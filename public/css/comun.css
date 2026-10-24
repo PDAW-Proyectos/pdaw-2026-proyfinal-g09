@@ -1,0 +1,36 @@
+:root { color-scheme: light; --papel: #f4f2ec; --tinta: #22241f; --borde: #d1cfc6; --acento: #a44026; --suave: #eae7de; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.65 Arial, sans-serif; }
+a { color: inherit; text-underline-offset: 5px; }
+button { font: inherit; cursor: pointer; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 5px; }
+img { display: block; max-width: 100%; height: auto; }
+.contenedor { width: min(1180px, calc(100% - 80px)); margin-inline: auto; }
+.cabecera { padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; gap: 25px; border-bottom: 1px solid var(--borde); }
+.marca { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 13px; font-weight: bold; line-height: 1.25; letter-spacing: 1px; }
+.marca img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
+.cabecera nav { display: flex; align-items: center; gap: 28px; font-size: 14px; }
+.cabecera nav > a { text-decoration: none; }
+.cabecera nav > a:hover { text-decoration: underline; }
+.boton { display: inline-flex; justify-content: center; align-items: center; gap: 22px; border: 1px solid var(--tinta); padding: 13px 22px; background: var(--tinta); color: var(--papel); text-decoration: none; font-size: 14px; font-weight: 500; }
+.boton:hover { background: var(--acento); border-color: var(--acento); color: var(--papel); }
+.boton.secundario { background: transparent; color: var(--tinta); }
+.boton.secundario:hover { background: var(--suave); }
+.pie { border-top: 1px solid var(--borde); padding-block: 25px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; font-size: 11px; }
+.salto { position: absolute; top: 8px; left: 8px; transform: translateY(-200%); background: var(--papel); padding: 10px; z-index: 2; }
+.salto:focus { transform: none; }
+dialog { background: var(--papel); color: var(--tinta); border: 1px solid var(--borde); padding: 30px; width: min(460px, calc(100% - 32px)); }
+dialog::backdrop { background: #0009; }
+dialog h2 { font-size: 28px; }
+cabecera-sitio, pie-sitio { display: block; }
+.marca, .pie { font-family: 'Courier New', monospace; }
+@media (max-width: 900px) { .cabecera nav { gap: 18px; } }
+@media (max-width: 640px) {
+  .contenedor { width: calc(100% - 36px); }
+  .cabecera { padding: 18px; flex-wrap: wrap; gap: 18px; }
+  .cabecera nav { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 12px; }
+  .cabecera nav .boton { padding: 10px 12px; font-size: 12px; }
+  .pie { gap: 12px; }
+}
