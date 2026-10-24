@@ -6,18 +6,13 @@
   <meta name="description" content="La cochera de Nidodo: un juego de terror laboral argentino. Conocé el proyecto y su demo de una noche.">
   <title>La cochera de Nidodo — El turno recién empieza</title>
   <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg">
+  <link rel="stylesheet" href="/css/comun.css">
   <link rel="stylesheet" href="/css/inicio.css">
+  <script src="/js/componentes.js" defer></script>
   <script src="/js/inicio.js" defer></script>
 </head>
 <body>
-  <a class="salto" href="#contenido">Saltar al contenido</a>
-  <header class="cabecera">
-    <a class="marca" href="/" aria-label="La cochera de Nidodo, inicio"><img src="/img/icono-nidodo.jpeg" alt="" width="44" height="44"><span>LA COCHERA<br>DE NIDODO</span></a>
-    <nav aria-label="Navegación principal">
-      <a href="#juego">El juego</a><a href="#imagenes">Imágenes</a><a href="#demo">Demo</a><a href="/foro.html">Foro</a>
-      <button class="boton secundario" type="button" data-aviso="cuentas">Iniciar sesión</button>
-    </nav>
-  </header>
+  <cabecera-sitio></cabecera-sitio>
   <main id="contenido">
     <section id="juego" class="portada contenedor" aria-labelledby="titulo">
       <div class="presentacion">
@@ -58,10 +53,7 @@
       <p class="nota-controles">Para jugar necesitás teclado y mouse. WASD: caminar · E: interactuar · Escape: pausa.</p>
     </section>
   </main>
-  <footer class="contenedor pie"><span>LA COCHERA DE NIDODO</span><span>Un proyecto independiente.</span><a href="#juego">Volver arriba ↑</a></footer>
-  <dialog id="aviso" aria-labelledby="aviso-titulo" aria-describedby="aviso-texto">
-    <p class="etiqueta">LA COCHERA DE NIDODO</p><h2 id="aviso-titulo">Próximamente</h2>
-    <p id="aviso-texto"></p><form method="dialog"><button class="boton secundario">Volver</button></form>
-  </dialog>
+  <pie-sitio></pie-sitio>
+
 </body>
 </html>
