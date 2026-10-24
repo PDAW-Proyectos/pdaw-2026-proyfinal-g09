@@ -1,0 +1,85 @@
+:root { color-scheme: light; --papel: #f4f2ec; --tinta: #22241f; --borde: #d1cfc6; --acento: #a44026; --suave: #eae7de; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { margin: 0; background: var(--papel); color: var(--tinta); font: 16px/1.65 Arial, sans-serif; }
+a { color: inherit; text-underline-offset: 5px; }
+button { font: inherit; cursor: pointer; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 5px; }
+img { display: block; max-width: 100%; height: auto; }
+figure { margin: 0; min-width: 0; }
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3, .marca, .etiqueta, .detalle, .pie { font-family: 'Courier New', monospace; }
+h1 { font-size: clamp(44px, 5.8vw, 80px); line-height: 1.04; letter-spacing: -4px; margin-bottom: 25px; }
+h1 span { color: var(--acento); }
+h2 { font-size: clamp(27px, 3vw, 39px); line-height: 1.2; letter-spacing: -1px; font-weight: 400; margin-bottom: 23px; }
+h3 { font-size: 22px; line-height: 1.35; font-weight: 400; }
+.contenedor { width: min(1180px, calc(100% - 80px)); margin-inline: auto; }
+.cabecera { padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; gap: 25px; border-bottom: 1px solid var(--borde); }
+.marca { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 13px; font-weight: bold; line-height: 1.25; letter-spacing: 1px; }
+.marca img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
+nav { display: flex; align-items: center; gap: 28px; font-size: 14px; }
+nav > a { text-decoration: none; }
+nav > a:hover { text-decoration: underline; }
+.boton { display: inline-flex; justify-content: center; align-items: center; gap: 22px; border: 1px solid var(--tinta); padding: 13px 22px; background: var(--tinta); color: var(--papel); text-decoration: none; font-size: 14px; font-weight: 500; }
+.boton:hover { background: var(--acento); border-color: var(--acento); color: var(--papel); }
+.boton.secundario { background: transparent; color: var(--tinta); }
+.boton.secundario:hover { background: var(--suave); }
+.etiqueta { font-size: 11px; letter-spacing: 2px; color: var(--acento); margin-bottom: 21px; font-weight: bold; }
+.portada { display: grid; grid-template-columns: 1fr 1.15fr; gap: 55px; align-items: center; padding-block: 76px; }
+.bajada { max-width: 360px; font-size: 18px; margin-bottom: 28px; }
+.detalle { font-size: 10px; letter-spacing: 1px; margin: 22px 0 0; }
+.imagen-principal img { width: 100%; aspect-ratio: 1.3; object-fit: cover; object-position: 64% center; }
+figcaption { padding-top: 12px; font-size: 12px; color: #5c5d55; }
+.franja { border-block: 1px solid var(--borde); background: var(--suave); }
+.columnas { display: grid; grid-template-columns: 1.2fr 1fr; gap: 100px; padding-block: 54px; }
+.columnas p:last-child { margin-bottom: 0; max-width: 500px; }
+.caracteristicas { padding-top: 37px; }
+.caracteristicas ul { list-style: none; margin: 0; padding: 0; }
+.caracteristicas li { padding: 12px 0; border-bottom: 1px solid var(--borde); font-size: 14px; }
+.caracteristicas li span { margin-right: 18px; font-family: monospace; color: var(--acento); }
+.galeria { padding-block: 65px; }
+.capturas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.capturas img { width: 100%; aspect-ratio: 1.5; object-fit: cover; }
+.capturas .ilustracion img { object-position: center 64%; }
+.seccion-demo { border-top: 1px solid var(--borde); padding-block: 58px 70px; }
+.demo-bloqueada { position: relative; min-height: 390px; display: grid; place-items: center; overflow: hidden; padding: 32px; background: #242721; isolation: isolate; }
+.fondo-demo { position: absolute; inset: -3%; width: 106%; height: 106%; max-width: none; object-fit: cover; filter: blur(7px) brightness(.55); z-index: -1; }
+.invitacion { background: var(--papel); padding: 35px; text-align: center; width: min(480px, 100%); }
+.invitacion h3 { font-size: clamp(25px, 3vw, 32px); letter-spacing: -1px; margin-bottom: 17px; }
+.invitacion p:not(.etiqueta) { font-size: 14px; max-width: 330px; margin-inline: auto; }
+.invitacion .etiqueta { font-size: 10px; margin-bottom: 13px; }
+.enlace { display: block; margin: 15px auto 0; border: 0; background: none; text-decoration: underline; text-underline-offset: 4px; color: var(--tinta); font-size: 12px; }
+.prueba { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; border-bottom: 1px solid var(--borde); padding: 18px 0; font-size: 12px; }
+.prueba p { margin: 0; max-width: 650px; }
+.prueba a { font-weight: bold; }
+.nota-controles { font-size: 12px; margin: 15px 0 0; color: #5c5d55; }
+.pie { border-top: 1px solid var(--borde); padding-block: 25px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; font-size: 11px; }
+.salto { position: absolute; top: 8px; left: 8px; transform: translateY(-200%); background: var(--papel); padding: 10px; z-index: 2; }
+.salto:focus { transform: none; }
+dialog { background: var(--papel); color: var(--tinta); border: 1px solid var(--borde); padding: 30px; width: min(460px, calc(100% - 32px)); }
+dialog::backdrop { background: #0009; }
+dialog h2 { font-size: 28px; }
+@media (max-width: 900px) {
+  .portada { gap: 28px; padding-block: 50px; }
+  .columnas { gap: 40px; }
+  nav { gap: 18px; }
+}
+@media (max-width: 640px) {
+  .contenedor { width: calc(100% - 36px); }
+  .cabecera { padding: 18px; flex-wrap: wrap; gap: 18px; }
+  nav { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 12px; }
+  nav .boton { padding: 10px 12px; font-size: 12px; }
+  h1 { letter-spacing: -2px; }
+  .portada, .columnas { grid-template-columns: 1fr; }
+  .portada { padding-block: 40px; gap: 30px; }
+  .imagen-principal img { aspect-ratio: 1.5; }
+  .columnas { gap: 28px; padding-block: 38px; }
+  .caracteristicas { padding-top: 0; }
+  .capturas { grid-template-columns: 1fr; gap: 26px; }
+  .galeria, .seccion-demo { padding-block: 40px; }
+  .demo-bloqueada { padding: 18px; min-height: 360px; }
+  .invitacion { padding: 26px 18px; }
+  .pie { gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
