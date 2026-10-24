@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="La cochera de Nidodo: un juego de terror laboral argentino. Conocé el proyecto y su demo de una noche.">
+  <title>La cochera de Nidodo — El turno recién empieza</title>
+  <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg">
+  <link rel="stylesheet" href="/css/inicio.css">
+  <script src="/js/inicio.js" defer></script>
+</head>
+<body>
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+  <header class="cabecera">
+    <a class="marca" href="/" aria-label="La cochera de Nidodo, inicio"><img src="/img/icono-nidodo.jpeg" alt="" width="44" height="44"><span>LA COCHERA<br>DE NIDODO</span></a>
+    <nav aria-label="Navegación principal">
+      <a href="#juego">El juego</a><a href="#imagenes">Imágenes</a><a href="#demo">Demo</a><a href="/foro.html">Foro</a>
+      <button class="boton secundario" type="button" data-aviso="cuentas">Iniciar sesión</button>
+    </nav>
+  </header>
+  <main id="contenido">
+    <section id="juego" class="portada contenedor" aria-labelledby="titulo">
+      <div class="presentacion">
+        <p class="etiqueta">TERROR LABORAL ARGENTINO</p>
+        <h1 id="titulo">La cochera<br>de Nidodo<span>.</span></h1>
+        <p class="bajada">Un turno de noche en una cochera donde no todo es lo que parece.</p>
+        <a class="boton" href="#demo">Conocé la demo <span aria-hidden="true">↘</span></a>
+        <p class="detalle">PRIMERA PERSONA · TERROR · PC</p>
+      </div>
+      <figure class="imagen-principal"><img src="/img/demo-nidodo.png" alt="Vista de la garita y el menú de la demo de Nidodo" width="1280" height="720"><figcaption>01 / Una noche en la cochera</figcaption></figure>
+    </section>
+    <section class="sobre franja" aria-labelledby="sobre-titulo">
+      <div class="contenedor columnas">
+        <div><p class="etiqueta">EL PROYECTO</p><h2 id="sobre-titulo">Un trabajo común.<br>Un turno que no lo es.</h2><p>Atendé clientes, registrá tickets y mantené la cochera en funcionamiento. Descubrí qué sucede cuando cae la noche.</p></div>
+        <div class="caracteristicas"><h3>¿Qué vas a encontrar?</h3><ul><li><span>01</span> Exploración en primera persona</li><li><span>02</span> Atención de clientes y lavado</li><li><span>03</span> Una ambientación de terror</li></ul></div>
+      </div>
+    </section>
+    <section id="imagenes" class="contenedor galeria" aria-labelledby="imagenes-titulo">
+      <p class="etiqueta">PUERTAS ADENTRO</p><h2 id="imagenes-titulo">Un vistazo a la cochera</h2>
+      <div class="capturas">
+        <figure><img src="/img/demo-nidodo.png" alt="La computadora de la garita dentro de la demo" loading="lazy" width="1280" height="720"><figcaption>El escenario / Garita nocturna</figcaption></figure>
+        <figure><img src="/img/vehiculo-nidodo.png" alt="Modelo de un auto verde utilizado en el proyecto" loading="lazy" width="1280" height="720"><figcaption>Los vehículos / Modelo del proyecto</figcaption></figure>
+        <figure class="ilustracion"><img src="/img/icono-nidodo.jpeg" alt="Ilustración de un portón entreabierto con dos ojos rojos en la oscuridad" loading="lazy" width="1024" height="1024"><figcaption>La identidad / Ilustración de Nidodo</figcaption></figure>
+      </div>
+    </section>
+    <section id="demo" class="contenedor seccion-demo" aria-labelledby="demo-titulo">
+      <p class="etiqueta">TU TURNO</p><h2 id="demo-titulo">Jugá la demo</h2>
+      <div class="demo-bloqueada">
+        <img class="fondo-demo" src="/img/demo-nidodo.png" alt="" loading="lazy" width="1280" height="720">
+        <div class="invitacion">
+          <p class="etiqueta">SUMATE AL PROYECTO</p><h3>Ayudanos a mantener<br>la cochera abierta.</h3>
+          <p>Contribuí al desarrollo y accedé a la demo desde esta página.</p>
+          <button class="boton" type="button" data-aviso="aportes">Quiero contribuir <span aria-hidden="true">↗</span></button>
+          <button class="enlace" type="button" data-aviso="cuentas">¿Ya contribuiste? Iniciá sesión</button>
+        </div>
+      </div>
+      <div class="prueba"><p>Por ahora podés probar la demo sin una cuenta. Login y aportes estarán disponibles próximamente.</p><a href="/demo/">Abrir demo de prueba <span aria-hidden="true">↗</span></a></div>
+      <p class="nota-controles">Para jugar necesitás teclado y mouse. WASD: caminar · E: interactuar · Escape: pausa.</p>
+    </section>
+  </main>
+  <footer class="contenedor pie"><span>LA COCHERA DE NIDODO</span><span>Un proyecto independiente.</span><a href="#juego">Volver arriba ↑</a></footer>
+  <dialog id="aviso" aria-labelledby="aviso-titulo" aria-describedby="aviso-texto">
+    <p class="etiqueta">LA COCHERA DE NIDODO</p><h2 id="aviso-titulo">Próximamente</h2>
+    <p id="aviso-texto"></p><form method="dialog"><button class="boton secundario">Volver</button></form>
+  </dialog>
+</body>
+</html>
