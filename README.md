@@ -1,5 +1,32 @@
 # La cochera de Nidodo en el navegador
 
+## Almacenamiento de usuarios
+
+`src/services/RepositorioUsuarios.js` guarda usuarios y administradores en `data/usuarios.json`, fuera de la carpeta pública y excluido de Git. El archivo se crea al llamar a cargar() si todavía no existe. No contiene usuarios de ejemplo ni contraseñas. Un archivo inválido provoca un error para evitar sobrescribir los datos existentes.
+
+Como en el proyecto anterior, el servidor crea un repositorio con la ruta del archivo y llama a cargar() una sola vez al iniciar:
+
+```js
+import { RepositorioUsuarios } from './src/services/RepositorioUsuarios.js';
+import { Usuario } from './src/Usuario.js';
+import path from 'node:path';
+
+// directory es la carpeta del servidor, ya calculada en server.js.
+const repositorioUsuarios = new RepositorioUsuarios(path.join(directory, 'data', 'usuarios.json'));
+await repositorioUsuarios.cargar();
+
+const usuario = new Usuario({ nombre: 'Ana', apellido: 'Ejemplo', email: 'ana@example.com' });
+await repositorioUsuarios.agregarUsuario(usuario);
+const guardado = repositorioUsuarios.buscarPorEmail('ana@example.com');
+guardado.habilitarContribuyente();
+await repositorioUsuarios.actualizarUsuario(guardado);
+```
+
+También ofrece `listar()` y `buscarPorId(id)`. Las búsquedas sin resultados devuelven `null`. Rechaza ids y emails duplicados; `actualizarUsuario` requiere un usuario existente. Recupera las instancias de Administrador con sus métodos. Mantiene un arreglo de usuarios en memoria. guardar() escribe ese arreglo en el archivo; agregarUsuario() y actualizarUsuario() llaman a guardar() automáticamente.
+
+Este ejemplo todavía no está conectado a server.js. Usar una sola instancia y un solo proceso del servidor con este archivo JSON. Para varios procesos o servidores será necesario migrar a una base de datos. El registro, los hashes de contraseñas, las sesiones y los controles de autorización todavía deben integrarse; este repositorio no expone rutas HTTP ni decide quién puede administrar usuarios. El bloqueo independiente del estado de contribuyente también queda pendiente.
+
+
 Requiere Node.js. Desde esta carpeta, instalar dependencias una vez con `npm install` y ejecutar `npm start`.
 
 Abrir http://localhost:3000. Para detener el servidor, presionar Ctrl+C en su terminal.
