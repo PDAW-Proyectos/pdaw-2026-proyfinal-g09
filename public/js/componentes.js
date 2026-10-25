@@ -3,7 +3,7 @@ class CabeceraSitio extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `<a class="salto" href="#contenido">Saltar al contenido</a>
   <header class="cabecera">
-    <a class="marca" href="/" aria-label="La cochera de Nidodo, inicio"><img src="/img/icono-nidodo.jpeg" alt="" width="44" height="44"><span>LA COCHERA<br>DE NIDODO</span></a>
+    <a class="marca" href="/" aria-label="La cochera de Nidodo, inicio"><img src="./img/icono-nidodo.jpeg" alt="" width="44" height="44"><span>LA COCHERA<br>DE NIDODO</span></a>
     <nav aria-label="Navegación principal">
       <a href="/#juego">El juego</a><a href="/#imagenes">Imágenes</a><a href="/#demo">Demo</a><a href="/foro.html">Foro</a>
       <button class="boton secundario" type="button" data-aviso="cuentas">Iniciar sesión</button>
