@@ -1,51 +1,134 @@
-# La cochera de Nidodo en el navegador
+# La cochera de Nidodo
 
-## Almacenamiento de usuarios
+> Una web para conocer el juego, acompañar su desarrollo y jugar una demo desde el navegador.
 
-`src/services/RepositorioUsuarios.js` guarda usuarios y administradores en `data/usuarios.json`, fuera de la carpeta pública y excluido de Git. El archivo se crea al llamar a cargar() si todavía no existe. No contiene usuarios de ejemplo ni contraseñas. Un archivo inválido provoca un error para evitar sobrescribir los datos existentes.
+Proyecto del **Grupo 09** para **Proyecto de Desarrollo de Aplicaciones Web**, de la Tecnicatura Universitaria en Programación Web y Móvil — DCIC, Universidad Nacional del Sur.
 
-Como en el proyecto anterior, el servidor crea un repositorio con la ruta del archivo y llama a cargar() una sola vez al iniciar:
+![Ilustración de la entrada de la cochera](public/img/portada-nidodo.webp)
 
-```js
-import { RepositorioUsuarios } from './src/services/RepositorioUsuarios.js';
-import { Usuario } from './src/Usuario.js';
-import path from 'node:path';
+## Ficha del proyecto
 
-// directory es la carpeta del servidor, ya calculada en server.js.
-const repositorioUsuarios = new RepositorioUsuarios(path.join(directory, 'data', 'usuarios.json'));
-await repositorioUsuarios.cargar();
+| Aspecto | Descripción |
+| --- | --- |
+| Propuesta | Presentar un videojuego independiente de terror laboral argentino y reunir una comunidad que acompañe su desarrollo. |
+| Usuarios | Visitantes, usuarios registrados, contribuyentes y administradores. |
+| Funciones principales | Información del juego, galería, cuentas de usuario, aportes para acceder a la demo, novedades y foro. |
+| APIs que vamos a utilizar | API de inicio de sesión de Google para ingresar con una cuenta de Google y API de Mercado Pago para recibir donaciones al proyecto. Ambas integraciones están pendientes. |
+| Tecnologías actuales | HTML, CSS, JavaScript, Node.js, Express y una exportación Unity WebGL. |
+| Persistencia | Repositorio de usuarios con almacenamiento en JSON, todavía pendiente de conectar al registro. |
 
-const usuario = new Usuario({ nombre: 'Ana', apellido: 'Ejemplo', email: 'ana@example.com' });
-await repositorioUsuarios.agregarUsuario(usuario);
-const guardado = repositorioUsuarios.buscarPorEmail('ana@example.com');
-guardado.habilitarContribuyente();
-await repositorioUsuarios.actualizarUsuario(guardado);
+### Reglas del proyecto
+
+- La información del juego puede consultarse sin una cuenta.
+- El ingreso previsto ofrece email y contraseña, además de Google.
+- Un aporte aprobado habilitará la demo de forma permanente para la cuenta correspondiente.
+- Ser contribuyente es una condición del usuario; Administrador es una clase que hereda de Usuario.
+- El administrador podrá gestionar usuarios y accesos, publicar novedades y moderar el foro.
+- Una revocación administrativa no deberá revertirse por realizar otro aporte. Ese bloqueo todavía debe implementarse.
+
+## Equipo
+
+| Integrante | GitHub |
+| --- | --- |
+| Leandro Liverotti | [leanliverotti](https://github.com/leanliverotti) |
+| Darío Pokorny | [dariopokorny](https://github.com/dariopokorny) |
+
+Los roles de trabajo se distribuyen y rotan entre los integrantes durante el desarrollo.
+
+## Estado actual
+
+| Parte | Estado |
+| --- | --- |
+| Inicio responsive | Implementado: presentación, características, galería y sección de demo. |
+| Navegación y pie compartidos | Implementados mediante componentes reutilizables. |
+| Demo WebGL | Disponible públicamente en `/demo/` para pruebas. |
+| Registro | Formulario maquetado en `/Registro.html`; todavía sin conexión al servidor. |
+| Usuario y Administrador | Clases implementadas con métodos de perfil y permisos. |
+| Repositorio de usuarios | Implementado; permite cargar, guardar, buscar y actualizar usuarios y administradores. |
+| Autenticación y sesiones | Pendientes de integración. |
+| Google y Mercado Pago | Pendientes de integración. |
+| Acceso a la demo según permisos | Pendiente: el desenfoque de Inicio es solamente visual. |
+| Foro, novedades y panel de administración | Pendientes. El enlace a `/foro.html` está preparado, pero la página aún no existe. |
+
+Actualmente los botones de ingreso y aportes de Inicio muestran avisos temporales. No se realizan cobros ni se exige una cuenta para abrir la demo de prueba. No hay endpoints REST propios conectados en `server.js` todavía.
+
+## Cómo ejecutar el proyecto
+
+Se necesita **Node.js 18 o superior**, npm y Git. Para jugar la demo se recomienda una computadora con teclado y mouse.
+
+```bash
+git clone https://github.com/PDAW-Proyectos/pdaw-2026-proyfinal-g09.git
+cd pdaw-2026-proyfinal-g09
+npm install
+npm start
 ```
 
-También ofrece `listar()` y `buscarPorId(id)`. Las búsquedas sin resultados devuelven `null`. Rechaza ids y emails duplicados; `actualizarUsuario` requiere un usuario existente. Recupera las instancias de Administrador con sus métodos. Mantiene un arreglo de usuarios en memoria. guardar() escribe ese arreglo en el archivo; agregarUsuario() y actualizarUsuario() llaman a guardar() automáticamente.
+El repositorio es privado: para clonarlo se necesita acceso en GitHub. Si ya tenés la carpeta, ejecutá los dos comandos de npm desde su raíz.
 
-Este ejemplo todavía no está conectado a server.js. Usar una sola instancia y un solo proceso del servidor con este archivo JSON. Para varios procesos o servidores será necesario migrar a una base de datos. El registro, los hashes de contraseñas, las sesiones y los controles de autorización todavía deben integrarse; este repositorio no expone rutas HTTP ni decide quién puede administrar usuarios. El bloqueo independiente del estado de contribuyente también queda pendiente.
+Abrí [http://localhost:3000/](http://localhost:3000/). Para detener el servidor, presioná **Ctrl+C** en la terminal.
 
+| Dirección | Contenido |
+| --- | --- |
+| `/` | Página principal. |
+| `/Registro.html` | Maqueta del formulario de registro. |
+| `/demo/` | Demo jugable exportada desde Unity. |
 
-Requiere Node.js. Desde esta carpeta, instalar dependencias una vez con `npm install` y ejecutar `npm start`.
+La demo descarga aproximadamente **106 MB** al abrirse por primera vez; puede tardar en cargar. Controles: **WASD** para caminar, **E** para interactuar y **Escape** para pausar. No hace falta instalar Unity para servir la exportación incluida.
 
-Abrir http://localhost:3000. Para detener el servidor, presionar Ctrl+C en su terminal.
+El servidor escucha en `127.0.0.1`, por lo que está disponible únicamente en la computadora que lo ejecuta. Si el puerto 3000 está ocupado, detené el servidor anterior o elegí otro puerto. En PowerShell:
 
-Express sirve Inicio desde `public/` en `/` y la exportación de Unity desde `La-cochera-exportacion-web` en `/demo/`. El juego descarga aproximadamente 106 MB sólo al abrir la demo. El servidor sólo escucha en esta computadora.
-
-Inicio sigue el wireframe del proyecto y se adapta a móvil y escritorio. Los botones de login y aportes muestran un aviso temporal; todavía no incluyen autenticación ni pagos. El enlace de prueba abre la demo públicamente: el bloqueo visual de Inicio no constituye control de acceso.
-
-Los estilos compartidos están en `public/css/comun.css` y los exclusivos de Inicio en `public/css/inicio.css`. `public/img/demo-nidodo.png` es una captura de la exportación actual; `vehiculo-nidodo.png` proviene de Capturas/auto-pack-0.12.png del repositorio del juego. El icono fue aportado por el equipo.
-
-## Cabecera y pie compartidos (#26)
-
-Para usar la navegación en login o foro, incluir en el head:
-
-```html
-<link rel="stylesheet" href="/css/comun.css">
-<script src="/js/componentes.js" defer></script>
+```powershell
+$env:PORT = 3001
+npm start
 ```
 
-Dentro del body, colocar `<cabecera-sitio></cabecera-sitio>` antes de `<main id="contenido">` y `<pie-sitio></pie-sitio>` después. Usar una sola instancia de cada componente por página. La cabecera incluye el salto al contenido y el pie incluye el diálogo temporal de ingreso. Los enlaces a Inicio funcionan también desde otras páginas. Se requiere JavaScript habilitado.
+Por ahora no se necesitan claves de Google ni Mercado Pago para ejecutar la maqueta y la demo.
 
-Las imágenes de Inicio se actualizaron con el material de «Nidodo - imagenes web - 2026-10-26»: portada ilustrada y capturas reales de entrada, pasillo y garita. Se usan las versiones WebP originales (aproximadamente 569 KB en total), con carga diferida en galería y fondo de demo. El icono del equipo se conserva.
+## Organización de archivos
+
+```text
+├── server.js                    # Servidor Express
+├── package.json                 # Dependencias y comando de inicio
+├── public/                      # Archivos que recibe el navegador
+│   ├── index.html
+│   ├── Registro.html
+│   ├── css/                     # comun.css e inicio.css
+│   ├── js/                      # Componentes compartidos y lógica de Inicio
+│   └── img/                     # Icono, ilustraciones y capturas
+├── src/                         # Clases del servidor
+│   ├── Usuario.js
+│   ├── Administrador.js
+│   └── services/
+│       └── RepositorioUsuarios.js
+├── routes/                      # Carpeta preparada para las rutas de la API
+├── data/                        # Persistencia local, fuera de public
+├── docs/                        # Diagramas y wireframe
+└── La-cochera-exportacion-web/   # Exportación Unity servida desde /demo/
+```
+
+### Almacenamiento de usuarios
+
+`RepositorioUsuarios` sigue la organización del proyecto anterior: mantiene un arreglo en memoria y lo guarda en un archivo JSON. Ofrece `cargar()`, `guardar()`, `agregarUsuario()`, `actualizarUsuario()`, `listar()`, `buscarPorId()` y `buscarPorEmail()`.
+
+Al conectarlo al servidor se debe crear una sola instancia con la ruta `data/usuarios.json` y llamar a `cargar()` al iniciar. Si el archivo no existe, se crea vacío. Recupera instancias de Usuario o Administrador según su rol y rechaza IDs y emails duplicados.
+
+`data/usuarios.json` está excluido de Git y no se publica desde Express. Los cambios en memoria deben guardarse para conservarse tras un reinicio. Esta implementación está pensada para un solo proceso del servidor. Las contraseñas y las sesiones todavía no están implementadas.
+
+### Componentes compartidos
+
+Para reutilizar la cabecera y el pie en otra pantalla, incluir `/css/comun.css` y `/js/componentes.js` con `defer`. Luego colocar `<cabecera-sitio></cabecera-sitio>` antes de `<main id="contenido">` y `<pie-sitio></pie-sitio>` después, una vez por página. Requieren JavaScript habilitado. Los estilos exclusivos de Inicio están en `public/css/inicio.css`.
+
+## Documentación y seguimiento
+
+- [Diagrama de contexto](docs/diagrama-contexto.jpeg).
+- [Diagrama de clases de dominio](docs/diagrama-clases-dominio.jpeg).
+- [Mapa de navegabilidad](docs/mapa-navegabilidad.jpeg).
+- [Wireframe de la pantalla principal](docs/wireframe-inicio.jpeg).
+- [Backlog y tareas](https://github.com/PDAW-Proyectos/pdaw-2026-proyfinal-g09/issues).
+- [Pull requests](https://github.com/PDAW-Proyectos/pdaw-2026-proyfinal-g09/pulls).
+
+Cada cambio se trabaja en una rama y se integra mediante un pull request vinculado a la tarea correspondiente. Se busca mantener los cambios acotados para facilitar la revisión.
+
+## Recursos visuales
+
+La portada usa una ilustración del proyecto, identificada como tal. La galería muestra capturas reales de la entrada, el pasillo y la garita. Las imágenes nuevas se sirven en WebP y la galería utiliza carga diferida. El icono fue aportado por el equipo.
