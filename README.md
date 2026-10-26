@@ -1,5 +1,10 @@
 # La cochera de Nidodo en el navegador
 
+# integrantes
+
+Dario Pokorny
+Leandro Liverotti
+
 ## Almacenamiento de usuarios
 
 `src/services/RepositorioUsuarios.js` guarda usuarios y administradores en `data/usuarios.json`, fuera de la carpeta pública y excluido de Git. El archivo se crea al llamar a cargar() si todavía no existe. No contiene usuarios de ejemplo ni contraseñas. Un archivo inválido provoca un error para evitar sobrescribir los datos existentes.
