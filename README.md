@@ -47,3 +47,5 @@ Para usar la navegación en login o foro, incluir en el head:
 ```
 
 Dentro del body, colocar `<cabecera-sitio></cabecera-sitio>` antes de `<main id="contenido">` y `<pie-sitio></pie-sitio>` después. Usar una sola instancia de cada componente por página. La cabecera incluye el salto al contenido y el pie incluye el diálogo temporal de ingreso. Los enlaces a Inicio funcionan también desde otras páginas. Se requiere JavaScript habilitado.
+
+Las imágenes de Inicio se actualizaron con el material de «Nidodo - imagenes web - 2026-10-26»: portada ilustrada y capturas reales de entrada, pasillo y garita. Se usan las versiones WebP originales (aproximadamente 569 KB en total), con carga diferida en galería y fondo de demo. El icono del equipo se conserva.
