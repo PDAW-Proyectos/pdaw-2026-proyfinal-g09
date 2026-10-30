@@ -4,14 +4,20 @@ export class Usuario {
   #username;
   #email;
   #esContribuyente;
+  #passwordHash;
 
-  constructor({ id = randomUUID(), username, email, esContribuyente = false }) {
+  constructor({
+    id = randomUUID(),username,email,passwordHash,esContribuyente = false}) {
     if (typeof id !== 'string' || !id.trim()) {
       throw new TypeError('El id es obligatorio');
     }
     if (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       throw new TypeError('El email no es válido');
     }
+    if (typeof passwordHash !== 'string' || !passwordHash.startsWith('$2')) {
+    throw new TypeError('El hash de la contraseña no es válido');
+    }
+    this.#passwordHash = passwordHash;
     if (typeof esContribuyente !== 'boolean') {
       throw new TypeError('La condición de contribuyente debe ser booleana');
     }
@@ -25,6 +31,7 @@ export class Usuario {
   get email() { return this.#email; }
   get esContribuyente() { return this.#esContribuyente; }
   get rol() { return 'usuario'; }
+  get passwordHash() {return this.#passwordHash;}
 
   actualizarPerfil(username) {
     if (typeof username !== 'string' ||
@@ -43,6 +50,13 @@ export class Usuario {
   puedeJugarDemo() { return this.#esContribuyente; }
   puedeAccederPanel() { return false; }
   puedeGestionarUsuarios() { return false; }
+
+  paraPersistir() {
+    return {
+        ...this.toJSON(),
+        passwordHash: this.#passwordHash
+    };
+  }
 
   toJSON() {
     return {
