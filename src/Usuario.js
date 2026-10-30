@@ -1,12 +1,11 @@
 import { randomUUID } from 'node:crypto';
 
 export class Usuario {
-  #nombre;
-  #apellido;
+  #username;
   #email;
   #esContribuyente;
 
-  constructor({ id = randomUUID(), nombre, apellido, email, esContribuyente = false }) {
+  constructor({ id = randomUUID(), username, email, esContribuyente = false }) {
     if (typeof id !== 'string' || !id.trim()) {
       throw new TypeError('El id es obligatorio');
     }
@@ -17,26 +16,26 @@ export class Usuario {
       throw new TypeError('La condición de contribuyente debe ser booleana');
     }
     Object.defineProperty(this, 'id', { value: id, enumerable: true });
-    this.actualizarPerfil(nombre, apellido);
+    this.actualizarPerfil(username);
     this.#email = email.trim().toLowerCase();
     this.#esContribuyente = esContribuyente;
   }
 
-  get nombre() { return this.#nombre; }
-  get apellido() { return this.#apellido; }
+  get username() { return this.#username; }
   get email() { return this.#email; }
   get esContribuyente() { return this.#esContribuyente; }
   get rol() { return 'usuario'; }
 
-  actualizarPerfil(nombre, apellido) {
-    if (typeof nombre !== 'string' || !nombre.trim()) {
-      throw new TypeError('El nombre es obligatorio');
+  actualizarPerfil(username) {
+    if (typeof username !== 'string' ||
+        username.trim().length < 3 ||
+        username.trim().length > 20) {
+        throw new TypeError(
+            'El nombre de usuario debe tener entre 3 y 20 caracteres'
+        );
     }
-    if (typeof apellido !== 'string' || !apellido.trim()) {
-      throw new TypeError('El apellido es obligatorio');
-    }
-    this.#nombre = nombre.trim();
-    this.#apellido = apellido.trim();
+
+    this.#username = username.trim();
   }
 
   habilitarContribuyente() { this.#esContribuyente = true; }
@@ -48,8 +47,7 @@ export class Usuario {
   toJSON() {
     return {
       id: this.id,
-      nombre: this.#nombre,
-      apellido: this.#apellido,
+      username: this.#username,
       email: this.#email,
       esContribuyente: this.#esContribuyente,
       rol: this.rol
