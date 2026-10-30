@@ -83,7 +83,7 @@ async function crearUsuario() {
         email: inputEmail.value.trim(),
         password: inputPassword.value
     };
-    const respuesta = await fetch("/api/usuarios", {
+    const respuesta = await fetch("/api/registro", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
