@@ -1,6 +1,6 @@
-
 import { Router } from "express";
 import { Usuario } from "../src/Usuario.js";
+import bcrypt from "bcrypt";
 
 export default function crearRouterRegistro(repositorio) {
     const router = Router();
@@ -30,9 +30,20 @@ export default function crearRouterRegistro(repositorio) {
                     error: "La contraseña debe tener entre 8 y 20 caracteres"
                 });
             }
+
+            const emailNormalizado = email.trim().toLowerCase();
+
+            if (repositorio.buscarPorEmail(emailNormalizado)) {
+                return res.status(409).json({
+                    error: "El correo electrónico ya está registrado"
+                });
+            }
+            const passwordHash = await bcrypt.hash(password, 12);
+
             const usuario = new Usuario({
                 username: username.trim(),
-                email: email.trim()
+                email: emailNormalizado,
+                passwordHash
             });
             await repositorio.agregarUsuario(usuario);
             return res.status(201).json({
@@ -45,6 +56,5 @@ export default function crearRouterRegistro(repositorio) {
             });
         }
     });
-
     return router;
 }

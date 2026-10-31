@@ -33,8 +33,10 @@ export class RepositorioUsuarios {
   }
 
   async guardar() {
+    const datos = this.usuarios.map(usuario => usuario.paraPersistir());
+
     await mkdir(dirname(this.ruta), { recursive: true });
-    await writeFile(this.ruta, JSON.stringify(this.usuarios, null, 2), 'utf8');
+    await writeFile(this.ruta, JSON.stringify(datos, null, 2), 'utf8');
   }
 
   listar() { return [...this.usuarios]; }
