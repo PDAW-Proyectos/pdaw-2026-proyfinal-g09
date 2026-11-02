@@ -44,6 +44,7 @@ app.use('/demo', express.static(path.join(directory, 'La-cochera-exportacion-web
 
 app.use("/api/registro", crearRouterRegistro(repositorioUsuarios));
 app.use("/api/login", crearRouterLogin(repositorioUsuarios));
+app.use("/api/login", crearRouterLogin(repositorioUsuarios));
 
 app.listen(port, '127.0.0.1', () => {
   console.log(`La cochera de Nidodo: http://localhost:${port}`);

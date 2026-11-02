@@ -34,3 +34,67 @@ cabecera-sitio, pie-sitio { display: block; }
   .cabecera nav .boton { padding: 10px 12px; font-size: 12px; }
   .pie { gap: 12px; }
 }
+
+/* Contenedor del perfil */
+.perfil-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Foto de perfil con aspecto circular */
+.avatar-btn {
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    transition: transform 0.2s ease;
+}
+
+.avatar-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Menú desplegable oculto por defecto */
+.desplegable-contenido {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: #ffffff;
+    min-width: 150px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+/* Clase activa para mostrar el menú */
+.desplegable-contenido.mostrar {
+    display: block;
+}
+
+/* Estilos de los elementos dentro del menú */
+.desplegable-contenido a,
+.desplegable-contenido button {
+    color: #333;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.desplegable-contenido a:hover,
+.desplegable-contenido button:hover {
+    background-color: #f1f1f1;
+}
+
+.desplegable-contenido .btn-logout {
+    color: #d9534f;
+    border-top: 1px solid #eee;
+}
