@@ -71,5 +71,32 @@ export default function crearRouterLogin(repositorioUsuarios) {
         }
     });
 
+
+    router.get('/', (req, res) => {
+        try {
+            if (!req.session.usuarioId) {
+                return res.status(200).json({
+                    usuario: null
+                });
+            }
+            const usuario = repositorioUsuarios.buscarPorId(
+                req.session.usuarioId
+            );
+            if (!usuario) {
+                return res.status(200).json({
+                    usuario: null
+                });
+            }
+            return res.status(200).json({
+                usuario: usuario.toJSON()
+            });
+        } catch (error) {
+            console.error('Error al consultar la sesión:', error);
+            return res.status(500).json({
+                mensaje: 'Error al consultar la sesión'
+            });
+        }
+    });
+
     return router;
 }
