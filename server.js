@@ -6,6 +6,7 @@ import 'dotenv/config';
 import crearRouterRegistro from "./routes/Registro.routes.js";
 import { RepositorioUsuarios } from "./src/services/RepositorioUsuarios.js";
 import crearRouterLogin from './routes/Login.routes.js';
+import crearRouterLogout from './routes/Logout.routes.js';
 
 const app = express();
 const directory = path.dirname(fileURLToPath(import.meta.url));
@@ -44,7 +45,8 @@ app.use('/demo', express.static(path.join(directory, 'La-cochera-exportacion-web
 
 app.use("/api/registro", crearRouterRegistro(repositorioUsuarios));
 app.use("/api/login", crearRouterLogin(repositorioUsuarios));
-app.use("/api/login", crearRouterLogin(repositorioUsuarios));
+app.use("/api/logout", crearRouterLogout());
+
 
 app.listen(port, '127.0.0.1', () => {
   console.log(`La cochera de Nidodo: http://localhost:${port}`);

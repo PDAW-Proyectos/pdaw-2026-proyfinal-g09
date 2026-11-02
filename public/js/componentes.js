@@ -133,7 +133,7 @@ async function actualizarEstadoUsuario() {
 
 async function cerrarSesionUsuario() {
     try {
-        const respuesta = await fetch('/api/login/logout', {
+        const respuesta = await fetch('/api/logout', {
             method: 'POST',
             credentials: 'same-origin'
         });
