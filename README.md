@@ -66,6 +66,21 @@ La demo de prueba se abre desde la página o entrando a [http://localhost:3000/d
 
 No hace falta tener Unity instalado para abrir esta versión. Para cerrar el servidor, presioná **Ctrl+C** en la terminal.
 
+## Pruebas automáticas
+
+Para ejecutar los tests, instalá las dependencias y usá:
+
+```bash
+npm install
+npm test
+```
+
+Para ver la cobertura: `npm run test:coverage`.
+
+Usamos Jest y Supertest para comprobar el registro, los hashes de contraseñas, las validaciones, la persistencia y los permisos de las clases Usuario y Administrador. Los tests crean sus propios archivos temporales y no modifican `data/usuarios.json`. También se ejecutan en GitHub al abrir un PR y al integrar cambios en `main`.
+
+Las pruebas de login, sesiones, pagos y permisos de rutas se agregarán cuando esas funciones estén implementadas.
+
 ## Carpetas del proyecto
 
 | Carpeta | Contenido |
