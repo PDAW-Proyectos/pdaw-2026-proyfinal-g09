@@ -1,3 +1,4 @@
+
 import express from 'express';
 import bcrypt from 'bcrypt';
 
@@ -18,6 +19,7 @@ export default function crearRouterLogin(repositorioUsuarios) {
                     mensaje: 'Email y contraseña son obligatorios'
                 });
             }
+
             const usuario = repositorioUsuarios.buscarPorEmail(email);
 
             if (!usuario) {
@@ -25,6 +27,7 @@ export default function crearRouterLogin(repositorioUsuarios) {
                     mensaje: 'Credenciales inválidas'
                 });
             }
+
             const contraseñaValida = await bcrypt.compare(
                 password,
                 usuario.passwordHash
@@ -36,8 +39,27 @@ export default function crearRouterLogin(repositorioUsuarios) {
                 });
             }
 
-            return res.status(200).json({
-                mensaje: 'Inicio de sesión correcto'
+            req.session.regenerate((error) => {
+                if (error) {
+                    return res.status(500).json({
+                        mensaje: 'Error al crear la sesión'
+                    });
+                }
+
+                req.session.usuarioId = usuario.id;
+
+                req.session.save((error) => {
+                    if (error) {
+                        return res.status(500).json({
+                            mensaje: 'Error al guardar la sesión'
+                        });
+                    }
+
+                    return res.status(200).json({
+                        mensaje: 'Inicio de sesión correcto',
+                        usuario: usuario.toJSON()
+                    });
+                });
             });
 
         } catch (error) {

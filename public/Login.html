@@ -22,23 +22,22 @@
         </h1>
         <p class="text-secondary mb-4">
         </p>
-        <form id="formRegistro" novalidate>
+        <form id="formLogin" novalidate>
           <div class="mb-3">
-            <label for="username" class="form-label">
-              Nombre de usuario
-            </label>
-            <input
-              type="text"
+          <label for="email" class="form-label">
+              Correo electrónico
+          </label>
+
+          <input
+              type="email"
               class="form-control rounded-0 p-3"
-              id="username"
-              name="username"
-              placeholder="Nombre de usuario"
-              minlength="3"
-              maxlength="20"
-              autocomplete="username"
+              id="email"
+              name="email"
+              placeholder="Correo electrónico"
+              autocomplete="email"
               required
-            >
-            <div id="errorUsername" class="text-danger small mt-1"></div>
+          >
+          <div id="errorEmail" class="text-danger small mt-1"></div>
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">
@@ -50,18 +49,19 @@
               id="password"
               name="password"
               minlength="8"
-              autocomplete="password"
+              autocomplete="current-password"
               placeholder="Contraseña"
               required
             >
             <div id="errorPassword" class="text-danger small mt-1"></div>
           </div>
           <button
-            id="BtnRegistro"
+            id="BtnLogin"
             type="submit"
             class="btn btn-dark rounded-0 w-100 py-3 fw-semibold">
             Iniciar sesion ↗
           </button>
+          <div id="errorLogin" class="text-danger small mt-3 text-center"></div>
           <p class="text-center mt-4">
             ¿No tenés una cuenta?
             <a href="/Registro.html"
@@ -76,5 +76,6 @@
   </main>
   <pie-sitio></pie-sitio>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/Login.js"></script>
 </body>
 </html>
