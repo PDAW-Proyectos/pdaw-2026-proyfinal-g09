@@ -7,8 +7,7 @@ export class Usuario {
   #passwordHash;
   #rol;
 
-  constructor({
-    id = randomUUID(),username,email,passwordHash,esContribuyente = false}) {
+  constructor({id = randomUUID(),username,email,passwordHash,esContribuyente = false,rol = 'usuario'}) {
     if (typeof id !== 'string' || !id.trim()) {
       throw new TypeError('El id es obligatorio');
     }
@@ -36,7 +35,7 @@ export class Usuario {
   get username() { return this.#username; }
   get email() { return this.#email; }
   get esContribuyente() { return this.#esContribuyente; }
-  get rol() { return 'usuario'; }
+  get rol() { return this.#rol; }
   get passwordHash() {return this.#passwordHash;}
 
   actualizarPerfil(username) {
