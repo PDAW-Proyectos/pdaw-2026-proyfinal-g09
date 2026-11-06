@@ -5,6 +5,7 @@ export class Usuario {
   #email;
   #esContribuyente;
   #passwordHash;
+  #rol;
 
   constructor({
     id = randomUUID(),username,email,passwordHash,esContribuyente = false}) {
@@ -25,6 +26,11 @@ export class Usuario {
     this.actualizarPerfil(username);
     this.#email = email.trim().toLowerCase();
     this.#esContribuyente = esContribuyente;
+    
+    if (!['usuario', 'admin'].includes(rol)) {
+      throw new TypeError('El rol debe ser usuario o admin');
+    }
+    this.#rol = rol;
   }
 
   get username() { return this.#username; }
