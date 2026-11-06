@@ -1,0 +1,205 @@
+
+/* Contenedor principal del perfil */
+.perfil {
+    padding-block: 55px 75px;
+}
+
+.perfil h1 {
+    font-size: clamp(38px, 4vw, 55px);
+    margin-bottom: 12px;
+}
+
+.perfil .descripcion {
+    color: #5c5d55;
+    margin-bottom: 35px;
+}
+
+/* Distribución del menú y contenido */
+.perfil-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* Menú lateral */
+.perfil-menu {
+    background: #fff;
+    border: 1px solid var(--borde);
+    padding: 25px;
+}
+
+.perfil-usuario {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--borde);
+    margin-bottom: 20px;
+}
+
+.perfil-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--suave);
+    display: grid;
+    place-items: center;
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--acento);
+}
+
+.perfil-usuario p {
+    margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.perfil-usuario span {
+    color: #77776f;
+    font-size: 12px;
+}
+
+/* Opciones del menú */
+.perfil-navegacion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.perfil-opcion {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--tinta);
+    text-align: left;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.perfil-opcion:hover {
+    background: var(--suave);
+}
+
+.perfil-opcion.activa {
+    background: var(--suave);
+    border-left: 3px solid var(--acento);
+    font-weight: bold;
+}
+
+.perfil-opcion span {
+    font-size: 18px;
+}
+
+/* Tarjeta de contenido */
+.perfil-contenido {
+    min-height: 370px;
+    background: #fff;
+    border: 1px solid var(--borde);
+    padding: 35px;
+}
+
+.perfil-seccion h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.perfil-seccion > p {
+    color: #5c5d55;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+/* Datos personales */
+.perfil-datos {
+    display: flex;
+    flex-direction: column;
+}
+
+.perfil-dato {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.perfil-dato h3 {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.perfil-dato p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+/* Secciones ocultas */
+.perfil-seccion[hidden] {
+    display: none;
+}
+
+/* Mensajes */
+#perfil-mensaje {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--acento);
+}
+
+/* Diseño adaptable */
+@media (max-width: 700px) {
+    .perfil {
+        padding-block: 35px 50px;
+    }
+
+    .perfil-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .perfil-menu {
+        padding: 18px;
+    }
+
+    .perfil-navegacion {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+    }
+
+    .perfil-opcion {
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        padding: 12px 5px;
+        text-align: center;
+        font-size: 11px;
+    }
+
+    .perfil-contenido {
+        padding: 22px 18px;
+    }
+
+    .perfil-dato {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .perfil-opcion {
+        transition: none;
+    }
+}
