@@ -5,27 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Consultá los datos de tu cuenta en La cochera de Nidodo.">
-
     <title>Mi perfil — La cochera de Nidodo</title>
-
     <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg">
     <link rel="stylesheet" href="/css/comun.css">
     <link rel="stylesheet" href="/css/perfil.css">
-    <script src="/js/componentes.js" defer></script>
 </head>
 <body>
     <cabecera-sitio></cabecera-sitio>
     <main id="contenido" class="contenedor perfil">
-
         <p class="etiqueta">TU CUENTA</p>
         <h1>Mi perfil</h1>
         <p class="descripcion">Administrá tu información y tus publicaciones.</p>
-
         <div class="perfil-layout">
-
-            <!-- Menú lateral -->
             <aside class="perfil-menu">
-
                 <div class="perfil-usuario">
                     <div class="perfil-avatar">U</div>
                     <div>
@@ -33,93 +25,68 @@
                         <span>Mi cuenta</span>
                     </div>
                 </div>
-
                 <nav class="perfil-navegacion" aria-label="Opciones del perfil">
-
                     <button class="perfil-opcion activa"
-                            type="button"
-                            data-seccion="informacion"
-                            aria-current="page">
-                        <span aria-hidden="true">♙</span>
-                        Mi información
-                    </button>
-
-                    <button class="perfil-opcion"
-                            type="button"
-                            data-seccion="publicaciones">
-                        <span aria-hidden="true">▤</span>
-                        Mis publicaciones
-                    </button>
-
-                    <button class="perfil-opcion"
-                            type="button"
-                            data-seccion="opciones">
-                        <span aria-hidden="true">⚙</span>
-                        Opciones
-                    </button>
-
-                </nav>
-
-            </aside>
-
-            <!-- Contenido derecho -->
-            <section class="perfil-contenido">
-
-                <!-- Información personal -->
-                <section class="perfil-seccion"
-                        id="seccion-informacion">
-
-                    <p class="etiqueta">INFORMACIÓN PERSONAL</p>
-                    <h2>Mi información</h2>
-                    <p>Datos asociados a tu cuenta.</p>
-
-                    <div class="perfil-datos">
-
-                        <div class="perfil-dato">
-                            <h3>Nombre de usuario</h3>
-                            <p id="perfil-username">Cargando...</p>
-                        </div>
-
-                        <div class="perfil-dato">
-                            <h3>Correo electrónico</h3>
-                            <p id="perfil-email">Cargando...</p>
-                        </div>
-                    </div>
-
-                </section>
-
-                <!-- Mis publicaciones -->
-                <section class="perfil-seccion"
-                        id="seccion-publicaciones"
-                        hidden>
-
-                    <p class="etiqueta">TU ACTIVIDAD</p>
-                    <h2>Mis publicaciones</h2>
-                    <p>Consultá las publicaciones que creaste.</p>
-
-                    <div id="lista-publicaciones">
-                        <p>Tus publicaciones aparecerán aquí.</p>
-                    </div>
-
-                </section>
-
-                <!-- Opciones -->
-                <section class="perfil-seccion"
-                        id="seccion-opciones"
-                        hidden>
-
-                    <p class="etiqueta">CONFIGURACIÓN</p>
-                    <h2>Opciones</h2>
-                    <p>Administrá las opciones de tu cuenta.</p>
-
-                </section>
-
-            </section>
-
+                    type="button"
+                    data-seccion="informacion"
+                    aria-current="page">
+                    <span aria-hidden="true">♙</span>
+                    Mi información
+                </button>
+                <button class="perfil-opcion"
+                type="button"
+                data-seccion="publicaciones">
+                <span aria-hidden="true">▤</span>
+                Mis publicaciones
+            </button>
+            <button class="perfil-opcion"
+            type="button"
+            data-seccion="opciones">
+            <span aria-hidden="true">⚙</span>
+            Opciones
+        </button>
+    </nav>
+</aside>
+<section class="perfil-contenido">
+    <section class="perfil-seccion"
+    id="seccion-informacion">
+    <p class="etiqueta">INFORMACIÓN PERSONAL</p>
+    <h2>Mi información</h2>
+    <p>Datos asociados a tu cuenta.</p>
+    <div class="perfil-datos">
+        <div class="perfil-dato">
+            <h3>Nombre de usuario</h3>
+            <p id="perfil-username">Cargando...</p>
         </div>
-        <p id="perfil-mensaje" role="alert" aria-live="polite"></p>
-    </main>
-    <pie-sitio></pie-sitio>
-    <script src="./js/Perfil.js"></script>
+        <div class="perfil-dato">
+            <h3>Correo electrónico</h3>
+            <p id="perfil-email">Cargando...</p>
+        </div>
+    </div>
+</section>
+<section class="perfil-seccion"
+id="seccion-publicaciones"
+hidden>
+<p class="etiqueta">TU ACTIVIDAD</p>
+<h2>Mis publicaciones</h2>
+<p>Consultá las publicaciones que creaste.</p>
+<div id="lista-publicaciones">
+    <p>Tus publicaciones aparecerán aquí.</p>
+</div>
+</section>
+<section class="perfil-seccion"
+id="seccion-opciones"
+hidden>
+<p class="etiqueta">CONFIGURACIÓN</p>
+<h2>Opciones</h2>
+<p>Administrá las opciones de tu cuenta.</p>
+</section>
+</section>
+</div>
+<p id="perfil-mensaje" role="alert" aria-live="polite"></p>
+</main>
+<pie-sitio></pie-sitio>
+<script src="/js/componentes.js" defer></script>
+<script src="./js/Perfil.js"></script>
 </body>
 </html>
