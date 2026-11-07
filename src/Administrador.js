@@ -1,7 +1,12 @@
 import { Usuario } from './Usuario.js';
 
 export class Administrador extends Usuario {
-  get rol() { return 'administrador'; }
+  constructor(datos) {
+    super({
+      ...datos,
+      rol: 'admin'
+    });
+  }
 
   puedeJugarDemo() { return true; }
   puedeAccederPanel() { return true; }

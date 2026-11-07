@@ -36,7 +36,7 @@ test('el administrador hereda de Usuario y puede gestionar el acceso', () => {
   const admin = new Administrador(datos);
   const usuario = new Usuario({ ...datos, email: 'otro@example.com' });
   expect(admin).toBeInstanceOf(Usuario);
-  expect(admin.toJSON().rol).toBe('administrador');
+  expect(admin.toJSON().rol).toBe('admin');
   expect(admin.puedeAccederPanel()).toBe(true);
   expect(admin.puedeGestionarUsuarios()).toBe(true);
   expect(admin.puedeJugarDemo()).toBe(true);

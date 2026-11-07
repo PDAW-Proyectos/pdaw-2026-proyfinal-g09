@@ -27,10 +27,10 @@ export class RepositorioUsuarios {
   }
 
   restaurar(datos) {
-    if (datos.rol === 'administrador') return new Administrador(datos);
+    if (datos.rol === 'admin') return new Administrador(datos);
     if (datos.rol === 'usuario') return new Usuario(datos);
     throw new Error('El rol de usuario no es válido');
-  }
+}
 
   async guardar() {
     const datos = this.usuarios.map(usuario => usuario.paraPersistir());
