@@ -1,0 +1,6 @@
+Edición: juego completo, siete noches
+NIDODO_WEB_DEMO: desactivado
+Estado: Succeeded
+Errores: 0
+Avisos: 11
+Tamaño: 26094922

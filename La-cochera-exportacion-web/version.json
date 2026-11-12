@@ -1,0 +1,11 @@
+{
+  "demoDefine": false,
+  "nights": 7,
+  "autoSyncPersistentDataPath": true,
+  "date": "2026-11-11",
+  "unity": "6000.6.5f1",
+  "edition": "complete",
+  "baseCommit": "9dd900d",
+  "compression": "gzip with decompression fallback",
+  "developmentBuild": false
+}

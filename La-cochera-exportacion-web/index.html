@@ -6,10 +6,32 @@
   <title>La cochera de Nidodo</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="TemplateData/style.css">
+<script>
+// Unity may request pointer capture again before the browser resolves the first request.
+// Reuse that request and ignore the already-captured case, without suppressing other errors.
+(() => {
+  const original = Element.prototype.requestPointerLock;
+  if (!original) return;
+  const requests = new WeakMap();
+  Element.prototype.requestPointerLock = function(options) {
+    if (document.pointerLockElement === this) return Promise.resolve();
+    if (requests.has(this)) return requests.get(this);
+    const result = original.call(this, options);
+    if (!result || !result.then) return result;
+    const pending = result.catch(error => {
+      if (document.pointerLockElement !== this) throw error;
+    }).finally(() => requests.delete(this));
+    requests.set(this, pending);
+    return pending;
+  };
+})();
+
+</script>
 </head>
 <body>
   <main id="unity-container">
     <div id="unity-fullscreen-container">
+      <button id="pantalla-completa" type="button">Pantalla completa ⛶</button>
       <canvas id="unity-canvas" width="960" height="600" tabindex="0" aria-label="Demo de La cochera de Nidodo"></canvas>
       <div id="unity-loading-container" role="status">
         <span>Cargando demo…</span>
@@ -23,6 +45,20 @@
     const loading = document.querySelector('#unity-loading-container');
     const progress = document.querySelector('#unity-progress');
     const warning = document.querySelector('#unity-warning');
+    const pantallaCompleta = document.querySelector('#pantalla-completa');
+    const contenedor = document.querySelector('#unity-fullscreen-container');
+    pantallaCompleta.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        else await contenedor.requestFullscreen();
+      } catch {
+        showBanner('El navegador no pudo activar la pantalla completa.', 'warning');
+      }
+    });
+    document.addEventListener('fullscreenchange', () => {
+      pantallaCompleta.textContent = document.fullscreenElement
+        ? 'Salir de pantalla completa ⛶' : 'Pantalla completa ⛶';
+    });
     function showBanner(message, type) {
       const notice = document.createElement('p');
       notice.textContent = message;
@@ -34,10 +70,11 @@
       }, 5000);
     }
     const config = {
+      autoSyncPersistentDataPath: true,
       arguments: [],
-      dataUrl: 'Build/demo-web-una-noche.data',
-      frameworkUrl: 'Build/demo-web-una-noche.framework.js',
-      codeUrl: 'Build/demo-web-una-noche.wasm',
+      dataUrl: 'Build/web-completo.data.unityweb',
+      frameworkUrl: 'Build/web-completo.framework.js.unityweb',
+      codeUrl: 'Build/web-completo.wasm.unityweb',
       streamingAssetsUrl: 'StreamingAssets',
       fullscreenElementID: 'unity-fullscreen-container',
       companyName: 'Nidodo',
@@ -46,7 +83,7 @@
       showBanner
     };
     const loader = document.createElement('script');
-    loader.src = 'Build/demo-web-una-noche.loader.js';
+    loader.src = 'Build/web-completo.loader.js';
     loader.onload = () => {
       createUnityInstance(canvas, config, value => {
         progress.value = value;
