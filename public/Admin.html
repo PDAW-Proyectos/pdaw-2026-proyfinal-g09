@@ -1,277 +1,278 @@
+
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administración - La cochera de Nidodo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Panel de administración de La cochera de Nidodo.">
+    <title>Administración — La cochera de Nidodo</title>
 
     <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg">
 
-    <!-- Estilos del proyecto -->
-    <link rel="stylesheet" href="/css/comun.css">
-    <link rel="stylesheet" href="/css/perfil.css">
-    <link rel="stylesheet" href="/css/admin.css">
-
-    <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+    <link rel="stylesheet" href="/css/comun.css">
+    <link rel="stylesheet" href="/css/perfil.css">
+    <link rel="stylesheet" href="/css/admin.css">
 
-    <!-- JavaScript -->
     <script src="/js/componentes.js" defer></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        defer
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="/js/Admin.js" defer></script>
 </head>
 
 <body>
-    <main class="container py-4">
+    <cabecera-sitio></cabecera-sitio>
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h1>Panel de administración</h1>
-                <p class="mb-0">
-                    Bienvenido, <span id="admin-username-menu">administrador</span>.
-                </p>
+    <main id="contenido">
+        <section class="perfil admin contenedor" aria-labelledby="titulo-admin">
+
+            <div class="admin-presentacion">
+                <div>
+                    <p class="etiqueta">PANEL DE CONTROL</p>
+                    <h1 id="titulo-admin">Administración<span>.</span></h1>
+                    <p class="descripcion">
+                        Bienvenido,
+                        <strong id="admin-username-menu">administrador</strong>.
+                        Desde acá podés gestionar el contenido del sitio.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="admin-cerrar-sesion"
+                    class="boton-admin-secundario"
+                >
+                    Cerrar sesión <span aria-hidden="true">↗</span>
+                </button>
             </div>
+
+            <div class="perfil-layout admin-layout">
+
+                <!-- Menú de navegación -->
+                <aside class="perfil-menu">
+                    <div class="perfil-usuario">
+                        <div class="perfil-avatar" aria-hidden="true">A</div>
+                        <div>
+                            <p>Administración</p>
+                            <span>Panel de control</span>
+                        </div>
+                    </div>
+
+                    <nav class="perfil-navegacion" aria-label="Secciones de administración">
+                        <button
+                            type="button"
+                            class="perfil-opcion activa"
+                            data-seccion="resumen"
+                        >
+                            <span aria-hidden="true">▦</span>
+                            Resumen
+                        </button>
+
+                        <button
+                            type="button"
+                            class="perfil-opcion"
+                            data-seccion="usuarios"
+                        >
+                            <span aria-hidden="true">♙</span>
+                            Usuarios
+                        </button>
+
+                        <button
+                            type="button"
+                            class="perfil-opcion"
+                            data-seccion="subir-noticia"
+                        >
+                            <span aria-hidden="true">＋</span>
+                            Publicar noticia
+                        </button>
+
+                        <button
+                            type="button"
+                            class="perfil-opcion"
+                            data-seccion="gestionar-noticias"
+                        >
+                            <span aria-hidden="true">▤</span>
+                            Gestionar noticias
+                        </button>
+                    </nav>
+                </aside>
+
+                <!-- Contenido de las secciones -->
+                <div class="perfil-contenido admin-contenido">
+
+                    <!-- Resumen -->
+                    <section
+                        id="seccion-resumen"
+                        class="perfil-seccion"
+                    >
+                        <p class="etiqueta">VISTA GENERAL</p>
+                        <h2>Resumen</h2>
+                        <p>Un vistazo al estado actual del sitio.</p>
+
+                        <div class="admin-estadisticas">
+                            <article class="admin-estadistica">
+                                <span class="admin-estadistica-icono" aria-hidden="true">♙</span>
+                                <div>
+                                    <h3>Usuarios registrados</h3>
+                                    <p id="resumen-usuarios">-</p>
+                                </div>
+                            </article>
+
+                            <article class="admin-estadistica">
+                                <span class="admin-estadistica-icono" aria-hidden="true">▤</span>
+                                <div>
+                                    <h3>Noticias publicadas</h3>
+                                    <p id="resumen-noticias">-</p>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="admin-acciones">
+                            <h3>Acciones rápidas</h3>
+
+                            <div class="admin-acciones-botones">
+                                <button
+                                    type="button"
+                                    class="boton-admin"
+                                    data-ir-seccion="subir-noticia"
+                                >
+                                    Publicar noticia <span aria-hidden="true">↗</span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="boton-admin-secundario"
+                                    data-ir-seccion="gestionar-noticias"
+                                >
+                                    Gestionar noticias <span aria-hidden="true">↗</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Usuarios -->
+                    <section
+                        id="seccion-usuarios"
+                        class="perfil-seccion"
+                        hidden
+                    >
+                        <p class="etiqueta">COMUNIDAD</p>
+                        <h2>Usuarios</h2>
+                        <p>Listado de usuarios registrados en el sitio.</p>
+
+                        <div id="lista-usuarios">
+                            <p>Cargando usuarios...</p>
+                        </div>
+                    </section>
+
+                    <!-- Publicar noticia -->
+                    <section
+                        id="seccion-subir-noticia"
+                        class="perfil-seccion"
+                        hidden
+                    >
+                        <p class="etiqueta">CONTENIDO</p>
+                        <h2 id="titulo-form-noticia">Publicar noticia</h2>
+                        <p id="descripcion-form-noticia">
+                            Completá los datos para publicar una noticia.
+                        </p>
+
+                        <form id="form-noticia" novalidate>
+                            <div class="perfil-dato admin-campo">
+                                <label for="noticia-titulo">Título</label>
+                                <input
+                                    type="text"
+                                    id="noticia-titulo"
+                                    name="titulo"
+                                    class="form-control"
+                                    minlength="5"
+                                    maxlength="100"
+                                    placeholder="Escribí el título de la noticia"
+                                    required
+                                >
+                            </div>
+
+                            <div class="admin-campo">
+                                <label for="noticia-contenido">Contenido</label>
+                                <textarea
+                                    id="noticia-contenido"
+                                    name="contenido"
+                                    class="form-control"
+                                    rows="7"
+                                    minlength="10"
+                                    maxlength="2000"
+                                    placeholder="Escribí el contenido de la noticia"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <div class="admin-formulario-acciones">
+                                <button
+                                    type="submit"
+                                    id="boton-guardar-noticia"
+                                    class="boton-admin"
+                                >
+                                    Publicar noticia
+                                </button>
+
+                                <button
+                                    type="button"
+                                    id="cancelar-edicion"
+                                    class="boton-admin-secundario"
+                                    hidden
+                                >
+                                    Cancelar edición
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- Gestionar noticias -->
+                    <section
+                        id="seccion-gestionar-noticias"
+                        class="perfil-seccion"
+                        hidden
+                    >
+                        <p class="etiqueta">CONTENIDO DEL SITIO</p>
+                        <h2>Gestionar noticias</h2>
+                        <p>Desde acá podés modificar o eliminar noticias existentes.</p>
+
+                        <div id="lista-noticias">
+                            <p>Cargando noticias...</p>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast de notificaciones: se conservan sus IDs -->
+    <div
+        id="admin-toast"
+        class="toast position-fixed bottom-0 end-0 m-3"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+    >
+        <div class="toast-header">
+            <strong class="me-auto" id="admin-toast-titulo">
+                Administración
+            </strong>
 
             <button
                 type="button"
-                id="admin-cerrar-sesion"
-                class="btn btn-outline-danger"
-            >
-                Cerrar sesión
-            </button>
+                class="btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Cerrar"
+            ></button>
         </div>
 
-        <div class="perfil-layout">
+        <div class="toast-body" id="admin-toast-mensaje"></div>
+    </div>
 
-            <!-- Menú de navegación -->
-            <aside class="perfil-menu">
-                <button
-                    type="button"
-                    class="perfil-opcion activo"
-                    data-seccion="resumen"
-                >
-                    Resumen
-                </button>
-
-                <button
-                    type="button"
-                    class="perfil-opcion"
-                    data-seccion="usuarios"
-                >
-                    Usuarios
-                </button>
-
-                <button
-                    type="button"
-                    class="perfil-opcion"
-                    data-seccion="subir-noticia"
-                >
-                    Publicar noticia
-                </button>
-
-                <button
-                    type="button"
-                    class="perfil-opcion"
-                    data-seccion="gestionar-noticias"
-                >
-                    Gestionar noticias
-                </button>
-            </aside>
-
-            <!-- Contenido -->
-            <div class="perfil-contenido">
-
-                <!-- Resumen -->
-                <section
-                    id="seccion-resumen"
-                    class="perfil-seccion"
-                >
-                    <h2>Resumen</h2>
-                    <p>Información general del sitio.</p>
-
-                    <div class="row g-3 mt-2">
-                        <div class="col-md-6">
-                            <div class="card p-3">
-                                <h3 class="h5">Usuarios registrados</h3>
-                                <p
-                                    id="resumen-usuarios"
-                                    class="fs-3 mb-0"
-                                >
-                                    -
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card p-3">
-                                <h3 class="h5">Noticias publicadas</h3>
-                                <p
-                                    id="resumen-noticias"
-                                    class="fs-3 mb-0"
-                                >
-                                    -
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <h3 class="h5">Acciones rápidas</h3>
-
-                        <button
-                            type="button"
-                            class="btn btn-primary me-2"
-                            data-ir-seccion="subir-noticia"
-                        >
-                            Publicar noticia
-                        </button>
-
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-ir-seccion="gestionar-noticias"
-                        >
-                            Gestionar noticias
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Usuarios -->
-                <section
-                    id="seccion-usuarios"
-                    class="perfil-seccion"
-                    hidden
-                >
-                    <h2>Usuarios</h2>
-                    <p>Listado de usuarios registrados en el sitio.</p>
-
-                    <div id="lista-usuarios">
-                        <p>Cargando usuarios...</p>
-                    </div>
-                </section>
-
-                <!-- Publicar noticia -->
-                <section
-                    id="seccion-subir-noticia"
-                    class="perfil-seccion"
-                    hidden
-                >
-                    <h2 id="titulo-form-noticia">Publicar noticia</h2>
-                    <p id="descripcion-form-noticia">
-                        Completá los datos para publicar una noticia.
-                    </p>
-
-                    <form id="form-noticia" novalidate>
-                        <div class="mb-3">
-                            <label
-                                for="noticia-titulo"
-                                class="form-label"
-                            >
-                                Título
-                            </label>
-
-                            <input
-                                type="text"
-                                id="noticia-titulo"
-                                name="titulo"
-                                class="form-control"
-                                minlength="5"
-                                maxlength="100"
-                                required
-                            >
-                        </div>
-
-                        <div class="mb-3">
-                            <label
-                                for="noticia-contenido"
-                                class="form-label"
-                            >
-                                Contenido
-                            </label>
-
-                            <textarea
-                                id="noticia-contenido"
-                                name="contenido"
-                                class="form-control"
-                                rows="7"
-                                minlength="10"
-                                maxlength="2000"
-                                required
-                            ></textarea>
-                        </div>
-
-                        <button
-                            type="submit"
-                            id="boton-guardar-noticia"
-                            class="btn btn-primary"
-                        >
-                            Publicar noticia
-                        </button>
-
-                        <button
-                            type="button"
-                            id="cancelar-edicion"
-                            class="btn btn-secondary"
-                            hidden
-                        >
-                            Cancelar edición
-                        </button>
-                    </form>
-                </section>
-
-                <!-- Gestionar noticias -->
-                <section
-                    id="seccion-gestionar-noticias"
-                    class="perfil-seccion"
-                    hidden
-                >
-                    <h2>Gestionar noticias</h2>
-                    <p>Desde acá podés modificar o eliminar noticias existentes.</p>
-
-                    <div id="lista-noticias">
-                        <p>Cargando noticias...</p>
-                    </div>
-                </section>
-
-            </div>
-        </div>
-
-        <!-- Notificaciones -->
-        <div
-            id="admin-toast"
-            class="toast position-fixed bottom-0 end-0 m-3"
-            role="alert"
-            aria-live="assertive"
-            aria-atomic="true"
-        >
-            <div class="toast-header">
-                <strong
-                    class="me-auto"
-                    id="admin-toast-titulo"
-                >
-                    Administración
-                </strong>
-
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="toast"
-                    aria-label="Cerrar"
-                ></button>
-            </div>
-
-            <div
-                class="toast-body"
-                id="admin-toast-mensaje"
-            ></div>
-        </div>
-
-    </main>
+    <pie-sitio></pie-sitio>
 </body>
 </html>
