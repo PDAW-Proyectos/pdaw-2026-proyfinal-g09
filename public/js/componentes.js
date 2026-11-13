@@ -83,6 +83,8 @@ async function actualizarEstadoUsuario() {
             const fotoPerfil = document.createElement('img');
 
             fotoPerfil.src = datos.usuario.avatarUrl || './img/avatar-defecto.png';
+            fotoPerfil.referrerPolicy = 'no-referrer';
+            fotoPerfil.addEventListener('error', () => { fotoPerfil.src = '/img/avatar-defecto.png'; }, { once: true });
             fotoPerfil.alt = `Perfil de ${datos.usuario.username}`;
             fotoPerfil.className = 'avatar-btn';
             fotoPerfil.width = 40;
@@ -116,12 +118,12 @@ async function actualizarEstadoUsuario() {
         } else {
             const login = document.createElement('a');
             login.className = 'boton secundario';
-            login.href = '/login.html';
+            login.href = '/Login.html';
             login.textContent = 'Iniciar sesión';
 
             const registro = document.createElement('a');
             registro.className = 'boton secundario';
-            registro.href = '/registro.html';
+            registro.href = '/Registro.html';
             registro.textContent = 'Registrarse';
 
             contenedor.append(login, registro);
