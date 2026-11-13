@@ -8,7 +8,6 @@ const errorEmail = document.getElementById('errorEmail');
 const errorPassword = document.getElementById('errorPassword');
 const errorConfirmPassword = document.getElementById('errorConfirmPassword');
 const errorRegistro = document.getElementById('errorRegistro');
-const btnRegistro = document.getElementById('BtnRegistro');
 
 formRegistro.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -106,7 +105,7 @@ async function crearUsuario() {
 
     const resultado = await respuesta.json();
     if (!respuesta.ok) {
-        throw new Error(resultado.error || 'No se pudo crear el usuario');
+        throw new Error(resultado.detail || resultado.error || 'No se pudo crear el usuario');
     }
     window.location.href = '/Login.html';
     return resultado;

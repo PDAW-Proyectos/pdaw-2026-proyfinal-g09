@@ -102,3 +102,27 @@ En la carpeta [docs](docs/) están los documentos que usamos para organizar la i
 - [Boceto de la página principal](docs/wireframe-inicio.jpeg).
 
 Las tareas se organizan en los [issues del repositorio](https://github.com/PDAW-Proyectos/pdaw-2026-proyfinal-g09/issues), y trabajamos con ramas y pull requests para integrar los cambios de cada uno.
+
+## Revisión del código
+
+- `npm run lint`: busca errores y avisa sobre funciones complejas en nuestro JavaScript.
+- `npm run format:check`: revisa el formato de los archivos incorporados para el manejo común de errores.
+- `npm run format`: aplica ese formato.
+
+La exportación de Unity queda fuera de estas herramientas.
+
+## Errores de la API
+
+Los errores usan `application/problem+json`. El mensaje está en `detail` y `requestId` permite encontrar la solicitud en la consola del servidor.
+
+| Código | Situación |
+| --- | --- |
+| 400 | Datos inválidos o JSON mal formado. |
+| 401 | Credenciales incorrectas o falta de sesión en el perfil. |
+| 403 | Origen no permitido al ingresar con Google. |
+| 404 | Ruta de la API inexistente. |
+| 409 | Conflicto al registrar una cuenta o al ingresar con otro método. |
+| 500 | Fallo interno; se devuelve un mensaje genérico. |
+| 502/503/504 | Google no está disponible, no está configurado o tarda demasiado. |
+
+Los registros incluyen método, ruta, estado, duración e identificador; no incluyen cuerpos de solicitudes, cookies ni credenciales.

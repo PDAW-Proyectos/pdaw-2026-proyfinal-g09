@@ -1,17 +1,15 @@
+import { ErrorHttp } from '../src/Errores.js';
 
 import express from 'express';
 
 export default function crearRouterLogout() {
     const router = express.Router();
 
-    router.post('/', (req, res) => {
+    router.post('/', (req, res, next) => {
         req.session.destroy((error) => {
             if (error) {
-                console.error('Error al cerrar sesión:', error);
 
-                return res.status(500).json({
-                    mensaje: 'Error al cerrar sesión'
-                });
+                return next(new ErrorHttp(500, 'Error al cerrar sesión'));
             }
 
             res.clearCookie('clase08.sid');

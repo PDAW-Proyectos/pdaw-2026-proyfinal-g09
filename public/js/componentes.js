@@ -166,7 +166,7 @@ async function cerrarSesionUsuario() {
         });
         const datos = await respuesta.json();
         if (!respuesta.ok) {
-            throw new Error(datos.mensaje);
+            throw new Error(datos.detail || datos.mensaje);
         }
         await actualizarEstadoUsuario();
         window.location.href = '/';

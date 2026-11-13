@@ -1,3 +1,4 @@
+import { manejarErrores } from '../middlewares/errores.js';
 import express from 'express';
 import request from 'supertest';
 import bcrypt from 'bcrypt';
@@ -18,6 +19,7 @@ beforeEach(async () => {
   app = express();
   app.use(express.json());
   app.use('/api/registro', crearRouterRegistro(repo));
+  app.use(manejarErrores);
 });
 afterEach(async () => { await rm(carpeta, { recursive: true, force: true }); });
 
@@ -52,7 +54,7 @@ test.each([
   const cuerpo = Object.keys(cambios).length ? { ...datos, ...cambios } : {};
   const respuesta = await request(app).post('/api/registro').send(cuerpo);
   expect(respuesta.status).toBe(400);
-  expect(respuesta.body.error).toEqual(expect.any(String));
+  expect(respuesta.body.detail).toEqual(expect.any(String));
   expect(repo.listar()).toHaveLength(0);
   expect(JSON.parse(await readFile(archivo, 'utf8'))).toEqual([]);
 });

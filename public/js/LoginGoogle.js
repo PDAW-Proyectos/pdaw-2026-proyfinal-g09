@@ -43,7 +43,7 @@ async function recibirCredencialGoogle(respuestaGoogle) {
       signal: AbortSignal.timeout(20000)
     });
     const datos = await respuesta.json();
-    if (!respuesta.ok) throw new Error(datos.mensaje || 'No se pudo iniciar sesión con Google');
+    if (!respuesta.ok) throw new Error(datos.detail || datos.mensaje || 'No se pudo iniciar sesión con Google');
     estadoGoogle.textContent = 'Sesión iniciada. Volviendo al inicio…';
     location.assign('/');
   } catch (error) {
@@ -60,7 +60,7 @@ async function prepararGoogle() {
       credentials: 'same-origin', cache: 'no-store', signal: AbortSignal.timeout(10000)
     });
     const config = await respuesta.json();
-    if (!respuesta.ok) throw new Error(config.mensaje || 'No se pudo preparar el ingreso con Google');
+    if (!respuesta.ok) throw new Error(config.detail || config.mensaje || 'No se pudo preparar el ingreso con Google');
     google.accounts.id.initialize({
       client_id: config.clientId, nonce: config.nonce,
       callback: recibirCredencialGoogle, auto_select: false
