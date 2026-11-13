@@ -27,33 +27,30 @@ botonesSecciones.forEach(boton => {
     });
 });
 
+
 async function cargarPerfil() {
     const mensaje = document.getElementById('perfil-mensaje');
-
     try {
         const respuesta = await fetch('/api/perfil', {
             method: 'GET',
             credentials: 'same-origin'
         });
-
+        if (respuesta.status === 401) {
+            window.location.replace('/login.html');
+            return;
+        }
         const datos = await respuesta.json();
-
         if (!respuesta.ok) {
             throw new Error(datos.mensaje || 'No se pudo cargar el perfil');
         }
-
         const usuario = datos.usuario;
-
         if (!usuario) {
             throw new Error('No se encontraron los datos del usuario');
         }
-
         document.getElementById('perfil-username').textContent =
             usuario.username;
-
         document.getElementById('perfil-username-menu').textContent =
             usuario.username;
-
         document.getElementById('perfil-email').textContent =
             usuario.email;
 
@@ -77,12 +74,8 @@ async function cargarPerfil() {
         console.error('Error al cargar el perfil:', error);
 
         mensaje.textContent = error.message;
-
-        if (error.message === 'No hay una sesión iniciada' ||
-            error.message === 'La sesión no corresponde a un usuario válido') {
-            window.location.replace('/login.html');
-        }
     }
 }
+
 
 cargarPerfil();
