@@ -58,18 +58,7 @@ async function cargarPerfil() {
             usuario.email;
 
   
-        const avatar = document.querySelector('.perfil-avatar');
-        if (avatar && usuario.avatarUrl) {
-            const foto = document.createElement('img');
-            foto.src = usuario.avatarUrl;
-            foto.alt = 'Foto de perfil de ' + usuario.username;
-            foto.referrerPolicy = 'no-referrer';
-            foto.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:inherit';
-            foto.addEventListener('error', () => { avatar.textContent = usuario.username[0].toUpperCase(); }, { once: true });
-            avatar.replaceChildren(foto);
-        } else if (avatar) {
-            avatar.textContent = usuario.username[0].toUpperCase();
-        }
+        const fecha = document.getElementById('perfil-fecha');
 
         mensaje.textContent = '';
 

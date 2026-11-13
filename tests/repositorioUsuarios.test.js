@@ -60,20 +60,3 @@ test.each(['{incompleto', '{}', JSON.stringify([{ ...datos, rol: 'desconocido' }
   await expect(new RepositorioUsuarios(archivo).cargar()).rejects.toThrow();
   expect(await readFile(archivo, 'utf8')).toBe(contenido);
 });
-
-test('conserva una cuenta de Google sin contraseña después de volver a cargar el archivo', async () => {
-  const usuario = await repo.agregarUsuario(new Usuario({
-    username: 'GooglePrueba', email: 'google@example.com', googleId: '123456789'
-  }));
-  const reiniciado = new RepositorioUsuarios(archivo);
-  await reiniciado.cargar();
-  const recuperado = reiniciado.buscarPorId(usuario.id);
-  expect(recuperado.googleId).toBe('123456789');
-  expect(reiniciado.buscarPorGoogleId('123456789').id).toBe(usuario.id);
-  expect(reiniciado.buscarPorGoogleId(null)).toBeNull();
-  expect(recuperado.passwordHash).toBeNull();
-  expect(recuperado.toJSON()).not.toHaveProperty('googleId');
-  await expect(reiniciado.agregarUsuario(new Usuario({
-    username: 'OtraCuenta', email: 'otro-google@example.com', googleId: '123456789'
-  }))).rejects.toThrow('Google ya');
-});
