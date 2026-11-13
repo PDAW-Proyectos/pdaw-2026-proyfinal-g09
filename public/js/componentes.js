@@ -151,13 +151,50 @@ async function cerrarSesionUsuario() {
 }
 
 class PieSitio extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `<footer class="contenedor pie"><span>LA COCHERA DE NIDODO</span><span>Un proyecto independiente.</span><a href="/#juego">Volver arriba ↑</a></footer>
-<dialog id="aviso" aria-labelledby="aviso-titulo" aria-describedby="aviso-texto">
-    <p class="etiqueta">LA COCHERA DE NIDODO</p><h2 id="aviso-titulo">Próximamente</h2>
-    <p id="aviso-texto"></p><form method="dialog"><button class="boton secundario">Volver</button></form>
-  </dialog>`;
-  }
+    connectedCallback() {
+        const footer = document.createElement('footer');
+        footer.classList.add('contenedor', 'pie');
+
+        const nombre = document.createElement('span');
+        nombre.textContent = 'LA COCHERA DE NIDODO';
+
+        const descripcion = document.createElement('span');
+        descripcion.textContent = 'Un proyecto independiente.';
+
+        const volverArriba = document.createElement('a');
+        volverArriba.href = '/#juego';
+        volverArriba.textContent = 'Volver arriba ↑';
+
+        footer.append(nombre, descripcion, volverArriba);
+
+        const dialog = document.createElement('dialog');
+        dialog.id = 'aviso';
+        dialog.setAttribute('aria-labelledby', 'aviso-titulo');
+        dialog.setAttribute('aria-describedby', 'aviso-texto');
+
+        const etiqueta = document.createElement('p');
+        etiqueta.classList.add('etiqueta');
+        etiqueta.textContent = 'LA COCHERA DE NIDODO';
+
+        const titulo = document.createElement('h2');
+        titulo.id = 'aviso-titulo';
+        titulo.textContent = 'Próximamente';
+
+        const texto = document.createElement('p');
+        texto.id = 'aviso-texto';
+
+        const formulario = document.createElement('form');
+        formulario.method = 'dialog';
+
+        const boton = document.createElement('button');
+        boton.classList.add('boton', 'secundario');
+        boton.textContent = 'Volver';
+
+        formulario.appendChild(boton);
+        dialog.append(etiqueta, titulo, texto, formulario);
+
+        this.append(footer, dialog);
+    }
 }
 
 customElements.define('cabecera-sitio', CabeceraSitio);
