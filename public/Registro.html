@@ -12,7 +12,7 @@
 </head>
 <body>
   <cabecera-sitio></cabecera-sitio>
-  <main class="container-fluid px-3 px-lg-4 py-5">
+  <main id="contenido" tabindex="-1" class="container-fluid px-3 px-lg-4 py-5">
     <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-lg-5 col-xl-4">
         <p class="text-uppercase fw-bold font-monospace mb-2">
@@ -35,6 +35,8 @@
               class="form-control rounded-0 p-3"
               id="username"
               name="username"
+              aria-describedby="errorUsername"
+              aria-invalid="false"
               placeholder="Tu nombre de usuario"
               minlength="3"
               maxlength="20"
@@ -52,6 +54,8 @@
               class="form-control rounded-0 p-3"
               id="email"
               name="email"
+              aria-describedby="errorEmail"
+              aria-invalid="false"
               placeholder="nombre@ejemplo.com"
               autocomplete="email"
               required
@@ -67,11 +71,15 @@
               class="form-control rounded-0 p-3"
               id="password"
               name="password"
+              aria-describedby="ayudaPassword errorPassword"
+              aria-invalid="false"
               minlength="8"
+              maxlength="20"
               autocomplete="new-password"
               placeholder="Mínimo 8 caracteres"
               required
             >
+            <p id="ayudaPassword" class="small text-secondary mt-2">Entre 8 y 20 caracteres. Los espacios también cuentan.</p>
             <div id="errorPassword" class="text-danger small mt-1"></div>
           </div>
           <div class="mb-4">
@@ -83,6 +91,8 @@
               class="form-control rounded-0 p-3"
               id="confirmPassword"
               name="confirmPassword"
+              aria-describedby="errorConfirmPassword"
+              aria-invalid="false"
               autocomplete="new-password"
               placeholder="Repetí tu contraseña"
               required
@@ -95,10 +105,10 @@
             class="btn btn-dark rounded-0 w-100 py-3 fw-semibold">
             CREAR CUENTA ↗
           </button>
-          <div id="errorRegistro" class="text-danger small mt-3 text-center"></div>
+          <p id="errorRegistro" class="text-danger small mt-3" role="alert" tabindex="-1"></p>
           <p class="text-center mt-4">
             ¿Ya tenés una cuenta?
-            <a href="./login.html"
+            <a href="/Login.html"
                class="text-dark fw-bold">
               Iniciar sesión
             </a>

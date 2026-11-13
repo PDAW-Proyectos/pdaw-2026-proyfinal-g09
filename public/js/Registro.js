@@ -13,6 +13,7 @@ const btnRegistro = document.getElementById('BtnRegistro');
 formRegistro.addEventListener('submit', function (event) {
     event.preventDefault();
     errorRegistro.textContent = '';
+
     if (validarForm()) {
         crearUsuario()
             .then(() => {
@@ -20,7 +21,10 @@ formRegistro.addEventListener('submit', function (event) {
             })
             .catch((error) => {
                 errorRegistro.textContent = error.message;
+                errorRegistro.focus();
             });
+    } else {
+        formRegistro.querySelector('[aria-invalid="true"]')?.focus();
     }
 });
 
@@ -28,9 +32,11 @@ function validarUsername() {
     const username = inputUsername.value.trim();
     if (username.length < 3 || username.length > 20) {
         errorUsername.textContent = 'El nombre de usuario debe tener entre 3 y 20 caracteres.';
+        inputUsername.setAttribute('aria-invalid', 'true');
         return false;
     } else {
         errorUsername.textContent = '';
+        inputUsername.setAttribute('aria-invalid', 'false');
         return true;
     }
 }
@@ -40,9 +46,11 @@ function validarEmail() {
     const formatoEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formatoEmail.test(email)) {
         errorEmail.textContent = 'Por favor, ingrese un correo electrónico válido.';
+        inputEmail.setAttribute('aria-invalid', 'true');
         return false;
     } else {
         errorEmail.textContent = '';
+        inputEmail.setAttribute('aria-invalid', 'false');
         return true;
     }
 }
@@ -51,9 +59,11 @@ function validarPassword() {
     const password = inputPassword.value;
     if (password.length < 8 || password.length > 20) {
         errorPassword.textContent = 'La contraseña debe tener entre 8 y 20 caracteres.';
+        inputPassword.setAttribute('aria-invalid', 'true');
         return false;
     } else {
         errorPassword.textContent = '';
+        inputPassword.setAttribute('aria-invalid', 'false');
         return true;
     }
 }
@@ -62,9 +72,11 @@ function validarConfirmPassword() {
     const password = inputPassword.value;
     if (password !== inputConfirmPassword.value) {
         errorConfirmPassword.textContent = 'Las contraseñas no coinciden.';
+        inputConfirmPassword.setAttribute('aria-invalid', 'true');
         return false;
     } else {
         errorConfirmPassword.textContent = '';
+        inputConfirmPassword.setAttribute('aria-invalid', 'false');
         return true;
     }
 }
