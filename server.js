@@ -1,3 +1,4 @@
+import { registrarSolicitud, rutaNoEncontrada, manejarErrores } from './middlewares/errores.js';
 import express from 'express';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,6 +28,7 @@ const repositorioUsuarios = new RepositorioUsuarios(
 
 await repositorioUsuarios.cargar();
 app.disable('x-powered-by');
+app.use('/api', registrarSolicitud);
 app.use(express.json());
 app.use(session({
     name: 'clase08.sid',
@@ -54,13 +56,16 @@ app.use('/demo', express.static(path.join(directory, 'La-cochera-exportacion-web
 app.use("/api/registro", crearRouterRegistro(repositorioUsuarios));
 app.use("/api/login", crearRouterLogin(repositorioUsuarios));
 app.use("/api/logout", crearRouterLogout());
-app.use("/api/perfil", crearRouterLogin(repositorioUsuarios))
+app.use("/api/perfil", crearRouterPerfil(repositorioUsuarios));
 
 
 app.use('/api/login/google', crearRouterGoogle(repositorioUsuarios, {
   clientId: process.env.GOOGLE_CLIENT_ID || '538180077146-j3ttn8c6lfsvla99u1e9jclsoakj80ce.apps.googleusercontent.com',
   appUrl: process.env.APP_URL || 'http://localhost:' + port
 }));
+
+app.use('/api', rutaNoEncontrada);
+app.use(manejarErrores);
 
 app.listen(port, '127.0.0.1', () => {
   console.log(`La cochera de Nidodo: http://localhost:${port}`);

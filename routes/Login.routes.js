@@ -1,3 +1,4 @@
+import { ErrorHttp } from '../src/Errores.js';
 
 import express from 'express';
 import bcrypt from 'bcrypt';
@@ -5,9 +6,9 @@ import bcrypt from 'bcrypt';
 export default function crearRouterLogin(repositorioUsuarios) {
     const router = express.Router();
 
-    router.post('/', async (req, res) => {
+    router.post('/', async (req, res, next) => {
         try {
-            const { email, password } = req.body;
+            const { email, password } = req.body ?? {};
 
             if (
                 typeof email !== 'string' ||
@@ -15,17 +16,13 @@ export default function crearRouterLogin(repositorioUsuarios) {
                 !email.trim() ||
                 !password
             ) {
-                return res.status(400).json({
-                    mensaje: 'Email y contraseña son obligatorios'
-                });
+                return next(new ErrorHttp(400, 'Email y contraseña son obligatorios'));
             }
 
             const usuario = repositorioUsuarios.buscarPorEmail(email);
 
             if (!usuario || !usuario.passwordHash) {
-                return res.status(401).json({
-                    mensaje: 'Credenciales inválidas'
-                });
+                return next(new ErrorHttp(401, 'Credenciales inválidas'));
             }
 
             const contraseñaValida = await bcrypt.compare(
@@ -34,25 +31,19 @@ export default function crearRouterLogin(repositorioUsuarios) {
             );
 
             if (!contraseñaValida) {
-                return res.status(401).json({
-                    mensaje: 'Credenciales inválidas'
-                });
+                return next(new ErrorHttp(401, 'Credenciales inválidas'));
             }
 
             req.session.regenerate((error) => {
                 if (error) {
-                    return res.status(500).json({
-                        mensaje: 'Error al crear la sesión'
-                    });
+                    return next(new ErrorHttp(500, 'Error al crear la sesión'));
                 }
 
                 req.session.usuarioId = usuario.id;
 
                 req.session.save((error) => {
                     if (error) {
-                        return res.status(500).json({
-                            mensaje: 'Error al guardar la sesión'
-                        });
+                        return next(new ErrorHttp(500, 'Error al guardar la sesión'));
                     }
 
                     return res.status(200).json({
@@ -63,16 +54,12 @@ export default function crearRouterLogin(repositorioUsuarios) {
             });
 
         } catch (error) {
-            console.error('Error al iniciar sesión:', error);
-
-            return res.status(500).json({
-                mensaje: 'Error al iniciar sesión'
-            });
+            next(error);
         }
     });
 
 
-    router.get('/', (req, res) => {
+    router.get('/', (req, res, next) => {
         res.set('Cache-Control', 'no-store');
         try {
             if (!req.session.usuarioId) {
@@ -92,10 +79,7 @@ export default function crearRouterLogin(repositorioUsuarios) {
                 usuario: usuario.toJSON()
             });
         } catch (error) {
-            console.error('Error al consultar la sesión:', error);
-            return res.status(500).json({
-                mensaje: 'Error al consultar la sesión'
-            });
+            next(error);
         }
     });
 

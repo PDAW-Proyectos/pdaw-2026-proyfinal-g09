@@ -84,7 +84,7 @@ async function iniciarSesion() {
         const datos = await respuesta.json();
 
         if (!respuesta.ok) {
-            throw new Error(datos.mensaje || 'No se pudo iniciar sesión');
+            throw new Error(datos.detail || datos.mensaje || 'No se pudo iniciar sesión');
         }
 
         return datos;
