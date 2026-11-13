@@ -47,7 +47,7 @@ app.use('/demo', express.static(path.join(directory, 'La-cochera-exportacion-web
 app.use("/api/registro", crearRouterRegistro(repositorioUsuarios));
 app.use("/api/login", crearRouterLogin(repositorioUsuarios));
 app.use("/api/logout", crearRouterLogout());
-app.use("/api/perfil", crearRouterLogin(repositorioUsuarios))
+app.use("/api/perfil", crearRouterPerfil(repositorioUsuarios));
 
 
 app.listen(port, '127.0.0.1', () => {

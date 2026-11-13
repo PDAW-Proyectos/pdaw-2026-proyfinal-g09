@@ -1,0 +1,164 @@
+
+/* Botones del panel de administración */
+#form-noticia button,
+#lista-noticias button {
+    padding: 0.7rem 1.2rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+/* Publicar noticia y guardar cambios */
+#boton-guardar-noticia,
+#lista-noticias button.btn-primary {
+    background-color: #a44026;
+    color: #fff;
+}
+
+#boton-guardar-noticia:hover,
+#lista-noticias button.btn-primary:hover {
+    background-color: #84331f;
+    transform: translateY(-2px);
+}
+
+/* Cancelar edición */
+#cancelar-edicion {
+    background-color: #eae7df;
+    color: #22241f;
+    border-color: #d1cfc6;
+}
+
+#cancelar-edicion:hover {
+    background-color: #dcd8ce;
+}
+
+/* Eliminar noticia */
+#lista-noticias button.btn-danger {
+    background-color: #b83232;
+    color: #fff;
+}
+
+#lista-noticias button.btn-danger:hover {
+    background-color: #922525;
+    transform: translateY(-2px);
+}
+
+/* Ocultar botones deshabilitados por hidden */
+button[hidden] {
+    display: none;
+}
+
+/* Accesibilidad */
+#form-noticia button:focus-visible,
+#lista-noticias button:focus-visible {
+    outline: 3px solid #d69b65;
+    outline-offset: 3px;
+}
+
+/* Área de texto de noticias */
+#noticia-contenido {
+    display: block;
+    width: 100%;
+    min-height: 150px;
+    padding: 0.9rem 1rem;
+
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #22241f;
+
+    background-color: #fff;
+    border: 1px solid #d1cfc6;
+    border-radius: 8px;
+
+    resize: vertical;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#noticia-contenido:focus {
+    outline: none;
+    border-color: #a44026;
+    box-shadow: 0 0 0 3px rgba(164, 64, 38, 0.15);
+}
+
+#noticia-contenido::placeholder {
+    color: #999;
+}
+
+/* Etiquetas del formulario */
+#form-noticia label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+}
+
+/* Espaciado entre campos */
+#form-noticia .perfil-dato {
+    margin-bottom: 1.2rem;
+}
+
+
+#admin-cerrar-sesion {
+    color: #a44026;
+}
+
+#admin-cerrar-sesion:hover {
+    background-color: rgba(164, 64, 38, 0.1);
+}
+
+
+/* Campo de título de noticia */
+#noticia-titulo {
+    display: block;
+    width: 100%;
+    padding: 0.9rem 1rem;
+
+    font-family: inherit;
+    font-size: 1rem;
+    color: #22241f;
+
+    background-color: #fff;
+    border: 1px solid #d1cfc6;
+    border-radius: 8px;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#noticia-titulo:focus {
+    outline: none;
+    border-color: #a44026;
+    box-shadow: 0 0 0 3px rgba(164, 64, 38, 0.15);
+}
+
+#noticia-titulo::placeholder {
+    color: #999;
+}
+
+
+/* Quitar estilos de validación de Bootstrap */
+#form-noticia .form-control:valid,
+#form-noticia .form-control:invalid {
+    border-color: #d1cfc6;
+    background-image: none;
+    box-shadow: none;
+}
+
+/* Mantener el estilo al seleccionar */
+#form-noticia input:focus,
+#form-noticia textarea:focus {
+    border-color: #a44026;
+    box-shadow: 0 0 0 3px rgba(164, 64, 38, 0.15);
+}
+
+/* Evitar colores de validación */
+#form-noticia input:valid,
+#form-noticia textarea:valid,
+#form-noticia input:invalid,
+#form-noticia textarea:invalid {
+    background-image: none;
+}
+
