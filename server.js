@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import session from 'express-session';
+import { randomBytes } from 'node:crypto';
 import 'dotenv/config';
 import crearRouterRegistro from "./routes/Registro.routes.js";
 import { RepositorioUsuarios } from "./src/services/RepositorioUsuarios.js";
@@ -15,6 +16,10 @@ const app = express();
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 3000);
 const production = process.env.NODE_ENV === 'production';
+if (production && !process.env.SESSION_SECRET) {
+  throw new Error('Falta configurar SESSION_SECRET para producción');
+}
+const sessionSecret = process.env.SESSION_SECRET || randomBytes(32).toString('hex');
 
 const repositorioUsuarios = new RepositorioUsuarios(
     path.join(directory, "data", "usuarios.json")
@@ -25,7 +30,7 @@ app.disable('x-powered-by');
 app.use(express.json());
 app.use(session({
     name: 'clase08.sid',
-    secret: process.env.SESSION_SECRET, // firma la cookie
+    secret: sessionSecret, // firma la cookie
     resave: false,
     saveUninitialized: false, // sin sesiones para anónimos
     cookie: {
@@ -53,7 +58,7 @@ app.use("/api/perfil", crearRouterLogin(repositorioUsuarios))
 
 
 app.use('/api/login/google', crearRouterGoogle(repositorioUsuarios, {
-  clientId: process.env.GOOGLE_CLIENT_ID,
+  clientId: process.env.GOOGLE_CLIENT_ID || '538180077146-j3ttn8c6lfsvla99u1e9jclsoakj80ce.apps.googleusercontent.com',
   appUrl: process.env.APP_URL || 'http://localhost:' + port
 }));
 
