@@ -1,35 +1,24 @@
 const botonesSecciones = document.querySelectorAll('.perfil-opcion');
 const secciones = document.querySelectorAll('.perfil-seccion');
-
 const listaUsuarios = document.getElementById('lista-usuarios');
 const listaNoticias = document.getElementById('lista-noticias');
-
 const formNoticia = document.getElementById('form-noticia');
 const inputTitulo = document.getElementById('noticia-titulo');
 const inputContenido = document.getElementById('noticia-contenido');
-
 const tituloFormNoticia = document.getElementById('titulo-form-noticia');
 const descripcionFormNoticia = document.getElementById('descripcion-form-noticia');
 const botonGuardarNoticia = document.getElementById('boton-guardar-noticia');
 const botonCancelarEdicion = document.getElementById('cancelar-edicion');
-
 const botonCerrarSesion = document.getElementById('admin-cerrar-sesion');
 const nombreAdministrador = document.getElementById('admin-username-menu');
-
 const resumenUsuarios = document.getElementById('resumen-usuarios');
 const resumenNoticias = document.getElementById('resumen-noticias');
-
 const toastElemento = document.getElementById('admin-toast');
 const toastTitulo = document.getElementById('admin-toast-titulo');
 const toastMensaje = document.getElementById('admin-toast-mensaje');
 
 let noticiaEditando = null;
 
-/* ------------------------------
-   FUNCIONES GENERALES
------------------------------- */
-
-// Realiza peticiones al servidor.
 async function realizarPeticion(url, opciones = {}) {
     const respuesta = await fetch(url, {
         ...opciones,
@@ -59,7 +48,6 @@ async function realizarPeticion(url, opciones = {}) {
     return datos;
 }
 
-// Muestra mensajes mediante Bootstrap Toast.
 function mostrarMensaje(mensaje, tipo = 'error') {
     if (!toastElemento || !mensaje) return;
 
@@ -92,7 +80,6 @@ function mostrarMensaje(mensaje, tipo = 'error') {
     toast.show();
 }
 
-// Crea un elemento de texto.
 function crearTexto(texto, clases = '') {
     const elemento = document.createElement('p');
 
@@ -102,7 +89,6 @@ function crearTexto(texto, clases = '') {
     return elemento;
 }
 
-// Crea un botón.
 function crearBoton(texto, clases, accion) {
     const boton = document.createElement('button');
 
@@ -115,7 +101,6 @@ function crearBoton(texto, clases, accion) {
     return boton;
 }
 
-// Obtiene una lista desde distintas estructuras de respuesta.
 function obtenerLista(datos, propiedad) {
     if (Array.isArray(datos)) return datos;
 
@@ -129,10 +114,6 @@ function obtenerLista(datos, propiedad) {
 
     return [];
 }
-
-/* ------------------------------
-   NAVEGACIÓN
------------------------------- */
 
 function cambiarSeccion(nombre) {
     secciones.forEach(seccion => {
@@ -167,10 +148,6 @@ document.querySelectorAll('[data-ir-seccion]').forEach(boton => {
     });
 });
 
-/* ------------------------------
-   VERIFICACIÓN DEL ADMINISTRADOR
------------------------------- */
-
 async function verificarAdministrador() {
     try {
         const datos = await realizarPeticion('/api/perfil');
@@ -194,10 +171,6 @@ async function verificarAdministrador() {
         return false;
     }
 }
-
-/* ------------------------------
-   CARGAR USUARIOS
------------------------------- */
 
 async function cargarUsuarios() {
     if (!listaUsuarios) return;
@@ -247,10 +220,6 @@ async function cargarUsuarios() {
         mostrarMensaje(error.message);
     }
 }
-
-/* ------------------------------
-   CARGAR NOTICIAS
------------------------------- */
 
 async function cargarNoticias() {
     if (!listaNoticias) return;
@@ -314,38 +283,20 @@ async function cargarNoticias() {
     }
 }
 
-/* ------------------------------
-   RESUMEN
------------------------------- */
-
 async function cargarResumen() {
+    const elementoUsuarios = document.getElementById('resumen-usuarios');
+
     try {
-        const [datosUsuarios, datosNoticias] = await Promise.all([
-            realizarPeticion('/api/admin/usuarios'),
-            realizarPeticion('/api/admin/noticias')
-        ]);
+        const usuarios = await realizarPeticion('/api/admin/usuarios');
 
-        const usuarios = obtenerLista(datosUsuarios, 'usuarios');
-        const noticias = obtenerLista(datosNoticias, 'noticias');
-
-        if (resumenUsuarios) {
-            resumenUsuarios.textContent = usuarios.length;
-        }
-
-        if (resumenNoticias) {
-            resumenNoticias.textContent = noticias.length;
-        }
+        elementoUsuarios.textContent = usuarios.length;
 
     } catch (error) {
-        mostrarMensaje('No se pudo actualizar el resumen.');
+        console.error('Error al cargar el resumen:', error);
+        elementoUsuarios.textContent = 'No disponible';
     }
 }
 
-/* ------------------------------
-   PUBLICAR Y MODIFICAR NOTICIAS
------------------------------- */
-
-// Prepara el formulario para crear una noticia.
 function prepararNuevaNoticia() {
     noticiaEditando = null;
 
@@ -361,7 +312,6 @@ function prepararNuevaNoticia() {
     botonCancelarEdicion.hidden = true;
 }
 
-// Prepara el formulario para modificar una noticia.
 function editarNoticia(noticia) {
     if (!noticia.id) {
         mostrarMensaje('La noticia no tiene un identificador válido.');
@@ -385,7 +335,6 @@ function editarNoticia(noticia) {
     cambiarSeccion('subir-noticia');
 }
 
-// Valida los campos manualmente.
 function validarNoticia() {
     const titulo = inputTitulo.value.trim();
     const contenido = inputContenido.value.trim();
@@ -408,7 +357,6 @@ function validarNoticia() {
     return true;
 }
 
-// Envía el formulario.
 formNoticia.addEventListener('submit', async evento => {
     evento.preventDefault();
 
@@ -457,14 +405,9 @@ formNoticia.addEventListener('submit', async evento => {
     }
 });
 
-// Cancela la modificación.
 botonCancelarEdicion.addEventListener('click', () => {
     prepararNuevaNoticia();
 });
-
-/* ------------------------------
-   ELIMINAR NOTICIAS
------------------------------- */
 
 async function eliminarNoticia(noticia) {
     if (!noticia.id) {
@@ -496,10 +439,6 @@ async function eliminarNoticia(noticia) {
     }
 }
 
-/* ------------------------------
-   CERRAR SESIÓN
------------------------------- */
-
 botonCerrarSesion.addEventListener('click', async () => {
     try {
         await realizarPeticion('/api/logout', {
@@ -512,7 +451,6 @@ botonCerrarSesion.addEventListener('click', async () => {
         mostrarMensaje('No se pudo cerrar la sesión.');
     }
 });
-
 
 async function iniciarPanelAdmin() {
     const esAdministrador = await verificarAdministrador();
