@@ -98,3 +98,20 @@ cabecera-sitio, pie-sitio { display: block; }
     color: #d9534f;
     border-top: 1px solid #eee;
 }
+[hidden] { display: none !important; }
+input[aria-invalid="true"] { border: 2px solid #a12d22; }
+.form-control:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; box-shadow: none; }
+.perfil-toggle { padding: 0; background: transparent; border: 0; border-radius: 50%; }
+.perfil-toggle img { width: 40px; height: 40px; }
+.desplegable-contenido { min-width: 170px; }
+.desplegable-contenido a:focus-visible, .desplegable-contenido button:focus-visible { outline-offset: -4px; }
+.desplegable-contenido .btn-logout { color: #a12d22; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .avatar-btn { transition: none; }
+}
+
+
+.text-secondary { color: #55594f !important; }
+.text-danger { color: #9b2c24 !important; }
+#accionesUsuario { display: flex; flex-wrap: wrap; gap: 8px; }

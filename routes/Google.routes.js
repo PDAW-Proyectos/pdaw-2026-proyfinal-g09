@@ -1,3 +1,4 @@
+import { ErrorHttp } from '../src/Errores.js';
 import { Router } from 'express';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { OAuth2Client } from 'google-auth-library';
@@ -9,27 +10,27 @@ export default function crearRouterGoogle(usuarios, {
   const router = Router();
   router.use((_req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
 
-  router.get('/config', (req, res) => {
-    if (!clientId) return res.status(503).json({ mensaje: 'El ingreso con Google todavía no está configurado' });
+  router.get('/config', (req, res, next) => {
+    if (!clientId) return next(new ErrorHttp(503, 'El ingreso con Google todavía no está configurado'));
     // Google incluirá este valor en la credencial firmada para vincularla a esta sesión.
     const nonce = randomBytes(32).toString('hex');
     req.session.googleIngreso = { nonce, vence: Date.now() + 10 * 60 * 1000 };
     res.json({ clientId, nonce });
   });
 
-  router.post('/', async (req, res) => {
-    if (!clientId) return res.status(503).json({ mensaje: 'El ingreso con Google todavía no está configurado' });
+  router.post('/', async (req, res, next) => {
+    if (!clientId) return next(new ErrorHttp(503, 'El ingreso con Google todavía no está configurado'));
     if (req.get('Origin') !== new URL(appUrl).origin) {
-      return res.status(403).json({ mensaje: 'El origen de la solicitud no es válido' });
+      return next(new ErrorHttp(403, 'El origen de la solicitud no es válido'));
     }
     const intento = req.session.googleIngreso;
     delete req.session.googleIngreso;
     if (!intento || intento.vence < Date.now()) {
-      return res.status(401).json({ mensaje: 'Volvé a iniciar el ingreso con Google' });
+      return next(new ErrorHttp(401, 'Volvé a iniciar el ingreso con Google'));
     }
     const credential = req.body?.credential;
     if (typeof credential !== 'string' || !credential || credential.length > 16000) {
-      return res.status(400).json({ mensaje: 'Falta una credencial válida de Google' });
+      return next(new ErrorHttp(400, 'Falta una credencial válida de Google'));
     }
 
     let perfil;
@@ -56,8 +57,11 @@ export default function crearRouterGoogle(usuarios, {
         throw new Error('Identidad inválida');
       }
     } catch (error) {
-      if (error.name === 'TimeoutError') return res.status(504).json({ mensaje: 'Google tardó demasiado en responder. Volvé a cargar la página e intentá otra vez' });
-      return res.status(401).json({ mensaje: 'No se pudo verificar tu identidad con Google. Volvé a intentar' });
+      if (error.name === 'TimeoutError') return next(new ErrorHttp(504, 'Google tardó demasiado en responder. Volvé a cargar la página e intentá otra vez'));
+      if (['ENOTFOUND', 'ECONNRESET', 'ECONNREFUSED', 'ETIMEDOUT'].includes(error.code) || error.response?.status >= 500) {
+        return next(new ErrorHttp(502, 'Google no está disponible temporalmente. Volvé a intentar más tarde'));
+      }
+      return next(new ErrorHttp(401, 'No se pudo verificar tu identidad con Google. Volvé a intentar'));
     } finally {
       clearTimeout(temporizador);
     }
@@ -66,7 +70,7 @@ export default function crearRouterGoogle(usuarios, {
       let usuario = usuarios.buscarPorGoogleId(perfil.sub);
       if (!usuario) {
         if (usuarios.buscarPorEmail(perfil.email)) {
-          return res.status(409).json({ mensaje: 'Usá el método de ingreso original de esta cuenta. La vinculación con Google todavía no está disponible' });
+          return next(new ErrorHttp(409, 'Usá el método de ingreso original de esta cuenta. La vinculación con Google todavía no está disponible'));
         }
         const nombre = typeof perfil.name === 'string' ? perfil.name.trim().slice(0, 20) : '';
         usuario = new Usuario({
@@ -80,15 +84,15 @@ export default function crearRouterGoogle(usuarios, {
         await usuarios.actualizarUsuario(usuario);
       }
       req.session.regenerate(error => {
-        if (error) return res.status(500).json({ mensaje: 'No se pudo crear la sesión' });
+        if (error) return next(new ErrorHttp(500, 'No se pudo crear la sesión'));
         req.session.usuarioId = usuario.id;
         req.session.save(error => {
-          if (error) return res.status(500).json({ mensaje: 'No se pudo guardar la sesión' });
+          if (error) return next(new ErrorHttp(500, 'No se pudo guardar la sesión'));
           res.json({ mensaje: 'Inicio de sesión correcto', usuario: usuario.toJSON() });
         });
       });
-    } catch {
-      res.status(500).json({ mensaje: 'No se pudo completar el ingreso con Google' });
+    } catch (error) {
+      next(error);
     }
   });
   return router;

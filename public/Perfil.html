@@ -12,7 +12,7 @@
 </head>
 <body>
     <cabecera-sitio></cabecera-sitio>
-    <main id="contenido" class="contenedor perfil">
+    <main tabindex="-1" id="contenido" class="contenedor perfil">
         <p class="etiqueta">TU CUENTA</p>
         <h1>Mi perfil</h1>
         <p class="descripcion">Administrá tu información y tus publicaciones.</p>
@@ -28,20 +28,20 @@
                 <nav class="perfil-navegacion" aria-label="Opciones del perfil">
                     <button class="perfil-opcion activa"
                     type="button"
-                    data-seccion="informacion"
+                    data-seccion="informacion" aria-controls="seccion-informacion"
                     aria-current="page">
                     <span aria-hidden="true">♙</span>
                     Mi información
                 </button>
                 <button class="perfil-opcion"
                 type="button"
-                data-seccion="publicaciones">
+                data-seccion="publicaciones" aria-controls="seccion-publicaciones">
                 <span aria-hidden="true">▤</span>
                 Mis publicaciones
             </button>
             <button class="perfil-opcion"
             type="button"
-            data-seccion="opciones">
+            data-seccion="opciones" aria-controls="seccion-opciones">
             <span aria-hidden="true">⚙</span>
             Opciones
         </button>
@@ -83,7 +83,7 @@ hidden>
 </section>
 </section>
 </div>
-<p id="perfil-mensaje" role="alert" aria-live="polite"></p>
+<p id="perfil-mensaje" role="alert" ></p>
 </main>
 <pie-sitio></pie-sitio>
 <script src="/js/componentes.js" defer></script>

@@ -36,12 +36,12 @@ async function cargarPerfil() {
             credentials: 'same-origin'
         });
         if (respuesta.status === 401) {
-            window.location.replace('/login.html');
+            window.location.replace('/Login.html');
             return;
         }
         const datos = await respuesta.json();
         if (!respuesta.ok) {
-            throw new Error(datos.mensaje || 'No se pudo cargar el perfil');
+            throw new Error(datos.detail || datos.mensaje || 'No se pudo cargar el perfil');
         }
         const usuario = datos.usuario;
         if (!usuario) {

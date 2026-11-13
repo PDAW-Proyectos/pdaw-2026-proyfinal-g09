@@ -20,7 +20,10 @@ formLogin.addEventListener('submit', function (event) {
             })
             .catch((error) => {
                 errorLogin.textContent = error.message;
+                errorLogin.focus();
             });
+    } else {
+        formLogin.querySelector('[aria-invalid="true"]')?.focus();
     }
 });
 
@@ -30,9 +33,11 @@ function validarEmail() {
 
     if (!formatoEmail.test(email)) {
         errorEmail.textContent = 'Por favor, ingrese un correo electrónico válido.';
+        inputEmail.setAttribute('aria-invalid', 'true');
         return false;
     } else {
         errorEmail.textContent = '';
+        inputEmail.setAttribute('aria-invalid', 'false');
         return true;
     }
 }
@@ -42,9 +47,11 @@ function validarPassword() {
 
     if (password.length < 8 || password.length > 20) {
         errorPassword.textContent = 'La contraseña invalida.';
+        inputPassword.setAttribute('aria-invalid', 'true');
         return false;
     } else {
         errorPassword.textContent = '';
+        inputPassword.setAttribute('aria-invalid', 'false');
         return true;
     }
 }
@@ -77,7 +84,7 @@ async function iniciarSesion() {
         const datos = await respuesta.json();
 
         if (!respuesta.ok) {
-            throw new Error(datos.mensaje || 'No se pudo iniciar sesión');
+            throw new Error(datos.detail || datos.mensaje || 'No se pudo iniciar sesión');
         }
 
         return datos;

@@ -11,14 +11,14 @@
 </head>
 <body>
   <cabecera-sitio></cabecera-sitio>
-  <main class="container-fluid px-3 px-lg-4 py-5">
+  <main id="contenido" tabindex="-1" class="container-fluid px-3 px-lg-4 py-5">
     <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-lg-5 col-xl-4">
         <p class="text-uppercase fw-bold font-monospace mb-2">
           empezar turno 
         </p>
         <h1 class="display-5 fw-bold font-monospace mb-3">
-          Iniciar sesion
+          Iniciar sesión
         </h1>
         <p class="text-secondary mb-4">
         </p>
@@ -33,6 +33,8 @@
               class="form-control rounded-0 p-3"
               id="email"
               name="email"
+              aria-describedby="errorEmail"
+              aria-invalid="false"
               placeholder="Correo electrónico"
               autocomplete="email"
               required
@@ -48,20 +50,24 @@
               class="form-control rounded-0 p-3"
               id="password"
               name="password"
+              aria-describedby="ayudaPassword errorPassword"
+              aria-invalid="false"
               minlength="8"
+              maxlength="20"
               autocomplete="current-password"
               placeholder="Contraseña"
               required
             >
+            <p id="ayudaPassword" class="small text-secondary mt-2">Entre 8 y 20 caracteres. Los espacios también cuentan.</p>
             <div id="errorPassword" class="text-danger small mt-1"></div>
           </div>
           <button
             id="BtnLogin"
             type="submit"
             class="btn btn-dark rounded-0 w-100 py-3 fw-semibold">
-            Iniciar sesion ↗
+            Iniciar sesión ↗
           </button>
-          <div id="errorLogin" class="text-danger small mt-3 text-center"></div>
+          <p id="errorLogin" class="text-danger small mt-3" role="alert" tabindex="-1"></p>
           <p class="text-center mt-4">
             ¿No tenés una cuenta?
             <a href="/Registro.html"

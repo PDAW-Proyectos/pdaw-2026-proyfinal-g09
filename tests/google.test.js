@@ -1,3 +1,4 @@
+import { manejarErrores } from '../middlewares/errores.js';
 import { jest, test, expect, beforeEach, afterEach } from '@jest/globals';
 import express from 'express';
 import session from 'express-session';
@@ -29,6 +30,7 @@ beforeEach(async () => {
   app.use('/api/login', crearRouterLogin(usuarios, { appUrl: origen }));
   app.use('/api/logout', crearRouterLogout());
   app.use('/api/registro', crearRouterRegistro(usuarios));
+  app.use(manejarErrores);
   agente = request.agent(app);
   const config = await agente.get('/api/login/google/config').expect(200);
   nonce = config.body.nonce;
@@ -114,9 +116,10 @@ test('cerrar sesión invalida la sesión del servidor y borra la cookie', async 
 test('si Google tarda demasiado responde 504 y no crea usuario ni sesión', async () => {
   const lento = { verifyIdToken: () => new Promise(() => {}) };
   app.use('/google-lento', crearRouterGoogle(usuarios, { clientId, appUrl: origen, cliente: lento, esperaMs: 20 }));
+  app.use(manejarErrores);
   await agente.get('/google-lento/config').expect(200);
   const respuesta = await agente.post('/google-lento').set('Origin', origen).send({ credential: 'simulada' }).expect(504);
-  expect(respuesta.body.mensaje).toContain('tardó demasiado');
+  expect(respuesta.body.detail).toContain('tardó demasiado');
   expect(usuarios.listar()).toHaveLength(0);
   expect((await agente.get('/api/login')).body.usuario).toBeNull();
 });
@@ -159,4 +162,13 @@ test('permite registrar dos cuentas normales después de una cuenta Google y vol
   await local.post('/api/login').send({ email: 'localuno@example.com', password: 'Clave1234' }).expect(200);
   expect((await local.get('/api/login')).body.usuario.username).toBe('LocalUno');
   await local.post('/api/login').send({ email: 'localuno@example.com', password: 'Incorrecta' }).expect(401);
+});
+
+test('un fallo de conexión con Google devuelve 502 sin crear una sesión', async () => {
+  cliente.verifyIdToken.mockRejectedValue(Object.assign(new Error('detalle interno'), { code: 'ENOTFOUND' }));
+  const respuesta = await ingresar().expect(502);
+  expect(respuesta.body.detail).toContain('temporalmente');
+  expect(respuesta.body.detail).not.toContain('detalle interno');
+  expect(usuarios.listar()).toHaveLength(0);
+  expect((await agente.get('/api/login')).body.usuario).toBeNull();
 });
