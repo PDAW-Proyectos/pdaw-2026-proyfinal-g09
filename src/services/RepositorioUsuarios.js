@@ -60,7 +60,7 @@ export class RepositorioUsuarios {
     if (!(usuario instanceof Usuario)) throw new TypeError('Se necesita un Usuario');
     if (this.buscarPorId(usuario.id)) throw new Error('El id ya está registrado');
     if (this.buscarPorEmail(usuario.email)) throw new Error('El email ya está registrado');
-    if (this.buscarPorGoogleId(usuario.googleId)) throw new Error('La cuenta de Google ya está registrada');
+    if (usuario.googleId && this.buscarPorGoogleId(usuario.googleId)) throw new Error('La cuenta de Google ya está registrada');
     this.usuarios.push(usuario);
     await this.guardar();
     return usuario;

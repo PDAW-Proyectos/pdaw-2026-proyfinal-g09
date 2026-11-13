@@ -8,6 +8,7 @@ import { join } from 'node:path';
 import crearRouterGoogle from '../routes/Google.routes.js';
 import crearRouterLogin from '../routes/Login.routes.js';
 import crearRouterLogout from '../routes/Logout.routes.js';
+import crearRouterRegistro from '../routes/Registro.routes.js';
 import { RepositorioUsuarios } from '../src/services/RepositorioUsuarios.js';
 import { Usuario } from '../src/Usuario.js';
 
@@ -27,6 +28,7 @@ beforeEach(async () => {
   app.use('/api/login/google', crearRouterGoogle(usuarios, { clientId, appUrl: origen, cliente }));
   app.use('/api/login', crearRouterLogin(usuarios, { appUrl: origen }));
   app.use('/api/logout', crearRouterLogout());
+  app.use('/api/registro', crearRouterRegistro(usuarios));
   agente = request.agent(app);
   const config = await agente.get('/api/login/google/config').expect(200);
   nonce = config.body.nonce;
@@ -134,4 +136,27 @@ test('guarda la foto verificada y la actualiza en el siguiente ingreso', async (
 test('descarta una URL de foto ajena a Google y mantiene el ingreso', async () => {
   perfil.picture = 'https://otra.example/foto';
   expect((await ingresar().expect(200)).body.usuario.avatarUrl).toBeNull();
+});
+
+
+test('permite registrar dos cuentas normales después de una cuenta Google y volver a ingresar tras reiniciar', async () => {
+  await ingresar().expect(200);
+  for (const username of ['LocalUno', 'LocalDos']) {
+    const alta = await request(app).post('/api/registro').send({
+      username, email: username.toLowerCase() + '@example.com', password: 'Clave1234'
+    }).expect(201);
+    expect(alta.body.usuario).not.toHaveProperty('googleId');
+    expect(usuarios.buscarPorId(alta.body.usuario.id).googleId).toBeNull();
+  }
+  const reiniciado = new RepositorioUsuarios(join(carpeta, 'usuarios.json'));
+  await reiniciado.cargar();
+  expect(reiniciado.listar()).toHaveLength(3);
+  const otraApp = express();
+  otraApp.use(express.json());
+  otraApp.use(session({ secret: 'secreto-de-test', resave: false, saveUninitialized: false }));
+  otraApp.use('/api/login', crearRouterLogin(reiniciado));
+  const local = request.agent(otraApp);
+  await local.post('/api/login').send({ email: 'localuno@example.com', password: 'Clave1234' }).expect(200);
+  expect((await local.get('/api/login')).body.usuario.username).toBe('LocalUno');
+  await local.post('/api/login').send({ email: 'localuno@example.com', password: 'Incorrecta' }).expect(401);
 });
