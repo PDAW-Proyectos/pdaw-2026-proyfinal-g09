@@ -44,6 +44,10 @@ class CabeceraSitio extends HTMLElement {
 
         const accionesUsuario = document.createElement('div');
         accionesUsuario.id = 'accionesUsuario';
+        const estadoCuenta = document.createElement('p');
+        estadoCuenta.id = 'estado-cuenta';
+        estadoCuenta.setAttribute('role', 'status');
+        estadoCuenta.setAttribute('aria-live', 'polite');
 
         header.append(marca, nav, accionesUsuario);
         this.append(salto, header);
@@ -52,10 +56,13 @@ class CabeceraSitio extends HTMLElement {
     }
 }
 
-document.addEventListener('click', () => {
-    document.querySelectorAll('.desplegable-contenido.mostrar')
-        .forEach(menu => menu.classList.remove('mostrar'));
-});
+function cerrarMenusPerfil() {
+    document.querySelectorAll('.perfil-dropdown').forEach(contenedor => {
+        contenedor.querySelector('.desplegable-contenido')?.classList.remove('mostrar');
+        contenedor.querySelector('.perfil-toggle')?.setAttribute('aria-expanded', 'false');
+    });
+}
+document.addEventListener('click', cerrarMenusPerfil);
 
 async function actualizarEstadoUsuario() {
     const contenedor = document.getElementById('accionesUsuario');
@@ -85,16 +92,25 @@ async function actualizarEstadoUsuario() {
             fotoPerfil.src = datos.usuario.avatarUrl || './img/avatar-defecto.png';
             fotoPerfil.referrerPolicy = 'no-referrer';
             fotoPerfil.addEventListener('error', () => { fotoPerfil.src = '/img/avatar-defecto.png'; }, { once: true });
-            fotoPerfil.alt = `Perfil de ${datos.usuario.username}`;
+            fotoPerfil.alt = '';
             fotoPerfil.className = 'avatar-btn';
             fotoPerfil.width = 40;
             fotoPerfil.height = 40;
 
+            const botonPerfil = document.createElement('button');
+            botonPerfil.type = 'button';
+            botonPerfil.className = 'perfil-toggle';
+            botonPerfil.setAttribute('aria-label', 'Opciones de la cuenta de ' + datos.usuario.username);
+            botonPerfil.setAttribute('aria-expanded', 'false');
+            botonPerfil.setAttribute('aria-controls', 'opciones-cuenta');
+            botonPerfil.append(fotoPerfil);
+
             const desplegable = document.createElement('div');
+            desplegable.id = 'opciones-cuenta';
             desplegable.className = 'desplegable-contenido';
 
             const opcionPerfil = document.createElement('a');
-            opcionPerfil.href = '/perfil.html';
+            opcionPerfil.href = '/Perfil.html';
             opcionPerfil.textContent = 'Mi perfil';
 
             const cerrarSesion = document.createElement('button');
@@ -104,15 +120,24 @@ async function actualizarEstadoUsuario() {
             cerrarSesion.addEventListener('click', cerrarSesionUsuario);
 
             desplegable.append(opcionPerfil, cerrarSesion);
-            menuPerfil.append(fotoPerfil, desplegable);
+            menuPerfil.append(botonPerfil, desplegable);
 
-            fotoPerfil.addEventListener('click', (e) => {
+            botonPerfil.addEventListener('click', (e) => {
                 e.stopPropagation();
-                desplegable.classList.toggle('mostrar');
+                const abierto = desplegable.classList.toggle('mostrar');
+                botonPerfil.setAttribute('aria-expanded', String(abierto));
             });
 
             desplegable.addEventListener('click', (e) => {
               e.stopPropagation();
+            });
+            menuPerfil.addEventListener('keydown', evento => {
+                if (evento.key !== 'Escape') return;
+                cerrarMenusPerfil();
+                botonPerfil.focus();
+            });
+            menuPerfil.addEventListener('focusout', evento => {
+                if (!menuPerfil.contains(evento.relatedTarget)) cerrarMenusPerfil();
             });
             contenedor.append(menuPerfil);
         } else {
@@ -141,7 +166,7 @@ async function cerrarSesionUsuario() {
         });
         const datos = await respuesta.json();
         if (!respuesta.ok) {
-            throw new Error(datos.mensaje);
+            throw new Error(datos.detail || datos.mensaje);
         }
         await actualizarEstadoUsuario();
         window.location.href = '/';

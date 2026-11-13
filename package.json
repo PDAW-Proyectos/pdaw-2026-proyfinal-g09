@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
-    "test:coverage": "npm test -- --coverage"
+    "test:coverage": "npm test -- --coverage",
+    "lint": "eslint server.js src routes middlewares public/js tests",
+    "format:check": "prettier --check src/Errores.js middlewares/errores.js tests/errores.test.js eslint.config.js .prettierrc.json",
+    "format": "prettier --write src/Errores.js middlewares/errores.js tests/errores.test.js eslint.config.js .prettierrc.json"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -16,7 +19,11 @@
     "google-auth-library": "^11.3.4"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "globals": "^17.14.0",
     "jest": "^30.5.2",
+    "prettier": "^3.10.1",
     "supertest": "^7.3.1"
   }
 }
