@@ -47,3 +47,28 @@ test('el administrador hereda de Usuario y puede gestionar el acceso', () => {
   expect(() => admin.habilitarAcceso({})).toThrow(TypeError);
   expect(() => admin.revocarAcceso(null)).toThrow(TypeError);
 });
+
+test('conserva los usuarios locales y permite un usuario de Google sin contraseña', () => {
+  const local = new Usuario(datos);
+  expect(local.googleId).toBeNull();
+  expect(local.passwordHash).toBe(datos.passwordHash);
+
+  const google = new Usuario({ username: 'GooglePrueba', email: 'google@example.com', googleId: '123456789' });
+  expect(google.passwordHash).toBeNull();
+  expect(google.googleId).toBe('123456789');
+  expect(google.paraPersistir()).toMatchObject({ googleId: '123456789', passwordHash: null });
+  expect(google.toJSON()).not.toHaveProperty('googleId');
+  expect(google.toJSON()).not.toHaveProperty('passwordHash');
+  expect(google.rol).toBe('usuario');
+  expect(google.esContribuyente).toBe(false);
+});
+
+test('rechaza usuarios sin contraseña y sin Google, y hashes inválidos aunque tengan Google', () => {
+  expect(() => new Usuario({ ...datos, passwordHash: null })).toThrow(TypeError);
+  expect(() => new Usuario({ username: datos.username, email: datos.email })).toThrow(TypeError);
+  expect(() => new Usuario({ ...datos, passwordHash: 'texto-plano', googleId: '123456789' })).toThrow(TypeError);
+});
+
+test.each(['', '   ', ' 123 ', 123, false, 'a'.repeat(256)])('rechaza un identificador de Google inválido: %j', googleId => {
+  expect(() => new Usuario({ ...datos, passwordHash: null, googleId })).toThrow(TypeError);
+});
