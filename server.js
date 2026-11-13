@@ -9,8 +9,6 @@ import crearRouterLogin from './routes/Login.routes.js';
 import crearRouterLogout from './routes/Logout.routes.js';
 import crearRouterPerfil from './routes/Perfil.routes.js';
 
-import crearRouterGoogle from './routes/Google.routes.js';
-
 const app = express();
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 3000);
@@ -51,11 +49,6 @@ app.use("/api/login", crearRouterLogin(repositorioUsuarios));
 app.use("/api/logout", crearRouterLogout());
 app.use("/api/perfil", crearRouterLogin(repositorioUsuarios))
 
-
-app.use('/api/login/google', crearRouterGoogle(repositorioUsuarios, {
-  clientId: process.env.GOOGLE_CLIENT_ID,
-  appUrl: process.env.APP_URL || 'http://localhost:' + port
-}));
 
 app.listen(port, '127.0.0.1', () => {
   console.log(`La cochera de Nidodo: http://localhost:${port}`);
