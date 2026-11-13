@@ -9,6 +9,7 @@ import crearRouterLogin from './routes/Login.routes.js';
 import crearRouterLogout from './routes/Logout.routes.js';
 import crearRouterPerfil from './routes/Perfil.routes.js';
 
+
 const app = express();
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 3000);
@@ -47,7 +48,7 @@ app.use('/demo', express.static(path.join(directory, 'La-cochera-exportacion-web
 app.use("/api/registro", crearRouterRegistro(repositorioUsuarios));
 app.use("/api/login", crearRouterLogin(repositorioUsuarios));
 app.use("/api/logout", crearRouterLogout());
-app.use("/api/perfil", crearRouterLogin(repositorioUsuarios))
+app.use("/api/perfil", crearRouterPerfil(repositorioUsuarios));
 
 
 app.listen(port, '127.0.0.1', () => {
