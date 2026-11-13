@@ -7,20 +7,21 @@ const errorUsername = document.getElementById('errorUsername');
 const errorEmail = document.getElementById('errorEmail');
 const errorPassword = document.getElementById('errorPassword');
 const errorConfirmPassword = document.getElementById('errorConfirmPassword');
+const errorRegistro = document.getElementById('errorRegistro');
 const btnRegistro = document.getElementById('BtnRegistro');
 
 formRegistro.addEventListener('submit', function (event) {
     event.preventDefault();
-
+    errorRegistro.textContent = '';
     if (validarForm()) {
         crearUsuario()
             .then(() => {
                 formRegistro.reset();
             })
             .catch((error) => {
-                alert('Error al crear el usuario: ' + error.message);
+                errorRegistro.textContent = error.message;
             });
-        }
+    }
 });
 
 function validarUsername() {
@@ -59,7 +60,7 @@ function validarPassword() {
 
 function validarConfirmPassword() {
     const password = inputPassword.value;
-    if (password !== inputConfirmPassword.value.trim()) {
+    if (password !== inputConfirmPassword.value) {
         errorConfirmPassword.textContent = 'Las contraseñas no coinciden.';
         return false;
     } else {
@@ -90,11 +91,11 @@ async function crearUsuario() {
         },
         body: JSON.stringify(datosUsuario)
     });
-
+    const datos = await respuesta.json();
     if (!respuesta.ok) {
-        throw new Error("No se pudo crear el usuario");
+        throw new Error(datos.mensaje || "No se pudo crear el usuario");
     }
     window.location.href = "/login.html";
-    return await respuesta.json();
+    return datos;
 }
 
