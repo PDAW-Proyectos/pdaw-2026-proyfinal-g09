@@ -16,7 +16,9 @@ export class RepositorioUsuarios {
       const usuarios = datos.map(dato => this.restaurar(dato));
       const ids = new Set(usuarios.map(usuario => usuario.id));
       const emails = new Set(usuarios.map(usuario => usuario.email));
-      if (ids.size !== usuarios.length || emails.size !== usuarios.length) {
+      const googleIds = usuarios.map(usuario => usuario.googleId).filter(id => id !== null);
+      if (ids.size !== usuarios.length || emails.size !== usuarios.length ||
+          new Set(googleIds).size !== googleIds.length) {
         throw new Error('El archivo contiene usuarios duplicados');
       }
       this.usuarios = usuarios;
@@ -30,7 +32,7 @@ export class RepositorioUsuarios {
     if (datos.rol === 'admin') return new Administrador(datos);
     if (datos.rol === 'usuario') return new Usuario(datos);
     throw new Error('El rol de usuario no es válido');
-}
+  }
 
   async guardar() {
     const datos = this.usuarios.map(usuario => usuario.paraPersistir());
@@ -49,10 +51,16 @@ export class RepositorioUsuarios {
     return this.usuarios.find(usuario => usuario.email === email.trim().toLowerCase()) ?? null;
   }
 
+  buscarPorGoogleId(googleId) {
+    if (typeof googleId !== 'string' || !googleId) return null;
+    return this.usuarios.find(usuario => usuario.googleId === googleId) ?? null;
+  }
+
   async agregarUsuario(usuario) {
     if (!(usuario instanceof Usuario)) throw new TypeError('Se necesita un Usuario');
     if (this.buscarPorId(usuario.id)) throw new Error('El id ya está registrado');
     if (this.buscarPorEmail(usuario.email)) throw new Error('El email ya está registrado');
+    if (usuario.googleId && this.buscarPorGoogleId(usuario.googleId)) throw new Error('La cuenta de Google ya está registrada');
     this.usuarios.push(usuario);
     await this.guardar();
     return usuario;
@@ -64,6 +72,8 @@ export class RepositorioUsuarios {
     if (indice === -1) throw new Error('El usuario no existe');
     const mismoEmail = this.buscarPorEmail(usuario.email);
     if (mismoEmail && mismoEmail.id !== usuario.id) throw new Error('El email ya está registrado');
+    const mismoGoogle = this.buscarPorGoogleId(usuario.googleId);
+    if (mismoGoogle && mismoGoogle.id !== usuario.id) throw new Error('La cuenta de Google ya está registrada');
     this.usuarios[indice] = usuario;
     await this.guardar();
     return usuario;

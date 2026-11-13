@@ -22,7 +22,7 @@ export default function crearRouterLogin(repositorioUsuarios) {
 
             const usuario = repositorioUsuarios.buscarPorEmail(email);
 
-            if (!usuario) {
+            if (!usuario || !usuario.passwordHash) {
                 return res.status(401).json({
                     mensaje: 'Credenciales inválidas'
                 });
@@ -73,6 +73,7 @@ export default function crearRouterLogin(repositorioUsuarios) {
 
 
     router.get('/', (req, res) => {
+        res.set('Cache-Control', 'no-store');
         try {
             if (!req.session.usuarioId) {
                 return res.status(200).json({
