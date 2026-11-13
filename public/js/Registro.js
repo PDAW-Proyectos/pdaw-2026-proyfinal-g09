@@ -91,11 +91,12 @@ async function crearUsuario() {
         },
         body: JSON.stringify(datosUsuario)
     });
-    const datos = await respuesta.json();
+
+    const resultado = await respuesta.json();
     if (!respuesta.ok) {
-        throw new Error(datos.mensaje || "No se pudo crear el usuario");
+        throw new Error(resultado.error || 'No se pudo crear el usuario');
     }
-    window.location.href = "/login.html";
-    return datos;
+    window.location.href = '/Login.html';
+    return resultado;
 }
 
