@@ -6,15 +6,23 @@ export class Usuario {
   #esContribuyente;
   #passwordHash;
   #rol;
+  #googleId;
+  #avatarUrl;
 
-  constructor({id = randomUUID(),username,email,passwordHash,esContribuyente = false,rol = 'usuario'}) {
+  constructor({id = randomUUID(),username,email,passwordHash = null,googleId = null,avatarUrl = null,esContribuyente = false,rol = 'usuario'}) {
     if (typeof id !== 'string' || !id.trim()) {
       throw new TypeError('El id es obligatorio');
     }
     if (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       throw new TypeError('El email no es válido');
     }
-    if (typeof passwordHash !== 'string' || !passwordHash.startsWith('$2')) {
+    if (googleId !== null && (typeof googleId !== 'string' || !googleId.trim() || googleId !== googleId.trim() || googleId.length > 255)) {
+      throw new TypeError('El identificador de Google no es válido');
+    }
+    if (passwordHash === null && googleId === null) throw new TypeError('Se necesita contraseña o cuenta de Google');
+    this.#googleId = googleId;
+    this.actualizarAvatar(avatarUrl);
+    if (passwordHash !== null && (typeof passwordHash !== 'string' || !passwordHash.startsWith('$2'))) {
     throw new TypeError('El hash de la contraseña no es válido');
     }
     this.#passwordHash = passwordHash;
@@ -32,6 +40,21 @@ export class Usuario {
     this.#rol = rol;
   }
 
+  get avatarUrl() { return this.#avatarUrl; }
+
+  actualizarAvatar(url) {
+    this.#avatarUrl = null;
+    if (typeof url !== 'string') return;
+    try {
+      const destino = new URL(url);
+      if (destino.protocol === 'https:' && !destino.username && !destino.password &&
+          (destino.hostname === 'googleusercontent.com' || destino.hostname.endsWith('.googleusercontent.com'))) {
+        this.#avatarUrl = destino.href;
+      }
+    } catch { /* Sin foto válida se utiliza el avatar predeterminado. */ }
+  }
+
+  get googleId() { return this.#googleId; }
   get username() { return this.#username; }
   get email() { return this.#email; }
   get esContribuyente() { return this.#esContribuyente; }
@@ -59,7 +82,8 @@ export class Usuario {
   paraPersistir() {
     return {
         ...this.toJSON(),
-        passwordHash: this.#passwordHash
+        passwordHash: this.#passwordHash,
+        googleId: this.#googleId
     };
   }
 
@@ -69,6 +93,7 @@ export class Usuario {
       username: this.#username,
       email: this.#email,
       esContribuyente: this.#esContribuyente,
+      avatarUrl: this.#avatarUrl,
       rol: this.rol
     };
   }

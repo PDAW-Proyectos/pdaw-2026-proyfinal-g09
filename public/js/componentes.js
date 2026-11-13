@@ -44,6 +44,10 @@ class CabeceraSitio extends HTMLElement {
 
         const accionesUsuario = document.createElement('div');
         accionesUsuario.id = 'accionesUsuario';
+        const estadoCuenta = document.createElement('p');
+        estadoCuenta.id = 'estado-cuenta';
+        estadoCuenta.setAttribute('role', 'status');
+        estadoCuenta.setAttribute('aria-live', 'polite');
 
         header.append(marca, nav, accionesUsuario);
         this.append(salto, header);
@@ -52,10 +56,13 @@ class CabeceraSitio extends HTMLElement {
     }
 }
 
-document.addEventListener('click', () => {
-    document.querySelectorAll('.desplegable-contenido.mostrar')
-        .forEach(menu => menu.classList.remove('mostrar'));
-});
+function cerrarMenusPerfil() {
+    document.querySelectorAll('.perfil-dropdown').forEach(contenedor => {
+        contenedor.querySelector('.desplegable-contenido')?.classList.remove('mostrar');
+        contenedor.querySelector('.perfil-toggle')?.setAttribute('aria-expanded', 'false');
+    });
+}
+document.addEventListener('click', cerrarMenusPerfil);
 
 async function actualizarEstadoUsuario() {
     const contenedor = document.getElementById('accionesUsuario');
@@ -83,16 +90,27 @@ async function actualizarEstadoUsuario() {
             const fotoPerfil = document.createElement('img');
 
             fotoPerfil.src = datos.usuario.avatarUrl || './img/avatar-defecto.png';
-            fotoPerfil.alt = `Perfil de ${datos.usuario.username}`;
+            fotoPerfil.referrerPolicy = 'no-referrer';
+            fotoPerfil.addEventListener('error', () => { fotoPerfil.src = '/img/avatar-defecto.png'; }, { once: true });
+            fotoPerfil.alt = '';
             fotoPerfil.className = 'avatar-btn';
             fotoPerfil.width = 40;
             fotoPerfil.height = 40;
 
+            const botonPerfil = document.createElement('button');
+            botonPerfil.type = 'button';
+            botonPerfil.className = 'perfil-toggle';
+            botonPerfil.setAttribute('aria-label', 'Opciones de la cuenta de ' + datos.usuario.username);
+            botonPerfil.setAttribute('aria-expanded', 'false');
+            botonPerfil.setAttribute('aria-controls', 'opciones-cuenta');
+            botonPerfil.append(fotoPerfil);
+
             const desplegable = document.createElement('div');
+            desplegable.id = 'opciones-cuenta';
             desplegable.className = 'desplegable-contenido';
 
             const opcionPerfil = document.createElement('a');
-            opcionPerfil.href = '/perfil.html';
+            opcionPerfil.href = '/Perfil.html';
             opcionPerfil.textContent = 'Mi perfil';
 
             const cerrarSesion = document.createElement('button');
@@ -102,26 +120,35 @@ async function actualizarEstadoUsuario() {
             cerrarSesion.addEventListener('click', cerrarSesionUsuario);
 
             desplegable.append(opcionPerfil, cerrarSesion);
-            menuPerfil.append(fotoPerfil, desplegable);
+            menuPerfil.append(botonPerfil, desplegable);
 
-            fotoPerfil.addEventListener('click', (e) => {
+            botonPerfil.addEventListener('click', (e) => {
                 e.stopPropagation();
-                desplegable.classList.toggle('mostrar');
+                const abierto = desplegable.classList.toggle('mostrar');
+                botonPerfil.setAttribute('aria-expanded', String(abierto));
             });
 
             desplegable.addEventListener('click', (e) => {
               e.stopPropagation();
             });
+            menuPerfil.addEventListener('keydown', evento => {
+                if (evento.key !== 'Escape') return;
+                cerrarMenusPerfil();
+                botonPerfil.focus();
+            });
+            menuPerfil.addEventListener('focusout', evento => {
+                if (!menuPerfil.contains(evento.relatedTarget)) cerrarMenusPerfil();
+            });
             contenedor.append(menuPerfil);
         } else {
             const login = document.createElement('a');
             login.className = 'boton secundario';
-            login.href = '/login.html';
+            login.href = '/Login.html';
             login.textContent = 'Iniciar sesión';
 
             const registro = document.createElement('a');
             registro.className = 'boton secundario';
-            registro.href = '/registro.html';
+            registro.href = '/Registro.html';
             registro.textContent = 'Registrarse';
 
             contenedor.append(login, registro);
@@ -139,7 +166,7 @@ async function cerrarSesionUsuario() {
         });
         const datos = await respuesta.json();
         if (!respuesta.ok) {
-            throw new Error(datos.mensaje);
+            throw new Error(datos.detail || datos.mensaje);
         }
         await actualizarEstadoUsuario();
         window.location.href = '/';
@@ -149,13 +176,50 @@ async function cerrarSesionUsuario() {
 }
 
 class PieSitio extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `<footer class="contenedor pie"><span>LA COCHERA DE NIDODO</span><span>Un proyecto independiente.</span><a href="/#juego">Volver arriba ↑</a></footer>
-<dialog id="aviso" aria-labelledby="aviso-titulo" aria-describedby="aviso-texto">
-    <p class="etiqueta">LA COCHERA DE NIDODO</p><h2 id="aviso-titulo">Próximamente</h2>
-    <p id="aviso-texto"></p><form method="dialog"><button class="boton secundario">Volver</button></form>
-  </dialog>`;
-  }
+    connectedCallback() {
+        const footer = document.createElement('footer');
+        footer.classList.add('contenedor', 'pie');
+
+        const nombre = document.createElement('span');
+        nombre.textContent = 'LA COCHERA DE NIDODO';
+
+        const descripcion = document.createElement('span');
+        descripcion.textContent = 'Un proyecto independiente.';
+
+        const volverArriba = document.createElement('a');
+        volverArriba.href = '/#juego';
+        volverArriba.textContent = 'Volver arriba ↑';
+
+        footer.append(nombre, descripcion, volverArriba);
+
+        const dialog = document.createElement('dialog');
+        dialog.id = 'aviso';
+        dialog.setAttribute('aria-labelledby', 'aviso-titulo');
+        dialog.setAttribute('aria-describedby', 'aviso-texto');
+
+        const etiqueta = document.createElement('p');
+        etiqueta.classList.add('etiqueta');
+        etiqueta.textContent = 'LA COCHERA DE NIDODO';
+
+        const titulo = document.createElement('h2');
+        titulo.id = 'aviso-titulo';
+        titulo.textContent = 'Próximamente';
+
+        const texto = document.createElement('p');
+        texto.id = 'aviso-texto';
+
+        const formulario = document.createElement('form');
+        formulario.method = 'dialog';
+
+        const boton = document.createElement('button');
+        boton.classList.add('boton', 'secundario');
+        boton.textContent = 'Volver';
+
+        formulario.appendChild(boton);
+        dialog.append(etiqueta, titulo, texto, formulario);
+
+        this.append(footer, dialog);
+    }
 }
 
 customElements.define('cabecera-sitio', CabeceraSitio);
