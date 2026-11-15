@@ -1,7 +1,5 @@
 
-/* ========================================
-   PANEL DE ADMINISTRACIÓN
-======================================== */
+/* PANEL DE ADMINISTRACIÓN */
 
 .admin {
     padding-block: 65px 80px;
@@ -33,9 +31,7 @@
     gap: 25px;
 }
 
-/* ========================================
-   MENÚ LATERAL
-======================================== */
+/* MENÚ LATERAL */
 
 .admin .perfil-menu {
     background: transparent;
@@ -76,9 +72,8 @@
     font-weight: bold;
 }
 
-/* ========================================
-   CONTENIDO
-======================================== */
+ /* CONTENIDO*/
+
 
 .admin .perfil-contenido {
     min-width: 0;
@@ -107,9 +102,7 @@
     display: none !important;
 }
 
-/* ========================================
-   ESTADÍSTICAS
-======================================== */
+/* ESTADÍSTICAS */
 
 .admin-estadisticas {
     display: grid;
@@ -154,9 +147,7 @@
     color: var(--acento);
 }
 
-/* ========================================
-   ACCIONES RÁPIDAS
-======================================== */
+/* ACCIONES RÁPIDAS */
 
 .admin-acciones {
     margin-top: 40px;
@@ -176,9 +167,7 @@
     gap: 12px;
 }
 
-/* ========================================
-   BOTONES
-======================================== */
+/* BOTONES */
 
 .boton-admin,
 .boton-admin-secundario,
@@ -254,9 +243,7 @@ button[hidden] {
     display: none !important;
 }
 
-/* ========================================
-   FORMULARIO DE NOTICIAS
-======================================== */
+/* FORMULARIO DE NOTICIAS */
 
 #form-noticia {
     margin-top: 30px;
@@ -325,9 +312,7 @@ button[hidden] {
     box-shadow: 0 0 0 3px rgba(164, 64, 38, 0.15);
 }
 
-/* ========================================
-   LISTADOS
-======================================== */
+/* LISTADOS */
 
 #lista-usuarios,
 #lista-noticias {
@@ -358,9 +343,7 @@ button[hidden] {
     font-size: 14px;
 }
 
-/* ========================================
-   TOAST
-======================================== */
+/* TOAST */
 
 #admin-toast {
     color: var(--tinta);
@@ -384,9 +367,7 @@ button[hidden] {
     font-size: 14px;
 }
 
-/* ========================================
-   ACCESIBILIDAD
-======================================== */
+/* ACCESIBILIDAD */
 
 .admin button:focus-visible,
 .admin input:focus-visible,
@@ -395,9 +376,7 @@ button[hidden] {
     outline-offset: 3px;
 }
 
-/* ========================================
-   DISEÑO RESPONSIVE
-======================================== */
+/* DISEÑO RESPONSIVE*/
 
 @media (max-width: 900px) {
     .admin-layout {
