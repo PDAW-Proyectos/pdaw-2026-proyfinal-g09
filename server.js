@@ -10,6 +10,7 @@ import { RepositorioUsuarios } from "./src/services/RepositorioUsuarios.js";
 import crearRouterLogin from './routes/Login.routes.js';
 import crearRouterLogout from './routes/Logout.routes.js';
 import crearRouterPerfil from './routes/Perfil.routes.js';
+import crearRouterAdmin from './routes/Admin.routes.js';
 
 import crearRouterGoogle from './routes/Google.routes.js';
 
@@ -57,6 +58,7 @@ app.use("/api/registro", crearRouterRegistro(repositorioUsuarios));
 app.use("/api/login", crearRouterLogin(repositorioUsuarios));
 app.use("/api/logout", crearRouterLogout());
 app.use("/api/perfil", crearRouterPerfil(repositorioUsuarios));
+app.use('/api/admin', crearRouterAdmin(repositorioUsuarios));
 
 
 app.use('/api/login/google', crearRouterGoogle(repositorioUsuarios, {
