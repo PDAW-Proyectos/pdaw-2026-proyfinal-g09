@@ -72,7 +72,7 @@ function mostrarMensaje(mensaje, tipo = 'error') {
         toastElemento.classList.add('text-bg-info');
     }
 
-    const toast = bootstrap.Toast.getOrCreateInstance(toastElemento, {
+    const toast = window.bootstrap.Toast.getOrCreateInstance(toastElemento, {
         delay: 4000,
         autohide: true
     });
@@ -166,7 +166,7 @@ async function verificarAdministrador() {
 
         return true;
 
-    } catch (error) {
+    } catch (_error) {
         window.location.href = '/Login.html';
         return false;
     }
@@ -284,16 +284,23 @@ async function cargarNoticias() {
 }
 
 async function cargarResumen() {
-    const elementoUsuarios = document.getElementById('resumen-usuarios');
-
     try {
-        const usuarios = await realizarPeticion('/api/admin/usuarios');
+        const [datosUsuarios, datosNoticias] = await Promise.all([
+            realizarPeticion('/api/admin/usuarios'),
+            realizarPeticion('/api/admin/noticias')
+        ]);
 
-        elementoUsuarios.textContent = usuarios.length;
+        const usuarios = obtenerLista(datosUsuarios, 'usuarios');
+        const noticias = obtenerLista(datosNoticias, 'noticias');
+
+        resumenUsuarios.textContent = usuarios.length;
+        resumenNoticias.textContent = noticias.length;
 
     } catch (error) {
         console.error('Error al cargar el resumen:', error);
-        elementoUsuarios.textContent = 'No disponible';
+
+        resumenUsuarios.textContent = 'No disponible';
+        resumenNoticias.textContent = 'No disponible';
     }
 }
 
@@ -447,7 +454,7 @@ botonCerrarSesion.addEventListener('click', async () => {
 
         window.location.href = '/Login.html';
 
-    } catch (error) {
+    } catch (_error) {
         mostrarMensaje('No se pudo cerrar la sesión.');
     }
 });

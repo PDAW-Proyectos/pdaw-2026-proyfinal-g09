@@ -25,50 +25,41 @@ export default function crearRouterAdmin(repositorioUsuarios) {
 
     router.get('/usuarios', (req, res) => {
         const usuarios = repositorioUsuarios.listar();
-
         res.json(usuarios.map(usuario => usuario.toJSON()));
     });
-
+    
     router.patch('/usuarios/:id/acceso', async (req, res) => {
         const usuario = repositorioUsuarios.buscarPorId(req.params.id);
-
         if (!usuario) {
             return res.status(404).json({
                 error: 'El usuario no existe'
             });
         }
-
         const { esContribuyente } = req.body;
-
         if (typeof esContribuyente !== 'boolean') {
             return res.status(400).json({
                 error: 'Debés indicar si el usuario será contribuyente'
             });
         }
-
         if (usuario.rol === 'admin') {
             return res.status(403).json({
                 error: 'No se puede modificar el acceso de otro administrador'
             });
         }
-
         try {
             if (esContribuyente) {
                 req.usuario.habilitarAcceso(usuario);
             } else {
                 req.usuario.revocarAcceso(usuario);
             }
-
             await repositorioUsuarios.actualizarUsuario(usuario);
-
             res.json({
                 mensaje: esContribuyente
                     ? 'Acceso de contribuyente habilitado'
                     : 'Acceso de contribuyente revocado',
                 usuario: usuario.toJSON()
             });
-
-        } catch (error) {
+        } catch (_error) {
             res.status(500).json({
                 error: 'No se pudo actualizar el acceso del usuario'
             });
