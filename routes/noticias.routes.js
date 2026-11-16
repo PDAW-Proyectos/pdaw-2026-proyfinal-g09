@@ -50,8 +50,10 @@ export function crearRouterNoticias(repositorio) {
             });
 
         } catch (error) {
+            console.error('Error al obtener noticias:', error);
+
             return res.status(500).json({
-                error: 'Error al obtener las noticias'
+                error: 'Error interno del servidor'
             });
         }
     });
