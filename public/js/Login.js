@@ -14,9 +14,14 @@ formLogin.addEventListener('submit', function (event) {
 
     if (validarForm()) {
         iniciarSesion()
-            .then(() => {
+            .then((datos) => {
                 formLogin.reset();
-                window.location.href = "/";
+
+                if (datos.usuario.rol === 'admin') {
+                    window.location.href = '/admin.html';
+                } else {
+                    window.location.href = '/';
+                }
             })
             .catch((error) => {
                 errorLogin.textContent = error.message;
