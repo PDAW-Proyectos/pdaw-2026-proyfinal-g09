@@ -1,7 +1,7 @@
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
-import { Noticia } from '../Noticia.js';
+import { Noticia } from '../Noticias.js';
 
 export class RepositorioNoticias {
     #noticias = [];

@@ -12,6 +12,7 @@ import crearRouterLogout from './routes/Logout.routes.js';
 import crearRouterPerfil from './routes/Perfil.routes.js';
 import crearRouterAdmin from './routes/Admin.routes.js';
 import { crearRouterNoticias } from './routes/Noticias.routes.js';
+import { RepositorioNoticias } from './src/services/RepositorioNoticias.js';
 
 import crearRouterGoogle from './routes/Google.routes.js';
 
