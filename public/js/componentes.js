@@ -32,7 +32,7 @@ class CabeceraSitio extends HTMLElement {
             { texto: 'El juego', href: '/#juego' },
             { texto: 'Imágenes', href: '/#imagenes' },
             { texto: 'Demo', href: '/#demo' },
-            { texto: 'Foro', href: '/foro.html' }
+            { texto: 'Noticias', href: '/Noticias.html' }
         ];
 
         enlaces.forEach(({ texto, href }) => {

@@ -1,0 +1,298 @@
+
+/* =========================================
+   PORTADA DE NOTICIAS
+========================================= */
+
+.portada-noticias {
+    padding-block: 76px 65px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.portada-noticias .presentacion {
+    max-width: 700px;
+}
+
+.portada-noticias .bajada {
+    max-width: 550px;
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   SECCIÓN DE NOTICIAS
+========================================= */
+
+.seccion-noticias {
+    padding-block: 60px 80px;
+}
+
+.encabezado-noticias {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.encabezado-noticias h2 {
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   GRILLA DE NOTICIAS
+========================================= */
+
+.tarjetas-noticias {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 26px;
+    align-items: stretch;
+}
+
+
+/* =========================================
+   TARJETA
+========================================= */
+
+.tarjeta-noticia {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+
+    background: var(--papel);
+    border: 1px solid var(--borde);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.tarjeta-noticia:hover {
+    transform: translateY(-5px);
+    border-color: var(--acento);
+    box-shadow: 0 8px 22px rgba(34, 36, 31, 0.09);
+}
+
+
+/* =========================================
+   IMAGEN DE PORTADA
+========================================= */
+
+.portada-tarjeta {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #dedbd2;
+}
+
+.portada-tarjeta img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    transition: transform 0.4s ease;
+}
+
+.tarjeta-noticia:hover .portada-tarjeta img {
+    transform: scale(1.05);
+}
+
+/* Imagen alternativa cuando no existe una portada. */
+
+.portada-tarjeta.sin-imagen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(135deg, #dedbd2 0%, #c9c3b7 100%);
+}
+
+.portada-tarjeta.sin-imagen::after {
+    content: "NIDODO.";
+
+    font-family: 'Courier New', monospace;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: bold;
+    letter-spacing: 5px;
+    color: rgba(34, 36, 31, 0.25);
+}
+
+
+/* =========================================
+   CATEGORÍA
+========================================= */
+
+.categoria-noticia {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    z-index: 1;
+
+    padding: 7px 11px;
+
+    background: var(--acento);
+    color: #fff;
+
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+
+/* =========================================
+   CONTENIDO DE LA TARJETA
+========================================= */
+
+.contenido-tarjeta {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    padding: 22px;
+}
+
+.contenido-tarjeta h3 {
+    margin: 0 0 13px;
+
+    font-family: 'Courier New', monospace;
+    font-size: 19px;
+    line-height: 1.4;
+    font-weight: bold;
+
+    overflow-wrap: anywhere;
+}
+
+.descripcion-noticia {
+    margin: 0 0 24px;
+
+    font-size: 14px;
+    line-height: 1.7;
+    color: #5c5d55;
+
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+
+    /* Evita que una noticia demasiado larga
+       desarme la altura de las tarjetas. */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+}
+
+
+/* =========================================
+   METADATOS
+========================================= */
+
+.metadatos-noticia {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: auto;
+    padding-top: 15px;
+
+    border-top: 1px solid var(--borde);
+
+    color: #77776f;
+
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+
+/* =========================================
+   ESTADOS DE CARGA Y ERRORES
+========================================= */
+
+.estado-noticias {
+    grid-column: 1 / -1;
+
+    padding: 40px 20px;
+
+    border: 1px dashed var(--borde);
+
+    text-align: center;
+    color: #5c5d55;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+    .tarjetas-noticias {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .portada-noticias {
+        padding-block: 55px 45px;
+    }
+
+    .seccion-noticias {
+        padding-block: 45px 60px;
+    }
+}
+
+@media (max-width: 640px) {
+    .portada-noticias {
+        padding-block: 40px;
+    }
+
+    .seccion-noticias {
+        padding-block: 40px 55px;
+    }
+
+    .tarjetas-noticias {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contenido-tarjeta {
+        padding: 19px;
+    }
+
+    .contenido-tarjeta h3 {
+        font-size: 18px;
+    }
+
+    .portada-tarjeta {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+
+/* =========================================
+   ACCESIBILIDAD
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .tarjeta-noticia,
+    .portada-tarjeta img {
+        transition: none;
+    }
+
+    .tarjeta-noticia:hover {
+        transform: none;
+    }
+
+    .tarjeta-noticia:hover .portada-tarjeta img {
+        transform: none;
+    }
+}

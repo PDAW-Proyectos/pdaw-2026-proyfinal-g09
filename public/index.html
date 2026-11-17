@@ -1,59 +1,135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es-AR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="La cochera de Nidodo: un juego de terror laboral argentino. Conocé el proyecto y probá el juego desde el navegador.">
-  <title>La cochera de Nidodo — El turno recién empieza</title>
-  <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg">
-  <link rel="stylesheet" href="/css/comun.css">
-  <link rel="stylesheet" href="/css/inicio.css">
-  <script src="/js/componentes.js" defer></script>
-  <script src="/js/inicio.js" defer></script>
-</head>
-<body>
-  <cabecera-sitio></cabecera-sitio>
-  <main id="contenido">
-    <section id="juego" class="portada contenedor" aria-labelledby="titulo">
-      <div class="presentacion">
-        <p class="etiqueta">TERROR LABORAL ARGENTINO</p>
-        <h1 id="titulo">La cochera<br>de Nidodo<span>.</span></h1>
-        <p class="bajada">Un turno de noche en una cochera donde no todo es lo que parece.</p>
-        <a class="boton" href="#demo">Conocé la demo <span aria-hidden="true">↘</span></a>
-        <p class="detalle">PRIMERA PERSONA · TERROR · PC</p>
-      </div>
-      <figure class="imagen-principal"><img src="/img/portada-nidodo.webp" alt="Ilustración nocturna de la entrada de la cochera, con un auto y la garita iluminada" width="1672" height="940" fetchpriority="high"><figcaption>01 / Una noche en la cochera · Ilustración</figcaption></figure>
-    </section>
-    <section class="sobre franja" aria-labelledby="sobre-titulo">
-      <div class="contenedor columnas">
-        <div><p class="etiqueta">EL PROYECTO</p><h2 id="sobre-titulo">Un trabajo común.<br>Un turno que no lo es.</h2><p>Atendé clientes, registrá tickets y mantené la cochera en funcionamiento. Descubrí qué sucede cuando cae la noche.</p></div>
-        <div class="caracteristicas"><h3>¿Qué vas a encontrar?</h3><ul><li><span>01</span> Exploración en primera persona</li><li><span>02</span> Atención de clientes y lavado</li><li><span>03</span> Una ambientación de terror</li></ul></div>
-      </div>
-    </section>
-    <section id="imagenes" class="contenedor galeria" aria-labelledby="imagenes-titulo">
-      <p class="etiqueta">PUERTAS ADENTRO</p><h2 id="imagenes-titulo">Un vistazo a la cochera</h2>
-      <div class="capturas">
-        <figure><img src="/img/entrada-nidodo.webp" alt="Captura del juego: un auto frente a la entrada del estacionamiento Nidodo" loading="lazy" decoding="async" width="1920" height="1080"><figcaption>01 / La entrada</figcaption></figure>
-        <figure><img src="/img/pasillo-nidodo.webp" alt="Captura del juego: el interior de la cochera con espacios amarillos y luces nocturnas" loading="lazy" decoding="async" width="1920" height="1080"><figcaption>02 / El turno de noche</figcaption></figure>
-        <figure><img src="/img/garita-nidodo.webp" alt="Captura del juego: computadora, impresora y mostrador dentro de la garita" loading="lazy" decoding="async" width="1920" height="1080"><figcaption>03 / Tu puesto en la garita</figcaption></figure>
-      </div>
-    </section>
-    <section id="demo" class="contenedor seccion-demo" aria-labelledby="demo-titulo">
-      <p class="etiqueta">TU TURNO</p><h2 id="demo-titulo">Jugá la demo</h2>
-      <div class="demo-bloqueada">
-        <img class="fondo-demo" src="/img/garita-nidodo.webp" alt="" loading="lazy" width="1920" height="1080">
-        <div class="invitacion">
-          <p class="etiqueta">SUMATE AL PROYECTO</p><h3>Ayudanos a mantener<br>la cochera abierta.</h3>
-          <p>Contribuí al desarrollo y accedé a la demo desde esta página.</p>
-          <button class="boton" type="button" data-aviso="aportes">Quiero contribuir <span aria-hidden="true">↗</span></button>
-          <button class="enlace" type="button" data-aviso="cuentas">¿Ya contribuiste? Iniciá sesión</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="La cochera de Nidodo: un juego de terror laboral argentino. Conocé el proyecto y probá el juego desde el navegador."
+    />
+    <title>La cochera de Nidodo — El turno recién empieza</title>
+    <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg" />
+    <link rel="stylesheet" href="/css/comun.css" />
+    <link rel="stylesheet" href="/css/inicio.css" />
+    <script src="/js/componentes.js" defer></script>
+    <script src="/js/inicio.js" defer></script>
+  </head>
+  <body>
+    <cabecera-sitio></cabecera-sitio>
+    <main id="contenido">
+      <section id="juego" class="portada contenedor" aria-labelledby="titulo">
+        <div class="presentacion">
+          <p class="etiqueta">TERROR LABORAL ARGENTINO</p>
+          <h1 id="titulo">La cochera<br />de Nidodo<span>.</span></h1>
+          <p class="bajada">Un turno de noche en una cochera donde no todo es lo que parece.</p>
+          <a class="boton" href="#demo">Conocé la demo <span aria-hidden="true">↘</span></a>
+          <p class="detalle">PRIMERA PERSONA · TERROR · PC</p>
         </div>
-      </div>
-      <div class="prueba"><p>Probá la versión web actualizada. Por ahora el acceso es libre.</p><a class="boton" href="/demo/" target="_blank" rel="noopener">Jugar en otra pestaña <span aria-hidden="true">↗</span></a></div>
-      <p class="nota-controles">Para jugar necesitás teclado y mouse. WASD: caminar · E: interactuar · Escape: pausa.</p>
-    </section>
-  </main>
-  <pie-sitio></pie-sitio>
-
-</body>
+        <figure class="imagen-principal">
+          <img
+            src="/img/portada-nidodo.webp"
+            alt="Ilustración nocturna de la entrada de la cochera, con un auto y la garita iluminada"
+            width="1672"
+            height="940"
+            fetchpriority="high"
+          />
+          <figcaption>01 / Una noche en la cochera · Ilustración</figcaption>
+        </figure>
+      </section>
+      <section class="sobre franja" aria-labelledby="sobre-titulo">
+        <div class="contenedor columnas">
+          <div>
+            <p class="etiqueta">EL PROYECTO</p>
+            <h2 id="sobre-titulo">Un trabajo común.<br />Un turno que no lo es.</h2>
+            <p>
+              Atendé clientes, registrá tickets y mantené la cochera en funcionamiento. Descubrí qué
+              sucede cuando cae la noche.
+            </p>
+          </div>
+          <div class="caracteristicas">
+            <h3>¿Qué vas a encontrar?</h3>
+            <ul>
+              <li><span>01</span> Exploración en primera persona</li>
+              <li><span>02</span> Atención de clientes y lavado</li>
+              <li><span>03</span> Una ambientación de terror</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section id="imagenes" class="contenedor galeria" aria-labelledby="imagenes-titulo">
+        <p class="etiqueta">PUERTAS ADENTRO</p>
+        <h2 id="imagenes-titulo">Un vistazo a la cochera</h2>
+        <div class="capturas">
+          <figure>
+            <img
+              src="/img/entrada-nidodo.webp"
+              alt="Captura del juego: un auto frente a la entrada del estacionamiento Nidodo"
+              loading="lazy"
+              decoding="async"
+              width="1920"
+              height="1080"
+            />
+            <figcaption>01 / La entrada</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="/img/pasillo-nidodo.webp"
+              alt="Captura del juego: el interior de la cochera con espacios amarillos y luces nocturnas"
+              loading="lazy"
+              decoding="async"
+              width="1920"
+              height="1080"
+            />
+            <figcaption>02 / El turno de noche</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="/img/garita-nidodo.webp"
+              alt="Captura del juego: computadora, impresora y mostrador dentro de la garita"
+              loading="lazy"
+              decoding="async"
+              width="1920"
+              height="1080"
+            />
+            <figcaption>03 / Tu puesto en la garita</figcaption>
+          </figure>
+        </div>
+      </section>
+      <section id="demo" class="contenedor seccion-demo" aria-labelledby="demo-titulo">
+        <p class="etiqueta">TU TURNO</p>
+        <h2 id="demo-titulo">Jugá la demo</h2>
+        <div class="demo-bloqueada">
+          <img
+            class="fondo-demo"
+            src="/img/garita-nidodo.webp"
+            alt=""
+            loading="lazy"
+            width="1920"
+            height="1080"
+          />
+          <div class="invitacion">
+            <p class="etiqueta">SUMATE AL PROYECTO</p>
+            <h3>Ayudanos a mantener<br />la cochera abierta.</h3>
+            <p>Contribuí al desarrollo y accedé a la demo desde esta página.</p>
+            <button class="boton" type="button" data-aviso="aportes">
+              Quiero contribuir <span aria-hidden="true">↗</span>
+            </button>
+            <button class="enlace" type="button" data-aviso="cuentas">
+              ¿Ya contribuiste? Iniciá sesión
+            </button>
+          </div>
+        </div>
+        <div class="prueba">
+          <p>Probá la versión web actualizada. Por ahora el acceso es libre.</p>
+          <a class="boton" href="/demo/" target="_blank" rel="noopener"
+            >Jugar en otra pestaña <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <p class="nota-controles">
+          Para jugar necesitás teclado y mouse. WASD: caminar · E: interactuar · Escape: pausa.
+        </p>
+      </section>
+    </main>
+    <pie-sitio></pie-sitio>
+  </body>
 </html>

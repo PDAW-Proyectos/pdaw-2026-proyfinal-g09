@@ -11,6 +11,8 @@ import crearRouterLogin from './routes/Login.routes.js';
 import crearRouterLogout from './routes/Logout.routes.js';
 import crearRouterPerfil from './routes/Perfil.routes.js';
 import crearRouterAdmin from './routes/Admin.routes.js';
+import { crearRouterNoticias } from './routes/Noticias.routes.js';
+import { RepositorioNoticias } from './src/services/RepositorioNoticias.js';
 
 import crearRouterGoogle from './routes/Google.routes.js';
 
@@ -60,6 +62,9 @@ app.use("/api/logout", crearRouterLogout());
 app.use("/api/perfil", crearRouterPerfil(repositorioUsuarios));
 app.use('/api/admin', crearRouterAdmin(repositorioUsuarios));
 
+const repositorioNoticias = new RepositorioNoticias();
+await repositorioNoticias.cargar();
+app.use('/api/noticias', crearRouterNoticias(repositorioNoticias));
 
 app.use('/api/login/google', crearRouterGoogle(repositorioUsuarios, {
   clientId: process.env.GOOGLE_CLIENT_ID || '538180077146-j3ttn8c6lfsvla99u1e9jclsoakj80ce.apps.googleusercontent.com',

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Conocé las últimas noticias y novedades de La cochera de Nidodo.">
+    <title>Noticias — La cochera de Nidodo</title>
+
+    <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg">
+    <link rel="stylesheet" href="/css/comun.css">
+    <link rel="stylesheet" href="/css/noticias.css">
+
+    <script src="/js/componentes.js" defer></script>
+    <script src="/js/noticias.js" defer></script>
+</head>
+
+<body>
+    <cabecera-sitio></cabecera-sitio>
+
+    <main id="contenido">
+
+        <section class="portada-noticias contenedor"
+                 aria-labelledby="titulo-noticias">
+
+            <div class="presentacion">
+                <p class="etiqueta">NOVEDADES DEL PROYECTO</p>
+
+                <h1 id="titulo-noticias">
+                    Noticias<span>.</span>
+                </h1>
+
+                <p class="bajada">
+                    Enterate de las últimas novedades, actualizaciones
+                    y anuncios de La cochera de Nidodo.
+                </p>
+            </div>
+
+        </section>
+
+        <section class="seccion-noticias franja"
+                 aria-labelledby="listado-noticias">
+
+            <div class="contenedor">
+
+                <div class="encabezado-noticias">
+                    <div>
+                        <p class="etiqueta">LO QUE ESTÁ PASANDO</p>
+                        <h2 id="listado-noticias">Últimas novedades</h2>
+                    </div>
+                </div>
+
+                <div id="contenedor-noticias"
+                     class="tarjetas-noticias"
+                     aria-live="polite"
+                     aria-busy="true">
+
+                    <p class="estado-noticias">
+                        Cargando noticias...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <pie-sitio></pie-sitio>
+</body>
+</html>
