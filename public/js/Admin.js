@@ -20,7 +20,7 @@ const modalEliminarElemento = document.getElementById('modal-eliminar-noticia');
 const modalEliminarNombre = document.getElementById('modal-eliminar-nombre');
 const botonConfirmarEliminacion = document.getElementById('boton-confirmar-eliminacion');
 
-const modalEliminar = bootstrap.Modal.getOrCreateInstance(modalEliminarElemento);
+const modalEliminar = window.bootstrap.Modal.getOrCreateInstance(modalEliminarElemento);
 
 let noticiaPendienteEliminar = null;
 
