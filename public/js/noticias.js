@@ -1,5 +1,5 @@
-const contenedorNoticias = document.getElementById('contenedor-noticias');
 
+const contenedorNoticias = document.getElementById('contenedor-noticias');
 
 async function cargarNoticias() {
     contenedorNoticias.setAttribute('aria-busy', 'true');
@@ -12,7 +12,6 @@ async function cargarNoticias() {
         }
 
         const datos = await respuesta.json();
-
 
         const noticias = Array.isArray(datos)
             ? datos
@@ -51,37 +50,9 @@ function crearTarjetaNoticia(noticia) {
     const tarjeta = document.createElement('article');
     tarjeta.classList.add('tarjeta-noticia');
 
-    const portada = document.createElement('div');
-    portada.classList.add('portada-tarjeta');
-
-    const imagenUrl = obtenerImagen(noticia);
-
-    if (imagenUrl) {
-        const imagen = document.createElement('img');
-
-        imagen.src = imagenUrl;
-        imagen.alt = noticia.titulo
-            ? `Imagen de ${noticia.titulo}`
-            : 'Imagen de la noticia';
-
-        imagen.loading = 'lazy';
-        imagen.decoding = 'async';
-
-        imagen.addEventListener('error', () => {
-            portada.classList.add('sin-imagen');
-            imagen.remove();
-        });
-
-        portada.appendChild(imagen);
-    } else {
-        portada.classList.add('sin-imagen');
-    }
-
     const categoria = document.createElement('span');
     categoria.classList.add('categoria-noticia');
     categoria.textContent = noticia.categoria || 'NOVEDAD';
-
-    portada.appendChild(categoria);
 
     const cuerpo = document.createElement('div');
     cuerpo.classList.add('contenido-tarjeta');
@@ -92,7 +63,6 @@ function crearTarjetaNoticia(noticia) {
     const descripcion = document.createElement('p');
     descripcion.classList.add('descripcion-noticia');
     descripcion.textContent = noticia.contenido || 'Sin descripción disponible.';
-
 
     const metadatos = document.createElement('div');
     metadatos.classList.add('metadatos-noticia');
@@ -119,7 +89,6 @@ function crearTarjetaNoticia(noticia) {
 
     metadatos.append(fecha, autor);
 
-    
     // Enlace para acceder al detalle.
     const enlace = document.createElement('a');
     enlace.classList.add('enlace-noticia');
@@ -127,36 +96,10 @@ function crearTarjetaNoticia(noticia) {
     enlace.textContent = 'Leer noticia';
 
     cuerpo.append(titulo, descripcion, metadatos, enlace);
-    tarjeta.append(portada, cuerpo);
+    tarjeta.append(categoria, cuerpo);
 
     return tarjeta;
-
 }
-
-
-function obtenerImagen(noticia) {
-    const url = noticia.imagen || noticia.imagenUrl || noticia.portada;
-
-    if (typeof url !== 'string' || !url.trim()) {
-        return null;
-    }
-
-    try {
-        const urlValidada = new URL(url, window.location.origin);
-
-        if (
-            urlValidada.protocol !== 'http:' &&
-            urlValidada.protocol !== 'https:'
-        ) {
-            return null;
-        }
-
-        return urlValidada.href;
-    } catch {
-        return null;
-    }
-}
-
 
 function mostrarEstado(mensaje) {
     const estado = document.createElement('p');

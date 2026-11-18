@@ -43,11 +43,6 @@ async function cargarNoticia() {
     }
 }
 
-
-
-/**
- * Construye la presentación de la noticia.
- */
 function mostrarNoticia(noticia) {
     contenedorNoticia.replaceChildren();
 
