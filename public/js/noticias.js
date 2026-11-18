@@ -1,9 +1,6 @@
 
 const contenedorNoticias = document.getElementById('contenedor-noticias');
 
-/**
- * Carga las noticias desde la API.
- */
 async function cargarNoticias() {
     contenedorNoticias.setAttribute('aria-busy', 'true');
 
@@ -16,7 +13,6 @@ async function cargarNoticias() {
 
         const datos = await respuesta.json();
 
-        // La API puede devolver un array o un objeto paginado.
         const noticias = Array.isArray(datos)
             ? datos
             : datos.noticias;
@@ -50,48 +46,14 @@ async function cargarNoticias() {
     }
 }
 
-/**
- * Construye una tarjeta individual.
- */
 function crearTarjetaNoticia(noticia) {
     const tarjeta = document.createElement('article');
     tarjeta.classList.add('tarjeta-noticia');
 
-    // Imagen de portada.
-    const portada = document.createElement('div');
-    portada.classList.add('portada-tarjeta');
-
-    const imagenUrl = obtenerImagen(noticia);
-
-    if (imagenUrl) {
-        const imagen = document.createElement('img');
-
-        imagen.src = imagenUrl;
-        imagen.alt = noticia.titulo
-            ? `Imagen de ${noticia.titulo}`
-            : 'Imagen de la noticia';
-
-        imagen.loading = 'lazy';
-        imagen.decoding = 'async';
-
-        imagen.addEventListener('error', () => {
-            portada.classList.add('sin-imagen');
-            imagen.remove();
-        });
-
-        portada.appendChild(imagen);
-    } else {
-        portada.classList.add('sin-imagen');
-    }
-
-    // Categoría.
     const categoria = document.createElement('span');
     categoria.classList.add('categoria-noticia');
     categoria.textContent = noticia.categoria || 'NOVEDAD';
 
-    portada.appendChild(categoria);
-
-    // Contenido de la tarjeta.
     const cuerpo = document.createElement('div');
     cuerpo.classList.add('contenido-tarjeta');
 
@@ -102,7 +64,6 @@ function crearTarjetaNoticia(noticia) {
     descripcion.classList.add('descripcion-noticia');
     descripcion.textContent = noticia.contenido || 'Sin descripción disponible.';
 
-    // Metadatos.
     const metadatos = document.createElement('div');
     metadatos.classList.add('metadatos-noticia');
 
@@ -128,42 +89,18 @@ function crearTarjetaNoticia(noticia) {
 
     metadatos.append(fecha, autor);
 
-    cuerpo.append(titulo, descripcion, metadatos);
-    tarjeta.append(portada, cuerpo);
+    // Enlace para acceder al detalle.
+    const enlace = document.createElement('a');
+    enlace.classList.add('enlace-noticia');
+    enlace.href = `/noticia.html?id=${encodeURIComponent(noticia.id)}`;
+    enlace.textContent = 'Leer noticia';
+
+    cuerpo.append(titulo, descripcion, metadatos, enlace);
+    tarjeta.append(categoria, cuerpo);
 
     return tarjeta;
 }
 
-/**
- * Obtiene una URL de imagen si la noticia tiene una.
- * Admite diferentes nombres habituales de propiedades.
- */
-function obtenerImagen(noticia) {
-    const url = noticia.imagen || noticia.imagenUrl || noticia.portada;
-
-    if (typeof url !== 'string' || !url.trim()) {
-        return null;
-    }
-
-    try {
-        const urlValidada = new URL(url, window.location.origin);
-
-        if (
-            urlValidada.protocol !== 'http:' &&
-            urlValidada.protocol !== 'https:'
-        ) {
-            return null;
-        }
-
-        return urlValidada.href;
-    } catch {
-        return null;
-    }
-}
-
-/**
- * Muestra mensajes de carga, error o ausencia de noticias.
- */
 function mostrarEstado(mensaje) {
     const estado = document.createElement('p');
 

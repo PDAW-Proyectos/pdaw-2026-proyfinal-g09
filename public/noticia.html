@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Leé la noticia completa de La cochera de Nidodo.">
+
+    <title>Detalle de noticia — La cochera de Nidodo</title>
+
+    <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg">
+    <link rel="stylesheet" href="/css/comun.css">
+    <link rel="stylesheet" href="/css/noticias.css">
+    <link rel="stylesheet" href="/css/noticia.css">
+
+    <script src="/js/componentes.js" defer></script>
+    <script src="/js/noticia.js" defer></script>
+</head>
+
+<body>
+    <cabecera-sitio></cabecera-sitio>
+
+    <main id="contenido">
+
+        <section class="detalle-noticia contenedor"
+                 aria-labelledby="titulo-noticia">
+
+            <a href="/noticias.html" class="volver-noticias">
+                ← Volver a noticias
+            </a>
+
+            <div id="contenido-noticia"
+                 class="contenido-detalle"
+                 aria-live="polite"
+                 aria-busy="true">
+
+                <p class="estado-noticias">
+                    Cargando noticia...
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <pie-sitio></pie-sitio>
+</body>
+</html>

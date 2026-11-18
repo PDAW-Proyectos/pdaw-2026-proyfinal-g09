@@ -64,7 +64,7 @@ app.use('/api/admin', crearRouterAdmin(repositorioUsuarios));
 
 const repositorioNoticias = new RepositorioNoticias();
 await repositorioNoticias.cargar();
-app.use('/api/noticias', crearRouterNoticias(repositorioNoticias));
+app.use('/api/noticias', crearRouterNoticias(repositorioNoticias, repositorioUsuarios));
 
 app.use('/api/login/google', crearRouterGoogle(repositorioUsuarios, {
   clientId: process.env.GOOGLE_CLIENT_ID || '538180077146-j3ttn8c6lfsvla99u1e9jclsoakj80ce.apps.googleusercontent.com',

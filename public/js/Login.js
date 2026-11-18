@@ -1,4 +1,3 @@
-
 const formLogin = document.getElementById('formLogin');
 const inputEmail = document.getElementById('email');
 const inputPassword = document.getElementById('password');
