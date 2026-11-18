@@ -73,6 +73,19 @@ export class Usuario {
     this.#username = username.trim();
   }
 
+  actualizarPasswordHash(nuevoHash) {
+      if (
+          typeof nuevoHash !== 'string' ||
+          !nuevoHash.startsWith('$2')
+      ) {
+          throw new TypeError(
+              'El hash de la contraseña no es válido'
+          );
+      }
+
+      this.#passwordHash = nuevoHash;
+  }
+
   habilitarContribuyente() { this.#esContribuyente = true; }
   revocarContribuyente() { this.#esContribuyente = false; }
   puedeJugarDemo() { return this.#esContribuyente; }

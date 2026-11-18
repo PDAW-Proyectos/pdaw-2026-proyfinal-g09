@@ -203,3 +203,146 @@
         transition: none;
     }
 }
+
+
+/* Formulario para cambiar contraseña */
+
+
+/* Sección de cambio de contraseña */
+
+.perfil-password {
+    max-width: 560px;
+    margin-top: 30px;
+}
+
+/* Título y descripción */
+
+.perfil-password-info {
+    margin-bottom: 22px;
+}
+
+.perfil-password-info h3 {
+    margin: 0 0 8px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.perfil-password-info p {
+    margin: 0;
+    color: #5c5d55;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.6;
+}
+
+/* Formulario */
+
+#form-cambiar-password {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 28px;
+    background: #faf9f6;
+    border: 1px solid var(--borde);
+}
+
+/* Grupos de campos */
+
+#form-cambiar-password .form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#form-cambiar-password label {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--tinta);
+}
+
+#form-cambiar-password input {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid var(--borde);
+    background: #fff;
+    color: var(--tinta);
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+#form-cambiar-password input:hover {
+    border-color: var(--acento);
+}
+
+#form-cambiar-password input:focus {
+    outline: none;
+    border-color: var(--acento);
+    box-shadow: 0 0 0 3px rgba(164, 64, 38, 0.12);
+}
+
+#form-cambiar-password small {
+    color: #77776f;
+    font-size: 12px;
+}
+
+/* Botón */
+
+#form-cambiar-password button {
+    align-self: flex-start;
+    min-height: 44px;
+    padding: 12px 24px;
+    border: 1px solid var(--acento);
+    background: var(--acento);
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#form-cambiar-password button:hover:not(:disabled) {
+    background: var(--tinta);
+    border-color: var(--tinta);
+}
+
+#form-cambiar-password button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* Mensaje */
+
+#password-mensaje {
+    margin: 0;
+    font-size: 13px;
+    color: var(--acento);
+    font-weight: normal;
+}
+
+/* Diseño adaptable */
+
+@media (max-width: 700px) {
+    .perfil-password {
+        max-width: 100%;
+    }
+
+    #form-cambiar-password {
+        padding: 20px;
+        gap: 18px;
+    }
+
+    #form-cambiar-password button {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #form-cambiar-password input,
+    #form-cambiar-password button {
+        transition: none;
+    }
+}
