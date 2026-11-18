@@ -50,10 +50,6 @@ function crearTarjetaNoticia(noticia) {
     const tarjeta = document.createElement('article');
     tarjeta.classList.add('tarjeta-noticia');
 
-    const categoria = document.createElement('span');
-    categoria.classList.add('categoria-noticia');
-    categoria.textContent = noticia.categoria || 'NOVEDAD';
-
     const cuerpo = document.createElement('div');
     cuerpo.classList.add('contenido-tarjeta');
 
@@ -82,21 +78,15 @@ function crearTarjetaNoticia(noticia) {
         fecha.textContent = 'Fecha no disponible';
     }
 
-    const autor = document.createElement('span');
-    autor.textContent = noticia.autor
-        ? `Por ${noticia.autor}`
-        : 'La cochera de Nidodo';
+   metadatos.append(fecha);
 
-    metadatos.append(fecha, autor);
-
-    // Enlace para acceder al detalle.
     const enlace = document.createElement('a');
     enlace.classList.add('enlace-noticia');
     enlace.href = `/noticia.html?id=${encodeURIComponent(noticia.id)}`;
     enlace.textContent = 'Leer noticia';
 
     cuerpo.append(titulo, descripcion, metadatos, enlace);
-    tarjeta.append(categoria, cuerpo);
+    tarjeta.append(cuerpo);
 
     return tarjeta;
 }

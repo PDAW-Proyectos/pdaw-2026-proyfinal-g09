@@ -16,6 +16,13 @@ const resumenNoticias = document.getElementById('resumen-noticias');
 const toastElemento = document.getElementById('admin-toast');
 const toastTitulo = document.getElementById('admin-toast-titulo');
 const toastMensaje = document.getElementById('admin-toast-mensaje');
+const modalEliminarElemento = document.getElementById('modal-eliminar-noticia');
+const modalEliminarNombre = document.getElementById('modal-eliminar-nombre');
+const botonConfirmarEliminacion = document.getElementById('boton-confirmar-eliminacion');
+
+const modalEliminar = window.bootstrap.Modal.getOrCreateInstance(modalEliminarElemento);
+
+let noticiaPendienteEliminar = null;
 
 let noticiaEditando = null;
 
@@ -416,17 +423,27 @@ botonCancelarEdicion.addEventListener('click', () => {
     prepararNuevaNoticia();
 });
 
-async function eliminarNoticia(noticia) {
+
+function eliminarNoticia(noticia) {
     if (!noticia.id) {
         mostrarMensaje('La noticia no tiene un identificador válido.');
         return;
     }
 
-    const confirmar = window.confirm(
-        `¿Estás seguro de que querés eliminar "${noticia.titulo}"?`
-    );
+    noticiaPendienteEliminar = noticia;
 
-    if (!confirmar) return;
+    modalEliminarNombre.textContent = noticia.titulo || 'Sin título';
+
+    modalEliminar.show();
+}
+
+botonConfirmarEliminacion.addEventListener('click', async () => {
+    if (!noticiaPendienteEliminar) return;
+
+    const noticia = noticiaPendienteEliminar;
+
+    botonConfirmarEliminacion.disabled = true;
+    botonConfirmarEliminacion.textContent = 'Eliminando...';
 
     try {
         await realizarPeticion(
@@ -436,6 +453,8 @@ async function eliminarNoticia(noticia) {
             }
         );
 
+        modalEliminar.hide();
+
         mostrarMensaje('La noticia se eliminó correctamente.', 'exito');
 
         await cargarNoticias();
@@ -443,8 +462,13 @@ async function eliminarNoticia(noticia) {
 
     } catch (error) {
         mostrarMensaje(error.message);
+
+    } finally {
+        botonConfirmarEliminacion.disabled = false;
+        botonConfirmarEliminacion.textContent = 'Eliminar noticia';
+        noticiaPendienteEliminar = null;
     }
-}
+});
 
 botonCerrarSesion.addEventListener('click', async () => {
     try {

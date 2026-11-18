@@ -60,12 +60,12 @@ app.use("/api/registro", crearRouterRegistro(repositorioUsuarios));
 app.use("/api/login", crearRouterLogin(repositorioUsuarios));
 app.use("/api/logout", crearRouterLogout());
 app.use("/api/perfil", crearRouterPerfil(repositorioUsuarios));
-app.use('/api/admin', crearRouterAdmin(repositorioUsuarios));
 
 const repositorioNoticias = new RepositorioNoticias();
 await repositorioNoticias.cargar();
-app.use('/api/noticias', crearRouterNoticias(repositorioNoticias, repositorioUsuarios));
+app.use('/api/admin', crearRouterAdmin(repositorioUsuarios, repositorioNoticias));
 
+app.use('/api/noticias', crearRouterNoticias(repositorioNoticias, repositorioUsuarios));
 app.use('/api/login/google', crearRouterGoogle(repositorioUsuarios, {
   clientId: process.env.GOOGLE_CLIENT_ID || '538180077146-j3ttn8c6lfsvla99u1e9jclsoakj80ce.apps.googleusercontent.com',
   appUrl: process.env.APP_URL || 'http://localhost:' + port
