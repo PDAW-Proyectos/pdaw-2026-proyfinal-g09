@@ -1,4 +1,3 @@
-
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { Noticia } from '../Noticias.js';
@@ -59,9 +58,13 @@ export class RepositorioNoticias {
 
         this.#noticias.push(noticia);
 
-        await this.guardar();
-
-        return noticia;
+        try {
+            await this.guardar();
+            return noticia;
+        } catch (error) {
+            this.#noticias.pop();
+            throw error;
+        }
     }
 
     async actualizarNoticia(id, datos) {
