@@ -1,4 +1,3 @@
-
 import express from 'express';
 
 import requiereSesion from '../middlewares/requiereSesion.js';
