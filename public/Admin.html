@@ -219,6 +219,58 @@
             </div>
         </section>
     </main>
+    
+    <div
+        class="modal fade"
+        id="modal-eliminar-noticia"
+        tabindex="-1"
+        aria-labelledby="modal-eliminar-titulo"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="modal-eliminar-titulo">
+                        Eliminar noticia
+                    </h2>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar"
+                    ></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>¿Estás seguro de que querés eliminar esta noticia?</p>
+                    <p class="fw-bold mb-0" id="modal-eliminar-nombre"></p>
+                    <p class="text-danger small mt-2 mb-0">
+                        Esta acción no se puede deshacer.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        id="boton-cancelar-eliminacion"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        id="boton-confirmar-eliminacion"
+                    >
+                        Eliminar noticia
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div
         id="admin-toast"

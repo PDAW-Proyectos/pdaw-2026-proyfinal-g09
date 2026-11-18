@@ -63,6 +63,29 @@ export function crearRouterNoticias(repositorio, repositorioUsuarios) {
         }
     });
 
+    // Obtener una noticia por identificador
+    router.get('/:id', (req, res) => {
+        try {
+            const noticia = repositorio.buscarPorId(req.params.id);
+
+            if (!noticia) {
+                return res.status(404).json({
+                    error: 'La noticia solicitada no existe.'
+                });
+            }
+
+            return res.json(noticia.toJSON());
+
+        } catch (error) {
+            console.error('Error al obtener noticia:', error);
+
+            return res.status(500).json({
+                error: 'Error interno del servidor'
+            });
+        }
+    });
+
+    // Crear noticia (solo administradores)
     router.post(
         '/',
         requiereSesion(repositorioUsuarios),
@@ -71,7 +94,6 @@ export function crearRouterNoticias(repositorio, repositorioUsuarios) {
             try {
                 const { titulo, contenido } = req.body ?? {};
 
-                // Validar los campos recibidos
                 if (
                     typeof titulo !== 'string' ||
                     typeof contenido !== 'string'
