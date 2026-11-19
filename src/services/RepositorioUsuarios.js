@@ -78,4 +78,19 @@ export class RepositorioUsuarios {
     await this.guardar();
     return usuario;
   }
+
+  async actualizarPasswordHash(id, nuevoHash) {
+    const usuario = this.buscarPorId(id);
+
+    if (!usuario) {
+        return null;
+    }
+
+    usuario.actualizarPasswordHash(nuevoHash);
+
+    await this.guardar();
+
+    return usuario;
+  }
 }
+

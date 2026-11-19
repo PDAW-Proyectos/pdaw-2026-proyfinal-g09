@@ -1,75 +1,121 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es-AR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Consultá los datos de tu cuenta en La cochera de Nidodo.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Consultá los datos de tu cuenta en La cochera de Nidodo." />
     <title>Mi perfil — La cochera de Nidodo</title>
-    <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg">
-    <link rel="stylesheet" href="/css/comun.css">
-    <link rel="stylesheet" href="/css/perfil.css">
-</head>
-<body>
+    <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg" />
+    <link rel="stylesheet" href="/css/comun.css" />
+    <link rel="stylesheet" href="/css/perfil.css" />
+  </head>
+  <body>
     <cabecera-sitio></cabecera-sitio>
     <main tabindex="-1" id="contenido" class="contenedor perfil">
-        <p class="etiqueta">TU CUENTA</p>
-        <h1>Mi perfil</h1>
-        <p class="descripcion">Administrá tu información y tus publicaciones.</p>
-        <div class="perfil-layout">
-            <aside class="perfil-menu">
-                <div class="perfil-usuario">
-                    <div class="perfil-avatar">U</div>
-                    <div>
-                        <p id="perfil-username-menu">Usuario</p>
-                        <span>Mi cuenta</span>
-                    </div>
+      <p class="etiqueta">TU CUENTA</p>
+      <h1>Mi perfil</h1>
+      <p class="descripcion">Administrá tu información y tus publicaciones.</p>
+      <div class="perfil-layout">
+        <aside class="perfil-menu">
+          <div class="perfil-usuario">
+            <div class="perfil-avatar">U</div>
+            <div>
+              <p id="perfil-username-menu">Usuario</p>
+              <span>Mi cuenta</span>
+            </div>
+          </div>
+          <nav class="perfil-navegacion" aria-label="Opciones del perfil">
+            <button
+              class="perfil-opcion activa"
+              type="button"
+              data-seccion="informacion"
+              aria-controls="seccion-informacion"
+              aria-current="page"
+            >
+              <span aria-hidden="true">♙</span>
+              Mi información
+            </button>
+            <button
+              class="perfil-opcion"
+              type="button"
+              data-seccion="opciones"
+              aria-controls="seccion-opciones"
+            >
+              <span aria-hidden="true">⚙</span>
+              Opciones
+            </button>
+          </nav>
+        </aside>
+        <section class="perfil-contenido">
+          <section class="perfil-seccion" id="seccion-informacion">
+            <p class="etiqueta">INFORMACIÓN PERSONAL</p>
+            <h2>Mi información</h2>
+            <p>Datos asociados a tu cuenta.</p>
+            <div class="perfil-datos">
+              <div class="perfil-dato">
+                <h3>Nombre de usuario</h3>
+                <p id="perfil-username">Cargando...</p>
+              </div>
+              <div class="perfil-dato">
+                <h3>Correo electrónico</h3>
+                <p id="perfil-email">Cargando...</p>
+              </div>
+            </div>
+          </section>
+          <section class="perfil-seccion" id="seccion-opciones" hidden>
+            <p class="etiqueta">CONFIGURACIÓN</p>
+            <h2>Opciones</h2>
+            <p>Administrá las opciones de tu cuenta.</p>
+
+            <div class="perfil-password">
+              <div class="perfil-password-info">
+                <h3>Cambiar contraseña</h3>
+                <p>
+                  Para modificar tu contraseña, primero necesitás confirmar tu contraseña actual.
+                </p>
+              </div>
+
+              <form id="form-cambiar-password">
+                <div class="form-grupo">
+                  <label for="password-actual"> Contraseña actual </label>
+
+                  <input
+                    type="password"
+                    id="password-actual"
+                    name="passwordActual"
+                    autocomplete="current-password"
+                    required
+                  />
                 </div>
-                <nav class="perfil-navegacion" aria-label="Opciones del perfil">
-                    <button class="perfil-opcion activa"
-                    type="button"
-                    data-seccion="informacion" aria-controls="seccion-informacion"
-                    aria-current="page">
-                    <span aria-hidden="true">♙</span>
-                    Mi información
-                </button>
-            <button class="perfil-opcion"
-            type="button"
-            data-seccion="opciones" aria-controls="seccion-opciones">
-            <span aria-hidden="true">⚙</span>
-            Opciones
-        </button>
-    </nav>
-</aside>
-<section class="perfil-contenido">
-    <section class="perfil-seccion"
-    id="seccion-informacion">
-    <p class="etiqueta">INFORMACIÓN PERSONAL</p>
-    <h2>Mi información</h2>
-    <p>Datos asociados a tu cuenta.</p>
-    <div class="perfil-datos">
-        <div class="perfil-dato">
-            <h3>Nombre de usuario</h3>
-            <p id="perfil-username">Cargando...</p>
-        </div>
-        <div class="perfil-dato">
-            <h3>Correo electrónico</h3>
-            <p id="perfil-email">Cargando...</p>
-        </div>
-    </div>
-</section>
-<section class="perfil-seccion"
-id="seccion-opciones"
-hidden>
-<p class="etiqueta">CONFIGURACIÓN</p>
-<h2>Opciones</h2>
-<p>Administrá las opciones de tu cuenta.</p>
-</section>
-</section>
-</div>
-<p id="perfil-mensaje" role="alert" ></p>
-</main>
-<pie-sitio></pie-sitio>
-<script src="/js/componentes.js" defer></script>
-<script src="./js/Perfil.js"></script>
-</body>
+
+                <div class="form-grupo">
+                  <label for="password-nueva"> Nueva contraseña </label>
+
+                  <input
+                    type="password"
+                    id="password-nueva"
+                    name="passwordNueva"
+                    minlength="8"
+                    maxlength="20"
+                    autocomplete="new-password"
+                    required
+                  />
+
+                  <small> Debe tener entre 8 y 20 caracteres. </small>
+                </div>
+
+                <button type="submit">Cambiar contraseña</button>
+
+                <p id="password-mensaje" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+          </section>
+        </section>
+      </div>
+      <p id="perfil-mensaje" role="alert"></p>
+    </main>
+    <pie-sitio></pie-sitio>
+    <script src="/js/componentes.js" defer></script>
+    <script src="./js/Perfil.js"></script>
+  </body>
 </html>
