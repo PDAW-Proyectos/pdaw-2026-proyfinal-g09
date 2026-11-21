@@ -60,6 +60,17 @@ npm install
 npm start
 ```
 
+### Crear el primer administrador
+
+El registro publico siempre crea cuentas comunes. Para crear el primer administrador, agrega estas variables al archivo `.env` (no las subas al repositorio):
+
+```env
+ADMIN_USERNAME=Admin
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=una-clave-segura
+```
+
+Luego ejecuta `npm run crear-admin`. El comando no hace cambios si ya existe una cuenta con rol `admin`; si no existe, guarda la nueva cuenta en `data/usuarios.json` con la contrasena cifrada. Despues podes quitar `ADMIN_PASSWORD` del `.env`.
 Después entrá a [http://localhost:3000/](http://localhost:3000/).
 
 La demo de prueba se abre desde la página o entrando a [http://localhost:3000/demo/](http://localhost:3000/demo/). La primera carga puede tardar porque descarga los archivos del juego. Para jugar necesitás teclado y mouse: **WASD** para caminar, **E** para interactuar y **Escape** para pausar.
