@@ -3,6 +3,12 @@ import { Router } from "express";
 import { Usuario } from "../src/Usuario.js";
 import bcrypt from "bcrypt";
 
+function emailEstaReservado(email) {
+  return email.trim().toLowerCase() === 'admin@admin.com';
+}
+
+
+
 export default function crearRouterRegistro(repositorio) {
     const router = Router();
 
@@ -28,9 +34,17 @@ export default function crearRouterRegistro(repositorio) {
 
             const emailNormalizado = email.trim().toLowerCase();
 
-            if (repositorio.buscarPorEmail(emailNormalizado)) {
-                return next(new ErrorHttp(409, "No se pudo registrar la cuenta con esos datos. Revisalos o iniciá sesión"));
+            if (emailEstaReservado(emailNormalizado)) {
+            return next(new ErrorHttp(409, 'No se puede registrar esa dirección de correo'));
             }
+
+            if (repositorio.buscarPorEmail(emailNormalizado)) {
+            return next(new ErrorHttp(
+                409,
+                'No se pudo registrar la cuenta con esos datos. Revisalos o iniciá sesión'
+            ));
+            }
+            
             const passwordHash = await bcrypt.hash(password, 12);
 
             const usuario = new Usuario({
