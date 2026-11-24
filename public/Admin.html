@@ -136,8 +136,16 @@
                         <div id="lista-usuarios">
                             <p>Cargando usuarios...</p>
                         </div>
-                    </section>
-
+                        
+                        <nav id="paginacion-usuarios"
+                        class="admin-paginacion"
+                        aria-label="Páginas de usuarios"
+                        hidden>
+                        <button type="button" data-anterior>Anterior</button>
+                        <span class="admin-paginacion-info" aria-live="polite"></span>
+                        <button type="button" data-siguiente>Siguiente</button>
+                    </nav>
+                </section>
 
                     <section
                         id="seccion-subir-noticia"
@@ -213,6 +221,15 @@
                         <div id="lista-noticias">
                             <p>Cargando noticias...</p>
                         </div>
+
+                        <nav id="paginacion-noticias-admin"
+                            class="admin-paginacion"
+                            aria-label="Páginas de noticias"
+                            hidden>
+                            <button type="button" data-anterior>Anterior</button>
+                            <span class="admin-paginacion-info" aria-live="polite"></span>
+                            <button type="button" data-siguiente>Siguiente</button>
+                        </nav>
                     </section>
 
                 </div>

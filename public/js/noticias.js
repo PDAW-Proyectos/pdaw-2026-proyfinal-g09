@@ -1,11 +1,40 @@
 
 const contenedorNoticias = document.getElementById('contenedor-noticias');
+const paginacion = document.getElementById('paginacion-noticias');
+const botonAnterior = document.getElementById('pagina-anterior');
+const botonSiguiente = document.getElementById('pagina-siguiente');
+const estadoPaginacion = document.getElementById('estado-paginacion');
+
+const noticiasPorPagina = 6;
+let paginaActual = 1;
+let totalPaginas = 0;
+
+botonAnterior.addEventListener('click', () => {
+    if (paginaActual > 1) {
+        paginaActual--;
+        cargarNoticias();
+    }
+});
+
+botonSiguiente.addEventListener('click', () => {
+    if (paginaActual < totalPaginas) {
+        paginaActual++;
+        cargarNoticias();
+    }
+});
 
 async function cargarNoticias() {
     contenedorNoticias.setAttribute('aria-busy', 'true');
+    botonAnterior.disabled = true;
+    botonSiguiente.disabled = true;
 
     try {
-        const respuesta = await fetch('/api/noticias');
+        const parametros = new URLSearchParams({
+            pagina: paginaActual,
+            limite: noticiasPorPagina
+        });
+
+        const respuesta = await fetch(`/api/noticias?${parametros}`);
 
         if (!respuesta.ok) {
             throw new Error(`Error HTTP: ${respuesta.status}`);
@@ -13,34 +42,38 @@ async function cargarNoticias() {
 
         const datos = await respuesta.json();
 
-        const noticias = Array.isArray(datos)
-            ? datos
-            : datos.noticias;
-
-        if (!Array.isArray(noticias)) {
+        if (!Array.isArray(datos.noticias)) {
             throw new Error('Formato de respuesta inválido');
         }
 
+        totalPaginas = datos.totalPaginas;
         contenedorNoticias.replaceChildren();
 
-        if (noticias.length === 0) {
+        if (datos.noticias.length === 0) {
             mostrarEstado('Todavía no hay noticias publicadas.');
+            paginacion.hidden = true;
             return;
         }
 
-        noticias.forEach(noticia => {
-            const tarjeta = crearTarjetaNoticia(noticia);
-            contenedorNoticias.appendChild(tarjeta);
+        datos.noticias.forEach(noticia => {
+            contenedorNoticias.appendChild(crearTarjetaNoticia(noticia));
         });
+
+        paginacion.hidden = totalPaginas <= 1;
+        estadoPaginacion.textContent =
+            `Página ${datos.pagina} de ${totalPaginas}`;
+
+        botonAnterior.disabled = datos.pagina <= 1;
+        botonSiguiente.disabled = datos.pagina >= totalPaginas;
 
     } catch (error) {
         console.error('Error al cargar noticias:', error);
 
         contenedorNoticias.replaceChildren();
-
         mostrarEstado(
             'No se pudieron cargar las noticias. Intentá nuevamente más tarde.'
         );
+        paginacion.hidden = true;
     } finally {
         contenedorNoticias.setAttribute('aria-busy', 'false');
     }

@@ -425,3 +425,30 @@ button[hidden] {
         transition: none;
     }
 }
+
+/* paginado*/
+
+.admin-paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-block: 20px;
+}
+
+.admin-paginacion button {
+    padding: 8px 14px;
+    border: 1px solid var(--borde);
+    background: var(--papel);
+    cursor: pointer;
+}
+
+.admin-paginacion button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.admin-paginacion-info {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}

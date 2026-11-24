@@ -19,6 +19,12 @@ const toastMensaje = document.getElementById('admin-toast-mensaje');
 const modalEliminarElemento = document.getElementById('modal-eliminar-noticia');
 const modalEliminarNombre = document.getElementById('modal-eliminar-nombre');
 const botonConfirmarEliminacion = document.getElementById('boton-confirmar-eliminacion');
+const paginacionUsuarios = document.getElementById('paginacion-usuarios');
+const paginacionNoticiasAdmin = document.getElementById('paginacion-noticias-admin');
+
+const elementosPorPagina = 10;
+const paginaUsuarios = { actual: 1 };
+const paginaNoticiasAdmin = { actual: 1 };
 
 const modalEliminar = window.bootstrap.Modal.getOrCreateInstance(modalEliminarElemento);
 
@@ -122,6 +128,45 @@ function obtenerLista(datos, propiedad) {
     return [];
 }
 
+function obtenerElementosPagina(items, controles, estado, alCambiarPagina) {
+    const totalPaginas = Math.max(
+        1,
+        Math.ceil(items.length / elementosPorPagina)
+    );
+
+    estado.actual = Math.min(
+        Math.max(estado.actual, 1),
+        totalPaginas
+    );
+
+    controles.hidden = items.length <= elementosPorPagina;
+
+    const botonAnterior = controles.querySelector('[data-anterior]');
+    const botonSiguiente = controles.querySelector('[data-siguiente]');
+    const indicador = controles.querySelector('.admin-paginacion-info');
+
+    botonAnterior.disabled = estado.actual === 1;
+    botonSiguiente.disabled = estado.actual === totalPaginas;
+    indicador.textContent = `Página ${estado.actual} de ${totalPaginas}`;
+
+    botonAnterior.onclick = () => {
+        if (estado.actual > 1) {
+            estado.actual--;
+            alCambiarPagina();
+        }
+    };
+
+    botonSiguiente.onclick = () => {
+        if (estado.actual < totalPaginas) {
+            estado.actual++;
+            alCambiarPagina();
+        }
+    };
+
+    const inicio = (estado.actual - 1) * elementosPorPagina;
+    return items.slice(inicio, inicio + elementosPorPagina);
+}
+
 function cambiarSeccion(nombre) {
     secciones.forEach(seccion => {
         seccion.hidden = seccion.id !== `seccion-${nombre}`;
@@ -199,7 +244,14 @@ async function cargarUsuarios() {
             return;
         }
 
-        usuarios.forEach(usuario => {
+        const usuariosDeLaPagina = obtenerElementosPagina(
+            usuarios,
+            paginacionUsuarios,
+            paginaUsuarios,
+            cargarUsuarios
+        );
+
+        usuariosDeLaPagina.forEach(usuario => {
             const contenedor = document.createElement('div');
             contenedor.className = 'card p-3 mb-3';
 
@@ -248,7 +300,14 @@ async function cargarNoticias() {
             return;
         }
 
-        noticias.forEach(noticia => {
+        const noticiasDeLaPagina = obtenerElementosPagina(
+            noticias,
+            paginacionNoticiasAdmin,
+            paginaNoticiasAdmin,
+            cargarNoticias
+        );
+
+        noticiasDeLaPagina.forEach(noticia => {
             const contenedor = document.createElement('article');
             contenedor.className = 'card p-3 mb-3';
 
