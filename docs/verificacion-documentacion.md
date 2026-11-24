@@ -27,4 +27,4 @@ Las pruebas automáticas no verifican todo el sistema: Google se simula y faltan
 
 ## Revisión pendiente del equipo
 
-Confirmar las herramientas y usos de IA de cada integrante, revisar decisiones y retrospectiva, y ensayar la defensa y modificación individual sin asistencia. Esta rama no publica credenciales de prueba, usuarios locales ni datos de noticias usados durante la práctica.
+Revisar decisiones y retrospectiva, y ensayar la defensa y modificación individual. Esta rama no publica credenciales de prueba, usuarios locales ni datos de noticias usados durante la práctica.

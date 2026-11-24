@@ -153,7 +153,7 @@ En [docs](docs/) están:
 - [Boceto de la página principal](docs/wireframe-inicio.jpeg).
 - [Verificación de la actualización del juego web](docs/verificacion-juego-web.md).
 
-La documentación actualizada está en el [índice de docs](docs/README.md): contrato de API, arquitectura, decisiones, guía de uso, uso de IA y lecciones aprendidas. Los diagramas actuales reflejan el código implementado; los JPEG anteriores se conservan en `docs/historico`. El wireframe inicial y las capturas Lighthouse son antecedentes históricos.
+La documentación actualizada está en el [índice de docs](docs/README.md): contrato de API, arquitectura, decisiones, guía de uso y lecciones aprendidas. Los diagramas actuales reflejan el código implementado; los JPEG anteriores se conservan en `docs/historico`. El wireframe inicial y las capturas Lighthouse son antecedentes históricos.
 
 Las tareas se organizan en los [issues del repositorio](https://github.com/PDAW-Proyectos/pdaw-2026-proyfinal-g09/issues). Trabajamos con ramas y pull requests para revisar e integrar cambios.
 
@@ -178,7 +178,7 @@ El registro común de solicitudes de la API incluye método, ruta, estado, durac
 ## Pendientes para la entrega
 
 - Documentar la URL pública y completar la preparación para producción: el servidor escucha en `127.0.0.1`, las sesiones están en memoria y los datos dependen de archivos locales.
-- Revisar entre ambos integrantes la documentación y completar la declaración de uso de IA antes de entregar.
+- Revisar entre ambos integrantes la documentación antes de entregar.
 - Completar las pruebas de noticias, endpoints administrativos y cambio de contraseña.
 - Retomar donaciones y protección del juego cuando se defina su alcance.
 
