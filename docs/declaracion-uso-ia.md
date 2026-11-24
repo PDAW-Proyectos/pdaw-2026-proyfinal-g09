@@ -1,6 +1,7 @@
 # Declaración de uso de herramientas de IA
 
-**Proyecto:** La cochera de Nidodo  
+**Proyecto:** La cochera de Nidodo
+
 **Fecha:** 24/11/2026
 
 ## Herramientas utilizadas
