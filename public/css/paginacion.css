@@ -1,0 +1,29 @@
+.paginacion-noticias {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 36px;
+}
+
+.paginacion-noticias button {
+    padding: 10px 16px;
+    border: 1px solid var(--borde);
+    background: var(--papel);
+    color: inherit;
+    cursor: pointer;
+}
+
+.paginacion-noticias button:hover:not(:disabled) {
+    border-color: var(--acento);
+}
+
+.paginacion-noticias button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#estado-paginacion {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}

@@ -9,6 +9,7 @@
     <link rel="icon" type="image/jpeg" href="/img/icono-nidodo.jpeg">
     <link rel="stylesheet" href="/css/comun.css">
     <link rel="stylesheet" href="/css/noticias.css">
+    <link rel="stylesheet" href="/css/paginacion.css">
 
     <script src="/js/componentes.js" defer></script>
     <script src="/js/noticias.js" defer></script>
@@ -63,6 +64,25 @@
             </div>
 
         </section>
+
+                <nav id="paginacion-noticias"
+            class="paginacion-noticias"
+            aria-label="Paginación de noticias"
+            hidden>
+            <button id="pagina-anterior"
+                    type="button"
+                    aria-label="Ver noticias anteriores">
+                ← Anterior
+            </button>
+
+            <span id="estado-paginacion" aria-live="polite"></span>
+
+            <button id="pagina-siguiente"
+                    type="button"
+                    aria-label="Ver noticias siguientes">
+                Siguiente →
+            </button>
+        </nav>
 
     </main>
 
