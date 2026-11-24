@@ -1,0 +1,12 @@
+digraph G { graph [bgcolor="#f5f7fb", pad="0.4", nodesep="0.45", ranksep="0.65", fontname="Arial", fontsize=22, fontcolor="#15243b", labelloc=t]; node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#6985a8", fontname="Arial", fontsize=14, margin="0.2,0.15"]; edge [color="#597591", fontname="Arial", fontsize=11, fontcolor="#334b65", arrowsize=0.8]; rankdir=TB; label="Arquitectura implementada | Responsabilidades y flujo";
+ui [label="NAVEGADOR\npublic: HTML · CSS · JavaScript\nFormularios, fetch, estados y DOM",fillcolor="#dfeaf9"];
+server [label="COMPOSICIÓN · server.js\nNode.js + Express · rutas · archivos estáticos"];
+mw [label="MIDDLEWARES\nexpress-session · registro de solicitudes\nrequiereSesion → requiereAdmin (rutas protegidas)"];
+routes [label="HTTP · routes\nRegistro · Login · Google · Perfil · Noticias · Admin\nValidación de entrada, coordinación y respuestas"];
+model [label="DOMINIO · src\nUsuario · Administrador · Noticia\nReglas, validaciones y representación pública"];
+repo [label="PERSISTENCIA · src/services\nRepositorioUsuarios · RepositorioNoticias\nColecciones en memoria, cargar y guardar"];
+data [label="DISCO PRIVADO\ndata/usuarios.json · data/noticias.json",shape=cylinder,fillcolor="#e3f2e9"];
+session [label="SESIONES EN MEMORIA\nusuarioId · se pierden al reiniciar",shape=note,fillcolor="#fff2d8"];
+google [label="GOOGLE\nIdentity Services / google-auth-library",fillcolor="#e3f2e9"];
+errors [label="ERRORES\nnext(error) → manejarErrores\nproblem+json; algunas rutas usan {error}",fillcolor="#fff2d8"];
+ui -> server [label="HTTP + cookie / JSON"]; server -> mw; mw -> routes; routes -> repo; repo -> model [label="Crea / recupera entidades"]; repo -> data [dir=both,label="Leer / escribir"]; mw -> session [dir=both]; routes -> google [dir=both,label="Verificación del token"]; ui -> google [label="Botón oficial",style=dashed]; routes -> errors [label="Errores derivados"]; }

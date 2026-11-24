@@ -2,7 +2,7 @@
 
 Somos el grupo 09 y este es nuestro proyecto para la materia Proyecto de Desarrollo de Aplicaciones Web.
 
-La idea es hacer una página para nuestro juego **La cochera de Nidodo**, un juego de terror en primera persona en el que trabajás durante el turno de noche de una cochera. Tenés que atender clientes, registrar tickets y mantener todo en funcionamiento mientras descubrís qué pasa en el lugar.
+La página presenta **La cochera de Nidodo**, nuestro juego de terror en primera persona. Durante el turno de noche de una cochera tenés que atender clientes, registrar tickets y mantener todo en funcionamiento mientras descubrís qué pasa en el lugar.
 
 ![La cochera de Nidodo](public/img/portada-nidodo.webp)
 
@@ -11,30 +11,32 @@ La idea es hacer una página para nuestro juego **La cochera de Nidodo**, un jue
 | Aspecto | Descripción |
 | --- | --- |
 | Propuesta | Dar a conocer el juego y reunir una comunidad que acompañe su desarrollo. |
-| Público | Personas interesadas en los videojuegos independientes y de terror. |
-| Funciones principales | Presentación del juego, galería, demo jugable, donaciones, foro y novedades. |
-| Acceso | La información es pública. Cada persona puede registrarse con email y contraseña o ingresar con Google. |
-| Donaciones | Un aporte al proyecto permite obtener acceso permanente a la demo. |
-| Administración | Gestión de la comunidad, publicaciones y acceso al juego. |
+| Público | Personas interesadas en videojuegos independientes y de terror. |
+| Funciones actuales | Presentación, galería, juego web, registro, ingreso, perfil, noticias y administración. |
+| Acceso | Inicio, noticias y juego web públicos. Perfil con sesión y funciones administrativas con rol admin. |
+| Ejecución local | http://localhost:3000/ |
+| Despliegue | Todavía no se documentó una URL pública en este repositorio. |
 
 ## Funcionalidades
 
-| Apartado | ¿Qué ofrece? |
+| Apartado | ¿Qué ofrece esta versión? |
 | --- | --- |
-| Inicio | Información del juego, sus características e imágenes. |
-| Registro e ingreso | Una cuenta para participar y acceder a los beneficios del proyecto. |
-| Demo | Una versión del juego para probar directamente desde el navegador. |
-| Donaciones | Una forma de ayudar al desarrollo y habilitar la demo para la cuenta. |
-| Foro | Un espacio para compartir opiniones y hablar sobre el juego. |
-| Novedades | Publicaciones sobre los avances del proyecto. |
-| Panel de administración | Herramientas para gestionar usuarios, publicaciones y permisos. |
+| Inicio | Presentación del juego, características e imágenes. |
+| Registro e ingreso | Cuentas comunes con nombre de usuario, email y contraseña; ingreso local o con Google y cierre de sesión. |
+| Perfil | Consulta de datos y cambio de contraseña para cuentas con contraseña local. |
+| Juego web | Exportación de Unity en otra pestaña, con opción de pantalla completa. Por ahora el acceso es libre. |
+| Noticias | Listado público paginado y detalle de novedades. |
+| Administración | Resumen y listado de usuarios, habilitación o revocación de la condición de contribuyente y creación, edición y eliminación de noticias. |
 
-## APIs elegidas
+La condición de contribuyente existe en el modelo y se modifica desde administración, pero **todavía no protege el acceso a los archivos del juego**.
 
-| API | ¿Para qué la usamos? |
-| --- | --- |
-| Google | Inicio de sesión con una cuenta de Google. |
-| Mercado Pago | Recepción de donaciones para acompañar el desarrollo del juego. |
+Las donaciones mediante Mercado Pago están pausadas y no forman parte de la versión activa. No hay confirmación de pagos ni desbloqueo automático. El foro queda pendiente.
+
+## Integración con Google
+
+Google Identity Services entrega al navegador una credencial firmada (ID token). El backend la verifica con `google-auth-library` antes de buscar o crear la cuenta y establecer una sesión de nuestra aplicación.
+
+Se utilizan el identificador de Google, el email, el nombre y la foto cuando está disponible. La aplicación no recibe la contraseña de Google. Una cuenta local no se vincula automáticamente con Google por compartir email: se pide usar el método original.
 
 ## Equipo y roles
 
@@ -43,97 +45,141 @@ La idea es hacer una página para nuestro juego **La cochera de Nidodo**, un jue
 | Leandro Liverotti | Scrum Master y desarrollador |
 | Alexis Pokorny | Product Owner y desarrollador |
 
-Los dos programamos y revisamos los cambios. Además, nos repartimos la organización del equipo:
+Los dos programamos y revisamos los cambios.
 
 | Rol | Responsable | ¿Qué hace? |
 | --- | --- | --- |
-| Scrum Master | Leandro | Ayuda a organizar el trabajo, seguir las tareas y resolver las trabas del equipo. |
-| Product Owner | Alexis Pokorny | Define las prioridades y organiza las funcionalidades del backlog. |
+| Scrum Master | Leandro | Organiza el seguimiento del trabajo y ayuda a resolver las trabas del equipo. |
+| Product Owner | Alexis | Define las prioridades y organiza las funcionalidades del backlog. |
 | Desarrolladores | Leandro y Alexis | Programan, integran y revisan las distintas partes del proyecto. |
 
 ## Cómo abrir la página
 
-Necesitás tener instalado Node.js. Desde la carpeta del proyecto, ejecutá:
+Necesitás Node.js y npm. La integración continua está configurada con Node.js 22. Desde la raíz del proyecto:
 
 ```bash
-npm install
+npm ci
 npm start
 ```
 
+Entrá a [http://localhost:3000/](http://localhost:3000/). Para detener el servidor, presioná **Ctrl+C**.
+
+### Configuración
+
+El servidor carga las variables de un archivo `.env` en la raíz, excluido de Git. Para la ejecución local predeterminada no es necesario crearlo.
+
+| Variable | Uso |
+| --- | --- |
+| `PORT` | Puerto del servidor; por defecto, `3000`. |
+| `APP_URL` | Origen esperado para Google; por defecto, `http://localhost:` seguido del puerto configurado. |
+| `GOOGLE_CLIENT_ID` | Identificador público de Google. Hay uno predeterminado para los orígenes locales autorizados. |
+| `SESSION_SECRET` | Secreto para firmar la cookie. En desarrollo se genera uno aleatorio al arrancar si falta. Es obligatorio en producción. |
+| `NODE_ENV` | Con `production`, exige el secreto y activa cookies `Secure`, que requieren HTTPS. |
+| `ADMIN_USERNAME` | Nombre del primer administrador, utilizado por el script. |
+| `ADMIN_EMAIL` | Email del primer administrador, utilizado por el script. |
+| `ADMIN_PASSWORD` | Contraseña del primer administrador, de 8 a 20 caracteres, utilizada por el script. |
+
+Otro puerto o dominio puede requerir autorización en Google Cloud. Cambiar `APP_URL` no agrega esa autorización. Este flujo no utiliza un Client Secret de Google.
+
 ### Crear el primer administrador
 
-El registro publico siempre crea cuentas comunes. Para crear el primer administrador, agrega estas variables al archivo `.env` (no las subas al repositorio):
+El registro público siempre crea cuentas comunes. Configurá estas variables en `.env` con tus propios valores:
 
 ```env
 ADMIN_USERNAME=Admin
 ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=una-clave-segura
+ADMIN_PASSWORD=elegi-una-clave
 ```
 
-Luego ejecuta `npm run crear-admin`. El comando no hace cambios si ya existe una cuenta con rol `admin`; si no existe, guarda la nueva cuenta en `data/usuarios.json` con la contrasena cifrada. Despues podes quitar `ADMIN_PASSWORD` del `.env`.
-Después entrá a [http://localhost:3000/](http://localhost:3000/).
+Ejecutá `npm run crear-admin`. Si ya existe un administrador, el script no hace cambios. Si no existe, guarda la cuenta en `data/usuarios.json` con un **hash generado con bcrypt**. Después podés quitar `ADMIN_PASSWORD` del `.env`.
 
-La demo de prueba se abre desde la página o entrando a [http://localhost:3000/demo/](http://localhost:3000/demo/). La primera carga puede tardar porque descarga los archivos del juego. Para jugar necesitás teclado y mouse: **WASD** para caminar, **E** para interactuar y **Escape** para pausar.
+Si el servidor estaba encendido, reinicialo para cargar la cuenta creada por el script. Iniciá sesión y abrí `/Admin.html`. Los endpoints del panel verifican sesión y rol en el servidor.
 
-No hace falta tener Unity instalado para abrir esta versión. Para cerrar el servidor, presioná **Ctrl+C** en la terminal.
+### Probar el juego
 
-## Pruebas automáticas
+Elegí **Jugar en otra pestaña** desde Inicio o entrá a [http://localhost:3000/demo/](http://localhost:3000/demo/). La primera carga puede tardar porque descarga los archivos del juego.
 
-Para ejecutar los tests, instalá las dependencias y usá:
+Necesitás teclado y mouse: **WASD** para caminar, **E** para interactuar y **Escape** para pausar. No necesitás Unity instalado para jugar esta exportación; el editor es necesario para generar una nueva versión.
 
-```bash
-npm install
-npm test
-```
+## Datos y sesiones
 
-Para ver la cobertura: `npm run test:coverage`.
+Los repositorios guardan usuarios y noticias en `data/usuarios.json` y `data/noticias.json`. Los datos sobreviven al reinicio mientras se conserven esos archivos. `data` está fuera de `public` y no se sirve como contenido estático.
 
-Usamos Jest y Supertest para comprobar el registro, los hashes de contraseñas, las validaciones, la persistencia y los permisos de las clases Usuario y Administrador. Los tests crean sus propios archivos temporales y no modifican `data/usuarios.json`. También se ejecutan en GitHub al abrir un PR y al integrar cambios en `main`.
+Las contraseñas locales se guardan como hashes de bcrypt. Las respuestas públicas de usuarios omiten el hash y el identificador de Google.
 
-Las pruebas de login, sesiones, pagos y permisos de rutas se agregarán cuando esas funciones estén implementadas.
+Las sesiones están en memoria del servidor y se identifican mediante la cookie `clase08.sid`, con `HttpOnly`, `SameSite=Lax` y duración configurada de una hora. **Reiniciar el servidor elimina las sesiones, pero no las cuentas guardadas.** Cerrar sesión destruye la sesión y elimina la cookie.
 
-## Carpetas del proyecto
+## Pruebas y revisión del código
 
-| Carpeta | Contenido |
+Después de instalar las dependencias:
+
+| Comando | Uso |
 | --- | --- |
-| `public` | Páginas, estilos, imágenes y JavaScript del navegador. |
-| `src` | Clases y lógica del servidor. |
-| `routes` | Rutas de la API. |
-| `data` | Archivos donde se guarda la información. |
-| `docs` | Diagramas y boceto de la página. |
-| `La-cochera-exportacion-web` | Versión del juego para el navegador. |
+| `npm test` | Ejecuta las pruebas con Jest y Supertest. |
+| `npm run test:coverage` | Ejecuta las pruebas y genera el informe de cobertura. |
+| `npm run lint` | Busca errores y advierte sobre complejidad en nuestro JavaScript. |
+| `npm run format:check` | Revisa el formato de los archivos incluidos en el script de Prettier. |
+| `npm run format` | Aplica formato a esos mismos archivos. |
+
+Las pruebas cubren modelos de usuarios y administrador, validaciones, persistencia, registro, compatibilidad entre cuentas locales y Google, sesiones y logout, avatar y manejo de errores. Google se simula: estas pruebas no reemplazan la comprobación real del ingreso con una cuenta de Google.
+
+Los tests de persistencia usan archivos temporales y no modifican `data/usuarios.json`. No hay suites específicas para el CRUD de noticias, los endpoints administrativos ni el cambio de contraseña. Tampoco prueban el gameplay de Unity.
+
+GitHub Actions ejecuta instalación, lint, revisión de formato y tests en los PR y ante cambios en `main`. Unity queda fuera de lint y formato; Prettier no se aplica a todo el repositorio.
+
+## Organización del proyecto
+
+| Ubicación | Contenido |
+| --- | --- |
+| `server.js` | Configuración de Express, sesiones, archivos públicos, routers y arranque. |
+| `public` | HTML, CSS, imágenes y JavaScript del navegador. |
+| `routes` | Endpoints HTTP que reciben solicitudes y coordinan respuestas. |
+| `middlewares` | Controles de sesión y rol, registro de solicitudes y manejo de errores. |
+| `src` | Modelos como Usuario, Administrador y Noticia. |
+| `src/services` | Repositorios de usuarios y noticias. |
+| `scripts` | Creación del primer administrador. |
+| `tests` | Pruebas automáticas. |
+| `data` | Archivos de datos del servidor. |
+| `docs` | Diagramas, boceto y evidencias de verificaciones anteriores. |
+| `La-cochera-exportacion-web` | Exportación del juego para el navegador. |
 
 ## Diagramas y diseño
 
-En la carpeta [docs](docs/) están los documentos que usamos para organizar la idea:
+En [docs](docs/) están:
 
-- [Diagrama de contexto](docs/diagrama-contexto.jpeg).
-- [Diagrama de clases](docs/diagrama-clases-dominio.jpeg).
-- [Mapa de navegabilidad](docs/mapa-navegabilidad.jpeg).
+- [Diagrama de contexto](docs/diagrama-contexto.png).
+- [Diagrama de clases del dominio](docs/diagrama-clases-dominio.png).
+- [Mapa de navegabilidad](docs/mapa-navegabilidad.png).
 - [Boceto de la página principal](docs/wireframe-inicio.jpeg).
+- [Verificación de la actualización del juego web](docs/verificacion-juego-web.md).
 
-Las tareas se organizan en los [issues del repositorio](https://github.com/PDAW-Proyectos/pdaw-2026-proyfinal-g09/issues), y trabajamos con ramas y pull requests para integrar los cambios de cada uno.
+La documentación actualizada está en el [índice de docs](docs/README.md): contrato de API, arquitectura, decisiones, guía de uso, uso de IA y lecciones aprendidas. Los diagramas actuales reflejan el código implementado; los JPEG anteriores se conservan en `docs/historico`. El wireframe inicial y las capturas Lighthouse son antecedentes históricos.
 
-## Revisión del código
-
-- `npm run lint`: busca errores y avisa sobre funciones complejas en nuestro JavaScript.
-- `npm run format:check`: revisa el formato de los archivos incorporados para el manejo común de errores.
-- `npm run format`: aplica ese formato.
-
-La exportación de Unity queda fuera de estas herramientas.
+Las tareas se organizan en los [issues del repositorio](https://github.com/PDAW-Proyectos/pdaw-2026-proyfinal-g09/issues). Trabajamos con ramas y pull requests para revisar e integrar cambios.
 
 ## Errores de la API
 
-Los errores usan `application/problem+json`. El mensaje está en `detail` y `requestId` permite encontrar la solicitud en la consola del servidor.
+Los errores derivados al manejador común usan `application/problem+json`, con mensaje en `detail` y `requestId`. Administración, noticias y los controles de acceso también usan respuestas con `{ "error": "mensaje" }`. El formato todavía no está unificado en toda la API.
 
 | Código | Situación |
 | --- | --- |
-| 400 | Datos inválidos o JSON mal formado. |
-| 401 | Credenciales incorrectas o falta de sesión en el perfil. |
-| 403 | Origen no permitido al ingresar con Google. |
-| 404 | Ruta de la API inexistente. |
+| 400 | Datos inválidos, paginación incorrecta o JSON mal formado. |
+| 401 | Credenciales incorrectas o ausencia de una sesión válida. |
+| 403 | Falta de permisos de administrador, operación administrativa no permitida u origen no permitido en Google. |
+| 404 | Recurso o ruta de la API inexistente. |
 | 409 | Conflicto al registrar una cuenta o al ingresar con otro método. |
-| 500 | Fallo interno; se devuelve un mensaje genérico. |
-| 502/503/504 | Google no está disponible, no está configurado o tarda demasiado. |
+| 500 | Fallo interno del servidor. |
+| 502 | Fallo de conexión reconocido al verificar la credencial de Google. |
+| 503 | Ingreso con Google sin configuración disponible. |
+| 504 | Tiempo de espera agotado al verificar la credencial de Google. |
 
-Los registros incluyen método, ruta, estado, duración e identificador; no incluyen cuerpos de solicitudes, cookies ni credenciales.
+El registro común de solicitudes de la API incluye método, ruta, estado, duración e identificador; no incluye cuerpos de solicitudes, contraseñas, cookies ni credenciales.
+
+## Pendientes para la entrega
+
+- Documentar la URL pública y completar la preparación para producción: el servidor escucha en `127.0.0.1`, las sesiones están en memoria y los datos dependen de archivos locales.
+- Revisar entre ambos integrantes la documentación y completar la declaración de uso de IA antes de entregar.
+- Completar las pruebas de noticias, endpoints administrativos y cambio de contraseña.
+- Retomar donaciones y protección del juego cuando se defina su alcance.
+
+Para desplegar en Linux hay que corregir la diferencia de mayúsculas entre los imports de Admin/Noticias en `server.js` y los nombres de los archivos versionados. Esta actualización de documentación no modifica el código del servidor.

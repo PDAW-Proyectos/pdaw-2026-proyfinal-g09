@@ -1,0 +1,11 @@
+digraph G { graph [bgcolor="#f5f7fb", pad="0.4", nodesep="0.45", ranksep="0.65", fontname="Arial", fontsize=22, fontcolor="#15243b", labelloc=t]; node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#6985a8", fontname="Arial", fontsize=14, margin="0.2,0.15"]; edge [color="#597591", fontname="Arial", fontsize=11, fontcolor="#334b65", arrowsize=0.8]; rankdir=LR; label="La cochera de Nidodo | Contexto actual";
+visitante [label="Visitante"]; usuario [label="Usuario autenticado"]; admin [label="Administrador"];
+web [label="Sistema web Nidodo\nInicio · cuentas · perfil\nnoticias · administración · juego",fillcolor="#dfeaf9",penwidth=2];
+google [label="Google\nServicio externo de identidad",fillcolor="#e3f2e9"];
+visitante -> web [label="Consulta inicio, noticias y juego público"];
+usuario -> web [label="Consulta perfil · cambia contraseña local"];
+admin -> web [label="Gestiona noticias y condición de contribuyente"];
+web -> google [label="Solicita identidad / verifica credencial"];
+google -> web [label="ID token firmado e identidad verificada"];
+limite [label="Alcance actual\nDemo pública · pagos pausados · foro pendiente",shape=note,fillcolor="#fff2d8",color="#c69a4b"];
+web -> limite [style=dashed,arrowhead=none]; }

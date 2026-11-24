@@ -1,0 +1,10 @@
+digraph G { graph [bgcolor="#f5f7fb", pad="0.4", nodesep="0.45", ranksep="0.65", fontname="Arial", fontsize=22, fontcolor="#15243b", labelloc=t]; node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#6985a8", fontname="Arial", fontsize=14, margin="0.2,0.15"]; edge [color="#597591", fontname="Arial", fontsize=11, fontcolor="#334b65", arrowsize=0.8]; rankdir=TB; label="Navegación actual | Páginas y condiciones";
+home [label="Inicio · /",fillcolor="#dfeaf9"]; game [label="Demo · /demo/\nOtra pestaña · acceso público"];
+news [label="Noticias · /Noticias.html"]; detail [label="Detalle · /noticia.html?id=..."];
+login [label="Ingreso · /Login.html\nContraseña o Google"]; registro [label="Registro · /Registro.html"];
+perfil [label="Perfil · /Perfil.html\nDatos y cambio de contraseña local"];
+admin [label="Panel · /Admin.html\nUsuarios · contribuyentes · CRUD de noticias",fillcolor="#e3f2e9"];
+api [label="Control efectivo en API\nPerfil: sesión (401 si falta)\nAdministración: sesión + rol (403 si no es admin)",shape=note,fillcolor="#fff2d8"];
+home -> game [label="Jugar"]; home -> news; news -> detail; home -> login; home -> registro;
+registro -> login [label="Luego de registrarse"]; login -> home [label="Ingreso correcto"]; home -> perfil [label="Menú de cuenta / sesión"]; login -> admin [label="Login local: rol admin (ver nota)"]; admin -> news [label="Noticias publicadas"]; perfil -> login [label="Sin sesión válida"]; perfil -> home [label="Cerrar sesión"]; admin -> api [style=dashed,arrowhead=none]; perfil -> api [style=dashed,arrowhead=none];
+nota [shape=note,label="Foro y pagos no forman parte de esta navegación activa.\nLogin local redirige a /admin.html; archivo real: /Admin.html.",fillcolor="#fff2d8"]; home -> nota [style=dashed,arrowhead=none]; }
