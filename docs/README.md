@@ -25,8 +25,3 @@ Documentación del código basado en main `052a410`, revisada el 24 de noviembre
 
 El [wireframe inicial](wireframe-inicio.jpeg) se conserva como boceto histórico. Los diagramas anteriores en JPEG están en [historico](historico/), identificados como propuesta inicial. Los SVG editables y las fuentes DOT de los diagramas actuales están en [diagramas](diagramas/).
 
-## Pendientes de entrega
-
-- Registrar y comprobar una URL pública. No se afirma que el sistema esté desplegado.
-- Ensayar demo y modificación individual; documentar pruebas manuales pendientes sin presentarlas como realizadas.
-- Las capturas Lighthouse existentes son históricas. No se repitió una auditoría de accesibilidad en esta actualización.
