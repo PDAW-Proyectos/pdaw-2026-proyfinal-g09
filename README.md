@@ -151,9 +151,9 @@ En [docs](docs/) están:
 - [Diagrama de clases del dominio](docs/diagrama-clases-dominio.png).
 - [Mapa de navegabilidad](docs/mapa-navegabilidad.png).
 - [Boceto de la página principal](docs/wireframe-inicio.jpeg).
-- [Verificación de la actualización del juego web](docs/verificacion-juego-web.md).
+- [Verificación de la actualización del juego web](docs/verificacion-juego-web.pdf).
 
-La documentación actualizada está en el [índice de docs](docs/README.md): contrato de API, arquitectura, decisiones, guía de uso y lecciones aprendidas. Los diagramas actuales reflejan el código implementado; los JPEG anteriores se conservan en `docs/historico`. El wireframe inicial y las capturas Lighthouse son antecedentes históricos.
+La documentación actualizada está en el [índice de docs](docs/index.pdf): contrato de API, arquitectura, decisiones, guía de uso y lecciones aprendidas. Los diagramas actuales reflejan el código implementado; los JPEG anteriores se conservan en `docs/historico`. El wireframe inicial y las capturas Lighthouse son antecedentes históricos.
 
 Las tareas se organizan en los [issues del repositorio](https://github.com/PDAW-Proyectos/pdaw-2026-proyfinal-g09/issues). Trabajamos con ramas y pull requests para revisar e integrar cambios.
 
