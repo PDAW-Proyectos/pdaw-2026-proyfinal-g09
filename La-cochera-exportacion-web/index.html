@@ -72,9 +72,9 @@
     const config = {
       autoSyncPersistentDataPath: true,
       arguments: [],
-      dataUrl: 'Build/web-completo.data.unityweb',
-      frameworkUrl: 'Build/web-completo.framework.js.unityweb',
-      codeUrl: 'Build/web-completo.wasm.unityweb',
+      dataUrl: 'Build/web-completo.data.unityweb?v=0e34b3ab3341',
+      frameworkUrl: 'Build/web-completo.framework.js.unityweb?v=0e34b3ab3341',
+      codeUrl: 'Build/web-completo.wasm.unityweb?v=0e34b3ab3341',
       streamingAssetsUrl: 'StreamingAssets',
       fullscreenElementID: 'unity-fullscreen-container',
       companyName: 'Nidodo',
@@ -83,7 +83,7 @@
       showBanner
     };
     const loader = document.createElement('script');
-    loader.src = 'Build/web-completo.loader.js';
+    loader.src = 'Build/web-completo.loader.js?v=0e34b3ab3341';
     loader.onload = () => {
       createUnityInstance(canvas, config, value => {
         progress.value = value;
